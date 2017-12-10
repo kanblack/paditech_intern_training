@@ -1,8 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.toring.paditechproject.activity.P1Activity">
 
+    <RelativeLayout
+        android:id="@+id/tool_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue">
+
+        <ImageView
+            android:id="@+id/iv_person"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_margin="@dimen/margin_8dp"
+            android:background="@drawable/ic_cicle"
+            android:padding="@dimen/padding_4dp"
+            android:src="@drawable/ic_person_white_24dp" />
+
+        <ImageView
+            android:id="@+id/iv_setting"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/margin_8dp"
+            android:src="@drawable/ic_settings_white_24dp" />
+
+        <ImageView
+            android:id="@+id/iv_notification"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/margin_8dp"
+            android:layout_toStartOf="@id/iv_setting"
+            android:src="@drawable/ic_notifications_white_24dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/iv_person"
+            android:layout_toStartOf="@id/iv_notification"
+            android:text="FLC CLAIM"
+            android:textAlignment="center"
+            android:textColor="#FFFFFFFF"
+            android:textSize="@dimen/text_size_big" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tool_bar"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_16dp"
+            android:background="@color/colorAccent"
+            android:paddingBottom="@dimen/padding_12dp"
+            android:paddingStart="@dimen/padding_16dp"
+            android:paddingTop="@dimen/padding_12dp"
+            android:text="Tin tức - Kinh nghiệm"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_lager"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_8dp">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_margin="@dimen/margin_8dp"
+                android:layout_weight="2"
+                android:elevation="5dp"
+                app:cardCornerRadius="8dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:background="@android:color/white"
+                    android:src="@drawable/ic_model_and_car" />
+            </android.support.v7.widget.CardView>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_weight="1">
+
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>
