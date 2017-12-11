@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_login"
+    tools:context="com.toring.paditechproject.activity.P2Activity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#a08f43ff"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Welcome, "
+                android:textColor="#ffffff"
+                android:textSize="@dimen/text_size_very_big" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My App"
+                android:textColor="#6bd1f7"
+                android:textSize="@dimen/text_size_very_big" />
+        </LinearLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/iv_nice_car" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="50dp"
+            android:backgroundTint="#FFFFFFFF"
+            android:drawableLeft="@drawable/ic_person_outline_white_24dp"
+            android:gravity="center_vertical"
+            android:inputType="text"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:text="nguyenthetrinhhd@gmail.com"
+            android:textColor="#FFFFFFFF"
+            android:textSize="@dimen/text_size_lager" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:backgroundTint="#FFFFFFFF"
+            android:drawableLeft="@drawable/ic_lock_outline_white_24dp"
+            android:gravity="center_vertical"
+            android:inputType="numberPassword"
+            android:paddingEnd="16dp"
+            android:paddingStart="16dp"
+            android:text="password"
+            android:textColor="#FFFFFFFF"
+            android:textSize="@dimen/text_size_lager" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="40dp"
+            android:background="#4bc1fe"
+            android:text="LOGIN"
+            android:textAllCaps="true"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/text_size_big" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="create new account"
+            android:textAllCaps="true"
+            android:textColor="#d2d2d2"
+            android:textSize="@dimen/text_size_normal" />
+    </LinearLayout>
+
+</RelativeLayout>
