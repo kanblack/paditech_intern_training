@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context="com.toring.paditechproject.activity.P1Activity">
 
     <RelativeLayout
@@ -40,6 +41,18 @@
             android:src="@drawable/ic_notifications_white_24dp" />
 
         <TextView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginTop="2dp"
+            android:layout_toStartOf="@id/iv_setting"
+            android:background="@drawable/bg_notification"
+            android:gravity="center"
+            android:text="2"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_size_small" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -51,52 +64,471 @@
             android:textSize="@dimen/text_size_big" />
     </RelativeLayout>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tool_bar"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_16dp"
-            android:background="@color/colorAccent"
-            android:paddingBottom="@dimen/padding_12dp"
-            android:paddingStart="@dimen/padding_16dp"
-            android:paddingTop="@dimen/padding_12dp"
-            android:text="Tin tức - Kinh nghiệm"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/text_size_lager"
-            android:textStyle="bold" />
+        android:layout_below="@id/tool_bar">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/padding_8dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <android.support.v7.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_margin="@dimen/margin_8dp"
-                android:layout_weight="2"
-                android:elevation="5dp"
-                app:cardCornerRadius="8dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginTop="@dimen/margin_16dp"
+                android:background="@drawable/bg_p1_1"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/padding_16dp"
+                android:text="Tin tức - Kinh nghiệm"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_lager"
+                android:textStyle="bold" />
 
-                <ImageView
-                    android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_8dp">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="170dp"
+                    android:layout_margin="@dimen/margin_4dp"
+                    android:layout_weight="2">
+
+                    <com.makeramen.roundedimageview.RoundedImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/white"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/iv_model_and_car"
+                        app:riv_corner_radius="10dp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:background="@drawable/bg_gradient"
+                        android:padding="@dimen/padding_12dp">
+
+                        <TextView
+                            android:id="@+id/tv_subject_1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/gthd"
+                            android:textColor="#FFFFFFFF"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tv_subject_1"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/des"
+                            android:textColor="#b7b7b7"
+                            android:textSize="@dimen/text_size_small" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:scaleType="centerCrop"
-                    android:background="@android:color/white"
-                    android:src="@drawable/ic_model_and_car" />
-            </android.support.v7.widget.CardView>
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_weight="1">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_margin="@dimen/margin_4dp"
+                        android:layout_weight="1">
 
-            </RelativeLayout>
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/white"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/iv_repair_car"
+                            app:riv_corner_radius="10dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/bg_gradient"
+                            android:padding="@dimen/padding_8dp"
+                            android:text="@string/bdx"
+                            android:textColor="#FFFFFFFF"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_margin="@dimen/margin_4dp"
+                        android:layout_weight="1">
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/white"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/iv_nice_car"
+                            app:riv_corner_radius="10dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/bg_gradient"
+                            android:padding="@dimen/padding_8dp"
+                            android:text="@string/xdd"
+                            android:textColor="#FFFFFFFF"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textStyle="bold" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/bg_p1_2"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/padding_16dp"
+                android:text="Yêu cầu bảo hiểm"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_lager"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/padding_8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_margin="@dimen/margin_4dp"
+                        android:layout_weight="1">
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/white"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/iv_model_and_car"
+                            app:riv_corner_radius="10dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/bg_tran_1"
+                            android:gravity="center"
+                            android:padding="@dimen/padding_8dp"
+                            android:text="Thông tin bảo hiểm"
+                            android:textColor="#FFFFFFFF"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_margin="@dimen/margin_4dp"
+                        android:layout_weight="1">
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/white"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/iv_model_and_car"
+                            app:riv_corner_radius="10dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/bg_tran_2"
+                            android:gravity="center"
+                            android:padding="@dimen/padding_8dp"
+                            android:text="Gọi hỗ trợ"
+                            android:textColor="#FFFFFFFF"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_margin="@dimen/margin_4dp"
+                        android:layout_weight="1">
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/white"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/iv_model_and_car"
+                            app:riv_corner_radius="10dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/bg_tran_3"
+                            android:gravity="center"
+                            android:padding="@dimen/padding_8dp"
+                            android:text="Lịch bồi thường"
+                            android:textColor="#FFFFFFFF"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_margin="@dimen/margin_4dp"
+                        android:layout_weight="1">
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@android:color/white"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/iv_model_and_car"
+                            app:riv_corner_radius="10dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:background="@drawable/bg_tran_4"
+                            android:gravity="center"
+                            android:padding="@dimen/padding_8dp"
+                            android:text="Tạo yêu cầu"
+                            android:textColor="#FFFFFFFF"
+                            android:textSize="@dimen/text_size_normal"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/bg_p1_3"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/padding_16dp"
+                android:text="Tra cứu thông tin"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_lager"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/iv_hospital"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/iv_car_hospital"
+                            app:civ_border_color="@color/text_color_second"
+                            app:civ_border_width="2dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/iv_hospital"
+                            android:gravity="center"
+                            android:padding="@dimen/padding_4dp"
+                            android:text="Bệnh viện\nP.Khám"
+                            android:textColor="@color/text_color_primary"
+                            android:textSize="@dimen/text_size_normal" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/iv_nha_thuoc"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/iv_car_hospital"
+                            app:civ_border_color="@color/text_color_second"
+                            app:civ_border_width="2dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/iv_nha_thuoc"
+                            android:gravity="center"
+                            android:padding="@dimen/padding_4dp"
+                            android:text="Nhà thuốc"
+                            android:textColor="@color/text_color_primary"
+                            android:textSize="@dimen/text_size_normal" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/iv_tra_cuu_benh"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/iv_car_hospital"
+                            app:civ_border_color="@color/text_color_second"
+                            app:civ_border_width="2dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/iv_tra_cuu_benh"
+                            android:gravity="center"
+                            android:padding="@dimen/padding_4dp"
+                            android:text="Tra cứu bệnh"
+                            android:textColor="@color/text_color_primary"
+                            android:textSize="@dimen/text_size_normal" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@drawable/bg_p1_4"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/padding_16dp"
+                android:text="Tiện ích - Nhắc lịch"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_lager"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/iv_vacxin"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/iv_car_hospital"
+                            app:civ_border_color="@color/text_color_second"
+                            app:civ_border_width="2dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/iv_vacxin"
+                            android:gravity="center"
+                            android:padding="@dimen/padding_4dp"
+                            android:text="Khám SK\nTiêm Vắc xin"
+                            android:textColor="@color/text_color_primary"
+                            android:textSize="@dimen/text_size_normal" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/so_kham"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/iv_car_hospital"
+                            app:civ_border_color="@color/text_color_second"
+                            app:civ_border_width="2dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/so_kham"
+                            android:gravity="center"
+                            android:padding="@dimen/padding_4dp"
+                            android:text="Sổ khám\nPhiếu khám"
+                            android:textColor="@color/text_color_primary"
+                            android:textSize="@dimen/text_size_normal" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/iv_ho_so"
+                            android:layout_width="90dp"
+                            android:layout_height="90dp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/iv_car_hospital"
+                            app:civ_border_color="@color/text_color_second"
+                            app:civ_border_width="2dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/iv_ho_so"
+                            android:gravity="center"
+                            android:padding="@dimen/padding_4dp"
+                            android:text="Lưu trữ hồ sơ"
+                            android:textColor="@color/text_color_primary"
+                            android:textSize="@dimen/text_size_normal" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
+
 </RelativeLayout>

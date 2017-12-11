@@ -34,7 +34,7 @@ public class P0Activity extends AppCompatActivity {
 
     private void initData() {
         menuList = new ArrayList<>();
-        menuList.add(new ItemMenu("Màn hình P1", "Màn hình P1"));
+        menuList.add(new ItemMenu("Màn hình P1", "Màn hình P1", new Intent(this, P1Activity.class)));
         menuList.add(new ItemMenu("Màn hình P2", "Màn hình P2"));
         menuList.add(new ItemMenu("Màn hình P3", "Màn hình P3"));
         menuList.add(new ItemMenu("Màn hình P4", "Màn hình P4"));

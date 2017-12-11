@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Paditech Project</string>
     <string name="item1">Item 1</string>
+    <string name="gthd">Giới thiệu Honda Civic 2017</string>
+    <string name="des">Honda Civic 2017: Thiết kế sắc sảo khỏe khoắn và thể thao</string>
+    <string name="bdx">Bảo dưỡng xe</string>
+    <string name="xdd">Xe đẹp và độc</string>
 </resources>
