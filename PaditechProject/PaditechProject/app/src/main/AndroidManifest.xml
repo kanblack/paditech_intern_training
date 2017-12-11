@@ -19,8 +19,10 @@
         <activity
             android:name=".activity.P1Activity"
             android:theme="@style/AppThemeNoActionbarP1" />
-        <activity android:name=".activity.P2Activity"
-            android:theme="@style/AppThemeFullScreen"/>
+        <activity
+            android:name=".activity.P2Activity"
+            android:theme="@style/AppThemeFullScreen" />
+        <activity android:name=".activity.P3Activity"></activity>
     </application>
 
 </manifest>
