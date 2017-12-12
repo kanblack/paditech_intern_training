@@ -20,4 +20,11 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="AppThemeNoActionbarP4" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#334f9c</item>
+        <item name="colorPrimaryDark">#243563</item>
+        <item name="colorAccent">#dfe5f2</item>
+    </style>
+
 </resources>

@@ -1,4 +1,4 @@
-package com.toring.paditechproject.item;
+package com.toring.paditechproject.model;
 
 import android.content.Intent;
 

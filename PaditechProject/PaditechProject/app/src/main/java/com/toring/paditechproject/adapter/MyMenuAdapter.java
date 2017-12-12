@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.toring.paditechproject.R;
-import com.toring.paditechproject.item.ItemMenu;
+import com.toring.paditechproject.model.ItemMenu;
 
 import java.util.List;
 

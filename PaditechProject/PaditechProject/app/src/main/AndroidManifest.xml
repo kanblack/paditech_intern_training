@@ -22,7 +22,11 @@
         <activity
             android:name=".activity.P2Activity"
             android:theme="@style/AppThemeFullScreen" />
-        <activity android:name=".activity.P3Activity"></activity>
+        <activity
+            android:name=".activity.P3Activity"
+            android:theme="@style/AppThemeFullScreen" />
+        <activity android:name=".activity.P4Activity"
+            android:theme="@style/AppThemeNoActionbarP4"></activity>
     </application>
 
 </manifest>
