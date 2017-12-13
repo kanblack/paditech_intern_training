@@ -37,7 +37,7 @@ public class P0Activity extends AppCompatActivity {
         menuList.add(new ItemMenu("Màn hình P2", "Màn hình P2", new Intent(this, P2Activity.class)));
         menuList.add(new ItemMenu("Màn hình P3", "Màn hình P3", new Intent(this, P3Activity.class)));
         menuList.add(new ItemMenu("Màn hình P4", "Màn hình P4", new Intent(this, P4Activity.class)));
-        menuList.add(new ItemMenu("Màn hình P5", "Màn hình P5"));
+        menuList.add(new ItemMenu("Màn hình P5", "Màn hình P5", new Intent(this, P5Activity.class)));
     }
 
     private void setData() {

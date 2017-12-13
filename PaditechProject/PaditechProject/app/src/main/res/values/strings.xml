@@ -5,4 +5,10 @@
     <string name="des">Honda Civic 2017: Thiết kế sắc sảo khỏe khoắn và thể thao</string>
     <string name="bdx">Bảo dưỡng xe</string>
     <string name="xdd">Xe đẹp và độc</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>

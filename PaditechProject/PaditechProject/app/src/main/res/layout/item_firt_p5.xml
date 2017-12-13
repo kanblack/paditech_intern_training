@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="90dp"
+    android:layout_height="wrap_content">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_bia"
+        android:layout_width="65dp"
+        android:layout_height="65dp"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="4dp"
+        android:src="@drawable/iv_nice_car"
+        app:civ_border_color="#2091fd"
+        app:civ_border_width="2dp" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/iv_avatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:src="@drawable/iv_repair_car"
+        app:civ_border_color="#FFFFFF"
+        app:civ_border_width="2dp" />
+
+    <RelativeLayout
+        android:paddingTop="4dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_bia"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="2dp">
+
+        <ImageView
+            android:id="@+id/iv_on"
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="@dimen/margin_4dp"
+            android:background="@drawable/bg_oval_green" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/iv_on"
+            android:maxLines="1"
+            android:minLines="1"
+            android:text="Nguyễn"
+            android:textColor="@color/text_color_primary"
+            android:textSize="@dimen/text_size_small" />
+    </RelativeLayout>
+</RelativeLayout>
