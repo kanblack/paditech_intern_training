@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/img_rcv_screen3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/background"
+        android:scaleType="fitCenter"
+        android:transitionName="simple_activity_transition"
+        tools:ignore="UnusedAttribute" />
+    <View
+        android:id="@+id/view_child_rcv_bottom_fragment_screen3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/view_img_whenclick_rcv_bt_screen3"/>
+
+</RelativeLayout>
