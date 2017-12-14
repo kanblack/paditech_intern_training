@@ -8,9 +8,20 @@
     android:orientation="vertical"
     tools:context="com.toring.paditechproject.activity.P4Activity">
 
+    <com.roughike.bottombar.BottomBar
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        app:bb_activeTabColor="#334f9c"
+        app:bb_behavior="iconsOnly"
+        app:bb_inActiveTabColor="@color/text_color_second"
+        app:bb_tabXmlResource="@xml/bottom_bar_tabs" />
+
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottom_bar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -121,12 +132,4 @@
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
-    <com.roughike.bottombar.BottomBar
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        app:bb_inActiveTabColor="@color/text_color_second"
-        app:bb_activeTabColor="#334f9c"
-        app:bb_behavior="iconsOnly"
-        app:bb_tabXmlResource="@xml/bottom_bar_tabs"
-        android:layout_alignParentBottom="true"/>
 </RelativeLayout>
