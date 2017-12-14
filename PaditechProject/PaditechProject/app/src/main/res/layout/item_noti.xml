@@ -2,13 +2,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:background="@android:color/white"
-    android:padding="16dp"
+    android:padding="10dp"
     android:layout_height="wrap_content">
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="80dp"
+        android:layout_width="70dp"
         android:id="@+id/iv_ava"
         android:src="@drawable/iv_car_hospital"
-        android:layout_height="80dp" />
+        android:layout_height="70dp" />
 
     <ImageView
         android:id="@+id/iv_more"
@@ -21,13 +21,14 @@
     <RelativeLayout
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
+        android:layout_centerHorizontal="true"
         android:layout_width="match_parent"
         android:layout_toEndOf="@id/iv_ava"
         android:layout_toStartOf="@id/iv_more"
         android:layout_height="wrap_content">
         <TextView
             android:id="@+id/tv_des"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/text_color_primary"

@@ -49,7 +49,7 @@ public class NotifacationAdapter extends RecyclerView.Adapter<NotifacationAdapte
         return notiList.size();
     }
 
-    public class NotiVH  extends RecyclerView.ViewHolder{
+    public class NotiVH extends RecyclerView.ViewHolder {
         private View view;
         private TextView tvDes, tvTimeAgo;
         private ImageView ivAction;
@@ -66,22 +66,28 @@ public class NotifacationAdapter extends RecyclerView.Adapter<NotifacationAdapte
         }
 
         public void setData(Noti data) {
-            if (!data.isSeen()){
+            if (!data.isSeen()) {
                 view.setBackgroundColor(Color.parseColor("#dfe5f2"));
             }
 
-            switch (data.getAction()){
+            String action_text = "";
+
+            switch (data.getAction()) {
                 case 1:
                     Picasso.with(context).load(R.drawable.ic_like).into(ivAction);
+                    action_text = " đã thích ảnh của bạn";
                     break;
                 case 2:
                     Picasso.with(context).load(R.drawable.ic_wow).into(ivAction);
+                    action_text = " đã bày tỏ cảm xúc về bài viết của bạn";
                     break;
                 case 3:
                     Picasso.with(context).load(R.drawable.ic_heart).into(ivAction);
+                    action_text = " đã bày tỏ cảm xúc về bình luận của bạn của bạn";
                     break;
                 case 4:
                     Picasso.with(context).load(R.drawable.ic_sad).into(ivAction);
+                    action_text = " có sinh nhật ngày hôm nay. Hãy chúc chúng nó đi";
                     break;
             }
 
@@ -90,24 +96,23 @@ public class NotifacationAdapter extends RecyclerView.Adapter<NotifacationAdapte
             tvTimeAgo.setText(data.getTime());
 
 
-            tvDes.setText(convert(data.getNameList()) + "ddax");
+            tvDes.setText(Html.fromHtml(convert(data.getNameList()) + "<pr>" + action_text + "</pr>"));
         }
     }
 
-    private CharSequence convert(List<String> names){
-        if (names.size()<= 1){
-            return (Html.fromHtml("<b>" + names.get(0) + "</b>"));
-        }else if (names.size() == 2){
-            return (Html.fromHtml("<b>" + names.get(0) + "</b>")+ " và "
-            +Html.fromHtml("<b>" + names.get(1) + "</b>"));
-        }else if (names.size() == 3){
-            return (Html.fromHtml("<b>" + names.get(0) + "</b>")+ ", "
-                    +Html.fromHtml("<b>" + names.get(1) + "</b>")+ " và "
-                    +Html.fromHtml("<b>" + names.get(2) + "</b>"));
-        }else {
-            CharSequence c = (Html.fromHtml("<b>" + names.get(0) + "</b>")+ ", "
-                    +Html.fromHtml("<b>" + names.get(1) + "</b>")
-            +Html.fromHtml("<b>" + (names.size() - 2) + "</b>")  );
+    private CharSequence convert(List<String> names) {
+        if (names.size() <= 1) {
+            return ("<b>" + names.get(0) + "</b>");
+        } else if (names.size() == 2) {
+            return ("<b>" + names.get(0) + "</b>" + "<pr> và </pr>" + "<b>" + names.get(1) + "</b>");
+        } else if (names.size() == 3) {
+            return ("<b>" + names.get(0) + "</b>" + "<pr>, </pr>"
+                    + "<b>" + names.get(1) + "</b>" + "<pr> và </pr>"
+                    + "<b>" + names.get(2) + "</b>");
+        } else {
+            CharSequence c = "<b>" + names.get(0) + "</b>" + "<pr>, </pr>"
+                    + "<b>" + names.get(1) + "</b>" + "<pr> và </pr>"
+                    + "<b>" + (names.size() - 2) + " other people </b>";
 
             return c;
         }

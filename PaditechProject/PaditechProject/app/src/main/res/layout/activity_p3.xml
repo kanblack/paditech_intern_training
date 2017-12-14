@@ -8,156 +8,152 @@
     android:orientation="vertical"
     tools:context="com.toring.paditechproject.activity.P3Activity">
 
-    <android.support.v4.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
             <RelativeLayout
+                android:id="@+id/rl_heder"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="250dp"
+                android:background="@drawable/bg_header_p3"
+                android:orientation="vertical">
 
-                <RelativeLayout
-                    android:id="@+id/rl_heder"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:background="@drawable/bg_header_p3"
-                    android:orientation="vertical">
-
-                    <android.support.v7.widget.Toolbar
-                        android:id="@+id/tool_bar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/iv_avatar"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_below="@id/tool_bar"
-                        android:layout_marginBottom="30dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="30dp"
-                        android:src="@drawable/iv_repair_car" />
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignBottom="@id/iv_avatar"
-                        android:layout_alignTop="@id/iv_avatar"
-                        android:layout_marginEnd="16dp"
-                        android:layout_toEndOf="@id/iv_avatar"
-                        android:gravity="center_vertical"
-                        android:paddingStart="24dp">
-
-                        <TextView
-                            android:id="@+id/tv_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Nguyễn Thế Trinh"
-                            android:textColor="#FFFFFFFF"
-                            android:textSize="22sp" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/tv_name"
-                            android:layout_marginTop="4dp"
-                            android:text="UI/UX Designer"
-                            android:textColor="@color/blue"
-                            android:textSize="@dimen/text_size_lager" />
-                    </RelativeLayout>
-                </RelativeLayout>
-
-
-                <LinearLayout
-                    android:id="@+id/rl_infor"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_below="@id/rl_heder">
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="#4dc1fe"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/tv_nb_remain"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:text="12"
-                            android:textColor="#FFFFFF"
-                            android:textSize="@dimen/text_size_very_big" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/tv_nb_remain"
-                            android:gravity="center_horizontal"
-                            android:text="remaining tasks"
-                            android:textColor="#FFFFFFFF" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="#fd7ee4"
-                        android:gravity="center">
-
-                        <TextView
-                            android:id="@+id/tv_nb_complete"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_horizontal"
-                            android:text="32"
-                            android:textColor="#FFFFFF"
-                            android:textSize="@dimen/text_size_very_big" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/tv_nb_complete"
-                            android:gravity="center_horizontal"
-                            android:text="completed tasks"
-                            android:textColor="#FFFFFFFF" />
-                    </RelativeLayout>
-                </LinearLayout>
-
-
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="225dp"
-                    android:background="@drawable/bg_oval"
-                    android:padding="24dp"
-                    android:src="@drawable/ic_add_black_24dp"
-                    android:textSize="32sp" />
-
-                <TextView
-                    android:id="@+id/tv_today"
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/tool_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:textColor="@color/text_color_second"
-                    android:textStyle="bold"
-                    android:paddingStart="16dp"
-                    android:layout_below="@id/rl_infor"
-                    android:text="TODAY"/>
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_task"
-                    android:nestedScrollingEnabled="false"
+                    android:layout_marginTop="32dp" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_avatar"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_below="@id/tool_bar"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/iv_repair_car" />
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/tv_today" />
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/iv_avatar"
+                    android:layout_alignTop="@id/iv_avatar"
+                    android:layout_marginEnd="16dp"
+                    android:layout_toEndOf="@id/iv_avatar"
+                    android:gravity="center_vertical"
+                    android:paddingStart="24dp">
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Nguyễn Thế Trinh"
+                        android:textColor="#FFFFFFFF"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_name"
+                        android:layout_marginTop="4dp"
+                        android:text="UI/UX Designer"
+                        android:textColor="@color/blue"
+                        android:textSize="@dimen/text_size_lager" />
+                </RelativeLayout>
             </RelativeLayout>
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+
+
+            <LinearLayout
+                android:id="@+id/rl_infor"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@id/rl_heder">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#4dc1fe"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_nb_remain"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="12"
+                        android:textColor="#FFFFFF"
+                        android:textSize="@dimen/text_size_very_big" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_nb_remain"
+                        android:gravity="center_horizontal"
+                        android:text="remaining tasks"
+                        android:textColor="#FFFFFFFF" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#fd7ee4"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/tv_nb_complete"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:text="32"
+                        android:textColor="#FFFFFF"
+                        android:textSize="@dimen/text_size_very_big" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_nb_complete"
+                        android:gravity="center_horizontal"
+                        android:text="completed tasks"
+                        android:textColor="#FFFFFFFF" />
+                </RelativeLayout>
+            </LinearLayout>
+
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="225dp"
+                android:background="@drawable/bg_oval"
+                android:padding="24dp"
+                android:src="@drawable/ic_add_black_24dp"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/tv_today"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_infor"
+                android:layout_marginTop="32dp"
+                android:paddingStart="16dp"
+                android:text="TODAY"
+                android:textColor="@color/text_color_second"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_task"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_today" />
+        </RelativeLayout>
+    </LinearLayout>
 </RelativeLayout>

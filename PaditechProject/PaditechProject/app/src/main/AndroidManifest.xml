@@ -24,7 +24,7 @@
             android:theme="@style/AppThemeFullScreen" />
         <activity
             android:name=".activity.P3Activity"
-            android:theme="@style/AppThemeFullScreen" />
+            android:theme="@style/AppThemeFullScreenP3" />
         <activity
             android:name=".activity.P4Activity"
             android:theme="@style/AppThemeNoActionbarP4" />

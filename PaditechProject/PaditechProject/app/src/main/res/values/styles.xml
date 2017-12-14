@@ -20,6 +20,9 @@
         <item name="android:windowFullscreen">true</item>
     </style>
 
+    <style name="AppThemeFullScreenP3" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
     <style name="AppThemeNoActionbarP4" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">#334f9c</item>

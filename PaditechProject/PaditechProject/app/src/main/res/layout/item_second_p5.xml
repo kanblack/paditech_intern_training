@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -9,6 +10,16 @@
         android:layout_height="55dp"
         android:layout_margin="16dp"
         android:src="@drawable/iv_model_and_car" />
+
+    <ImageView
+        android:id="@+id/iv_online"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_alignBottom="@id/iv_avatar_sender"
+        android:layout_alignEnd="@id/iv_avatar_sender"
+        android:background="@drawable/bg_oval"
+        android:padding="3dp"
+        android:src="@drawable/bg_oval_green" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -41,27 +52,29 @@
                 android:textColor="#000000"
                 android:textSize="@dimen/text_size_lager" />
         </RelativeLayout>
+
         <RelativeLayout
-            android:layout_below="@id/header"
             android:layout_width="match_parent"
-            android:layout_marginTop="4dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/header"
+            android:layout_marginTop="4dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/iv_content"
+                android:id="@+id/iv_seen"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/iv_nice_car" />
 
             <TextView
+                android:id="@+id/tv_mes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBaseline="@id/iv_content"
-                android:layout_toStartOf="@id/iv_content"
+                android:layout_alignBaseline="@id/iv_seen"
+                android:layout_toStartOf="@id/iv_seen"
                 android:text="Just You"
-                android:textColor="#000000"
-                android:textSize="@dimen/text_size_lager" />
+                android:textColor="@color/text_color_second"
+                android:textSize="@dimen/text_size_normal" />
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

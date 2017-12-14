@@ -45,7 +45,7 @@
                     android:layout_height="50dp"
                     android:layout_toEndOf="@id/iv_camera"
                     android:layout_toStartOf="@id/iv_mess"
-                    android:backgroundTint="#FFFFFF"
+                    android:backgroundTint="#939393"
                     android:drawableLeft="@drawable/ic_search_white_24dp"
                     android:gravity="center_vertical"
                     android:hint="Search"
