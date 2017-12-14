@@ -2,6 +2,7 @@ package com.toring.paditechproject.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,13 +32,25 @@ public class FirstP5Adapter extends RecyclerView.Adapter<FirstP5Adapter.VH> {
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.item_firt_p5, parent, false);
-        return new VH(view);
+        Log.e("LOL", "onCreateViewHolder: ");
+        if (viewType == 0) {
+            View view = inflater.inflate(R.layout.item_add_to_you_day, parent, false);
+            return new VH1(view);
+        } else {
+            View view = inflater.inflate(R.layout.item_firt_p5, parent, false);
+            return new VH2(view);
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     @Override
     public void onBindViewHolder(VH holder, int position) {
-        holder.setData(personList.get(position), position);
+        Log.e("LOL", "onBindViewHolder: SCroll");
+        holder.setData(position);
     }
 
     @Override
@@ -45,22 +58,51 @@ public class FirstP5Adapter extends RecyclerView.Adapter<FirstP5Adapter.VH> {
         return personList.size();
     }
 
-    public class VH extends RecyclerView.ViewHolder {
+    public abstract class VH extends RecyclerView.ViewHolder {
         private TextView tvName;
         private ImageView ivOn;
         private CircleImageView ivBia, ivAvatar;
 
         public VH(View itemView) {
             super(itemView);
-
-           ivBia = itemView.findViewById(R.id.iv_bia);
-           ivAvatar = itemView.findViewById(R.id.iv_avatar);
-
-           ivOn = itemView.findViewById(R.id.iv_on);
-           tvName = itemView.findViewById(R.id.tv_name);
         }
 
-        public void setData(Person person, int position) {
+        public void setData(int pos) {
+            onData(pos);
+        }
+
+        public abstract void onData(int position);
+    }
+
+    public class VH1 extends VH {
+        public VH1(View itemView) {
+            super(itemView);
+        }
+
+        @Override
+        public void onData(int position) {
+
+        }
+    }
+
+    public class VH2 extends VH {
+        private TextView tvName;
+        private ImageView ivOn;
+        private CircleImageView ivBia, ivAvatar;
+
+        public VH2(View itemView) {
+            super(itemView);
+
+            ivBia = itemView.findViewById(R.id.iv_bia);
+            ivAvatar = itemView.findViewById(R.id.iv_avatar);
+
+            ivOn = itemView.findViewById(R.id.iv_on);
+            tvName = itemView.findViewById(R.id.tv_name);
+        }
+
+        @Override
+        public void onData(int position) {
+            Person person = personList.get(position - 1);
             if (person.isNew_()) {
                 ivAvatar.setImageResource(person.getAva());
                 ivBia.setImageResource(person.getBia());
@@ -69,7 +111,7 @@ public class FirstP5Adapter extends RecyclerView.Adapter<FirstP5Adapter.VH> {
                 ivBia.setBorderWidth(0);
             }
 
-            if (!person.isOn()){
+            if (!person.isOn()) {
                 ivOn.setVisibility(View.GONE);
             }
 
