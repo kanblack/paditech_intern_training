@@ -52,8 +52,13 @@ public class P5Activity extends AppCompatActivity {
         messageList.add(new Message(false, R.drawable.iv_car_hospital, "Nam", "You: Ăn cơm chưa", true, true, false, "now"));
         messageList.add(new Message(false, R.drawable.iv_model_and_car, "Just You", "You sent a file", true, true, false, "10:23"));
         messageList.add(new Message(true, R.drawable.iv_nice_car, "Hoàng'ss", "Yebbbbbbbbbbbb", false, true, false, "12:23"));
+        messageList.add(new Message(true, R.drawable.iv_nice_car, "Hoàng'ss", "Yebbbbbbbbbbbb", false, true, false, "12:23"));
         messageList.add(new Message(false, R.drawable.iv_repair_car, "Oh my chuối", "Nay đi đâu đấy", false, true, false, "21:23"));
         messageList.add(new Message(false, R.drawable.iv_nice_car, "Là tên", "Nay kiểm tra nhé !!!", true, false, false, "Sun"));
+        messageList.add(new Message(false, R.drawable.iv_nice_car, "Là tên", "Nay kiểm tra nhé !!!", true, false, false, "Sun"));
+        messageList.add(new Message(false, R.drawable.iv_nice_car, "Là tên", "Nay kiểm tra nhé !!!", true, false, false, "Sun"));
+        messageList.add(new Message(false, R.drawable.iv_nice_car, "Là tên", "Nay kiểm tra nhé !!!", true, false, false, "Sun"));
+        messageList.add(new Message(true, R.drawable.iv_car_hospital, "No name", "Ăn cơm chưa", true, true, false, "23 tháng 6"));
         messageList.add(new Message(true, R.drawable.iv_car_hospital, "No name", "Ăn cơm chưa", true, true, false, "23 tháng 6"));
         messageList.add(new Message(false, R.drawable.iv_repair_car, "Nam", "Ăn cơm chưa", true, true, false, "12/10/2017"));
 
