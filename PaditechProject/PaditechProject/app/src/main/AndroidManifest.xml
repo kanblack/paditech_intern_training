@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.toring.paditechproject">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -28,7 +29,8 @@
         <activity
             android:name=".activity.P4Activity"
             android:theme="@style/AppThemeNoActionbarP4" />
-        <activity android:name=".activity.P5Activity"
+        <activity
+            android:name=".activity.P5Activity"
             android:theme="@style/AppThemeNoActionbarP4" />
     </application>
 
