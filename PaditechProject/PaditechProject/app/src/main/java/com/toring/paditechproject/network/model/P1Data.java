@@ -5,9 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-class P1Data {
+public class P1Data {
 
-    @SerializedName("p1Section")
+    @SerializedName("section")
     @Expose
     private List<P1Section> p1Section = null;
 

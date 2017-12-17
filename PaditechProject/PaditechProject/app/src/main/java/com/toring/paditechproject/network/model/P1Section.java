@@ -5,12 +5,12 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-class P1Section {
+public class P1Section {
 
     @SerializedName("title")
     @Expose
     private String title;
-    @SerializedName("p1Images")
+    @SerializedName("images")
     @Expose
     private List<P1Image> p1Images = null;
 

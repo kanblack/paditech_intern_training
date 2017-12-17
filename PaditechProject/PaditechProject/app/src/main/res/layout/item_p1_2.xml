@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_margin="@dimen/margin_4dp"
+            android:layout_weight="1">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/iv_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentTop="true"
+                android:background="@android:color/white"
+                android:scaleType="centerCrop"
+                android:src="@drawable/iv_model_and_car"
+                app:riv_corner_radius="10dp" />
+
+            <TextView
+                android:id="@+id/tv_title_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/bg_tran_1"
+                android:gravity="center"
+                android:padding="@dimen/padding_8dp"
+                android:text="Thông tin bảo hiểm"
+                android:textColor="#FFFFFFFF"
+                android:textSize="@dimen/text_size_normal"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_margin="@dimen/margin_4dp"
+            android:layout_weight="1">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/iv_2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:scaleType="centerCrop"
+                android:src="@drawable/iv_model_and_car"
+                app:riv_corner_radius="10dp" />
+
+            <TextView
+                android:id="@+id/tv_title_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/bg_tran_2"
+                android:gravity="center"
+                android:padding="@dimen/padding_8dp"
+                android:text="Gọi hỗ trợ"
+                android:textColor="#FFFFFFFF"
+                android:textSize="@dimen/text_size_normal"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_margin="@dimen/margin_4dp"
+            android:layout_weight="1">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/iv_3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:scaleType="centerCrop"
+                android:src="@drawable/iv_model_and_car"
+                app:riv_corner_radius="10dp" />
+
+            <TextView
+                android:id="@+id/tv_title_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/bg_tran_3"
+                android:gravity="center"
+                android:padding="@dimen/padding_8dp"
+                android:text="Lịch bồi thường"
+                android:textColor="#FFFFFFFF"
+                android:textSize="@dimen/text_size_normal"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_margin="@dimen/margin_4dp"
+            android:layout_weight="1">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/iv_4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/white"
+                android:scaleType="centerCrop"
+                android:src="@drawable/iv_model_and_car"
+                app:riv_corner_radius="10dp" />
+
+            <TextView
+                android:id="@+id/tv_title_4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/bg_tran_4"
+                android:gravity="center"
+                android:padding="@dimen/padding_8dp"
+                android:text="Tạo yêu cầu"
+                android:textColor="#FFFFFFFF"
+                android:textSize="@dimen/text_size_normal"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>

@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 public class P1MainObject {
 
-    @SerializedName("p1Data")
+    @SerializedName("data")
     @Expose
     private P1Data p1Data;
 

@@ -10,6 +10,6 @@ import retrofit2.http.GET;
  */
 
 public interface GetData {
-    @GET("https://demo0858711.mockable.io/p1/getP1Data")
+    @GET("https://demo0858711.mockable.io/p1/getData")
     Call<P1MainObject> getData();
 }

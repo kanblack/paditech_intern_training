@@ -3,7 +3,7 @@ package com.toring.paditechproject.network.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-class P1Image {
+public class P1Image {
 
     @SerializedName("title")
     @Expose
