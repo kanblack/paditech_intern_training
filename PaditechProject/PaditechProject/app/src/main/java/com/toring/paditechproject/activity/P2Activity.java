@@ -2,6 +2,7 @@ package com.toring.paditechproject.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -33,8 +34,8 @@ public class P2Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ServiceLogin serviceLogin = RetrofitFactory.getInstance().createServiceClass(ServiceLogin.class);
-                serviceLogin.login(etUsername.getText().toString(), etPassword.getText().toString())
-                        .equals(new Callback<P2MainObject>() {
+                serviceLogin.login()
+                        .enqueue(new Callback<P2MainObject>() {
                             @Override
                             public void onResponse(Call<P2MainObject> call, Response<P2MainObject> response) {
                                 P2MainObject mainObject = response.body();
@@ -46,7 +47,7 @@ public class P2Activity extends AppCompatActivity {
 
                             @Override
                             public void onFailure(Call<P2MainObject> call, Throwable t) {
-
+                                Log.d("", "onFailure: Fail");
                             }
                         });
             }

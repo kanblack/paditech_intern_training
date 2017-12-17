@@ -26,11 +26,11 @@ public class P4Activity extends AppCompatActivity {
         rvNew =  this.findViewById(R.id.rv_new);
         rvEarlier = this.findViewById(R.id.rv_earlier);
 
-        getDatanew();
+        getDataNew();
         getDataEarlier();
     }
 
-    public void getDatanew() {
+    public void getDataNew() {
         newNotificationListList = new ArrayList<>();
 
         List<String> names = new ArrayList<>();
