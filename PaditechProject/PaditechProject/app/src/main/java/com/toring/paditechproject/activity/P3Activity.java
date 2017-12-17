@@ -7,8 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 
 import com.toring.paditechproject.R;
-import com.toring.paditechproject.adapter.TaskAdapter;
-import com.toring.paditechproject.model.Task;
+import com.toring.paditechproject.adapter.P3TaskAdapter;
+import com.toring.paditechproject.model.P3Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,34 +16,34 @@ import java.util.List;
 public class P3Activity extends AppCompatActivity {
 
     private RecyclerView rvTask;
-    private TaskAdapter taskAdapter;
-    private List<Task> taskList;
+    private P3TaskAdapter p3TaskAdapter;
+    private List<P3Task> p3TaskList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_p3);
 
-        Toolbar toolbar = (Toolbar) this.findViewById(R.id.tool_bar);
+        Toolbar toolbar = this.findViewById(R.id.tool_bar);
         toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
 
-        rvTask = (RecyclerView) this.findViewById(R.id.rv_task);
+        rvTask = this.findViewById(R.id.rv_task);
 
         getData();
     }
 
     public void getData() {
-        taskList = new ArrayList<>();
+        p3TaskList = new ArrayList<>();
 
-        taskList.add(new Task("Finish landing page concept", "#00FF00"));
-        taskList.add(new Task("Design app illustrations", "#0000FF"));
-        taskList.add(new Task("Javascript traning", "#FF0000"));
-        taskList.add(new Task("Surprise Party for Matt", "#AAFF00"));
-        taskList.add(new Task("Create project", "#00FFCC"));
+        p3TaskList.add(new P3Task("Finish landing page concept", "#00FF00"));
+        p3TaskList.add(new P3Task("Design app illustrations", "#0000FF"));
+        p3TaskList.add(new P3Task("Javascript traning", "#FF0000"));
+        p3TaskList.add(new P3Task("Surprise Party for Matt", "#AAFF00"));
+        p3TaskList.add(new P3Task("Create project", "#00FFCC"));
 
-        taskAdapter = new TaskAdapter(this, taskList);
+        p3TaskAdapter = new P3TaskAdapter(this, p3TaskList);
 
-        rvTask.setAdapter(taskAdapter);
+        rvTask.setAdapter(p3TaskAdapter);
         rvTask.setLayoutManager(new LinearLayoutManager(this));
     }
 }

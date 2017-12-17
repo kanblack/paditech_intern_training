@@ -12,16 +12,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.toring.paditechproject.R;
-import com.toring.paditechproject.model.Message;
-import com.toring.paditechproject.model.Person;
+import com.toring.paditechproject.model.P5Message;
+import com.toring.paditechproject.model.P5Person;
 
 import java.util.List;
 
-public class SecondP5Adapter extends RecyclerView.Adapter<SecondP5Adapter.VH> {
+public class P5Adapter extends RecyclerView.Adapter<P5Adapter.VH> {
     private Context context;
     private List messageList;
 
-    public SecondP5Adapter(Context context, List messageList) {
+    public P5Adapter(Context context, List messageList) {
         this.context = context;
         this.messageList = messageList;
     }
@@ -31,10 +31,10 @@ public class SecondP5Adapter extends RecyclerView.Adapter<SecondP5Adapter.VH> {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view;
         if (viewType == 0) {
-            view = inflater.inflate(R.layout.item_second_recycle, parent, false);
+            view = inflater.inflate(R.layout.item_p5_person, parent, false);
             return new VH1(view);
         } else {
-            view = inflater.inflate(R.layout.item_second_p5, parent, false);
+            view = inflater.inflate(R.layout.item_p5_message, parent, false);
             return new VH2(view);
         }
     }
@@ -58,7 +58,7 @@ public class SecondP5Adapter extends RecyclerView.Adapter<SecondP5Adapter.VH> {
         return messageList.size();
     }
 
-    public class VH2 extends SecondP5Adapter.VH {
+    public class VH2 extends P5Adapter.VH {
         TextView tvName, tvTime, tvMessage;
         ImageView ivSeen, ivOnline, ivAvatar;
 
@@ -76,7 +76,7 @@ public class SecondP5Adapter extends RecyclerView.Adapter<SecondP5Adapter.VH> {
 
         @Override
         public void onData(int pos) {
-            Message data = (Message) messageList.get(pos);
+            P5Message data = (P5Message) messageList.get(pos);
 
             ivAvatar.setImageResource(data.getAvatar());
             tvName.setText(data.getName());
@@ -96,27 +96,27 @@ public class SecondP5Adapter extends RecyclerView.Adapter<SecondP5Adapter.VH> {
                 ivOnline.setVisibility(View.GONE);
             }
 
-            Log.e("adapter", "onData: + 2" );
+            Log.e("adapter", "onBindingViewHolder: + 2" );
 
         }
     }
 
-    public class VH1 extends SecondP5Adapter.VH {
+    public class VH1 extends P5Adapter.VH {
         RecyclerView recyclerView;
 
         public VH1(View itemView) {
             super(itemView);
 
-            recyclerView = itemView.findViewById(R.id.rv);
+            recyclerView = itemView.findViewById(R.id.rv_p1);
         }
 
         @Override
         public void onData(int pos) {
-            List<Person> personList = (List<Person>) messageList.get(pos);
-            Log.e("adapter", "onData: + 1" );
+            List<P5Person> p5PersonList = (List<P5Person>) messageList.get(pos);
+            Log.e("adapter", "onBindingViewHolder: + 1" );
 
-            FirstP5Adapter firstP5Adapter = new FirstP5Adapter(context, personList);
-            recyclerView.setAdapter(firstP5Adapter);
+            P5PersonAdapter p5PersonAdapter = new P5PersonAdapter(context, p5PersonList);
+            recyclerView.setAdapter(p5PersonAdapter);
             recyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
 
         }
@@ -132,7 +132,7 @@ public class SecondP5Adapter extends RecyclerView.Adapter<SecondP5Adapter.VH> {
         }
 
         public void onData(int pos) {
-            Log.e("adapter", "onData: + parent" );
+            Log.e("adapter", "onBindingViewHolder: + parent" );
         }
     }
 }

@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 import com.toring.paditechproject.R;
-import com.toring.paditechproject.network.model.ComboImage;
+import com.toring.paditechproject.network.model.P1ComboImage;
 import com.toring.paditechproject.network.model.P1Image;
 
 import java.util.List;
@@ -23,17 +23,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class P1SectionAdapter extends RecyclerView.Adapter<P1SectionAdapter.SectionVH> {
     private Context context;
-    private List<ComboImage> comboImages;
+    private List<P1ComboImage> p1ComboImageList;
     private int type;
 
-    public P1SectionAdapter(Context context, List<ComboImage> comboImages) {
+    public P1SectionAdapter(Context context, List<P1ComboImage> p1ComboImageList, int type) {
         this.context = context;
-        this.comboImages = comboImages;
-    }
-
-    public P1SectionAdapter(Context context, List<ComboImage> comboImages, int type) {
-        this.context = context;
-        this.comboImages = comboImages;
+        this.p1ComboImageList = p1ComboImageList;
         this.type = type;
     }
 
@@ -66,14 +61,14 @@ public class P1SectionAdapter extends RecyclerView.Adapter<P1SectionAdapter.Sect
 
     @Override
     public int getItemCount() {
-        return comboImages.size();
+        return p1ComboImageList.size();
     }
 
     public class SectionVH1 extends SectionVH {
         TextView tvDes1;
 
         private RoundedImageView iv1, iv2, iv3;
-        private TextView tvTitle1, tvTiltle2, tvTile3;
+        private TextView tvTitle1, tvTitle2, tvTitle3;
 
         public SectionVH1(View itemView) {
             super(itemView);
@@ -87,27 +82,27 @@ public class P1SectionAdapter extends RecyclerView.Adapter<P1SectionAdapter.Sect
 
 
             tvTitle1 = itemView.findViewById(R.id.tv_title_1);
-            tvTiltle2 = itemView.findViewById(R.id.tv_title_2);
-            tvTile3 = itemView.findViewById(R.id.tv_title_3);
+            tvTitle2 = itemView.findViewById(R.id.tv_title_2);
+            tvTitle3 = itemView.findViewById(R.id.tv_title_3);
         }
 
         @Override
         public void onBindViewHolder(int position) {
 
-            ComboImage comboImage = comboImages.get(position);
+            P1ComboImage p1ComboImage = p1ComboImageList.get(position);
 
-            P1Image image = comboImage.getP1Images().get(0);
+            P1Image image = p1ComboImage.getP1ImageList().get(0);
             Picasso.with(context).load(image.getUrl()).into(iv1);
             tvTitle1.setText(image.getTitle());
             tvDes1.setText(image.getShortDescription());
 
-            image = comboImage.getP1Images().get(1);
+            image = p1ComboImage.getP1ImageList().get(1);
             Picasso.with(context).load(image.getUrl()).into(iv2);
-            tvTiltle2.setText(image.getTitle());
+            tvTitle2.setText(image.getTitle());
 
-            image = comboImage.getP1Images().get(2);
+            image = p1ComboImage.getP1ImageList().get(2);
             Picasso.with(context).load(image.getUrl()).into(iv3);
-            tvTile3.setText(image.getTitle());
+            tvTitle3.setText(image.getTitle());
         }
     }
 
@@ -116,7 +111,7 @@ public class P1SectionAdapter extends RecyclerView.Adapter<P1SectionAdapter.Sect
         private TextView tvTitle4;
 
         private RoundedImageView iv1, iv2, iv3;
-        private TextView tvTitle1, tvTiltle2, tvTile3;
+        private TextView tvTitle1, tvTitle2, tvTitle3;
 
         public SectionVH2(View itemView) {
             super(itemView);
@@ -128,29 +123,29 @@ public class P1SectionAdapter extends RecyclerView.Adapter<P1SectionAdapter.Sect
 
 
             tvTitle1 = itemView.findViewById(R.id.tv_title_1);
-            tvTiltle2 = itemView.findViewById(R.id.tv_title_2);
-            tvTile3 = itemView.findViewById(R.id.tv_title_3);
+            tvTitle2 = itemView.findViewById(R.id.tv_title_2);
+            tvTitle3 = itemView.findViewById(R.id.tv_title_3);
             tvTitle4 = itemView.findViewById(R.id.tv_title_4);
         }
 
         @Override
         public void onBindViewHolder(int position) {
 
-            ComboImage comboImage = comboImages.get(position);
+            P1ComboImage p1ComboImage = p1ComboImageList.get(position);
 
-            P1Image image = comboImage.getP1Images().get(0);
+            P1Image image = p1ComboImage.getP1ImageList().get(0);
             Picasso.with(context).load(image.getUrl()).into(iv1);
             tvTitle1.setText(image.getTitle());
 
-            image = comboImage.getP1Images().get(1);
+            image = p1ComboImage.getP1ImageList().get(1);
             Picasso.with(context).load(image.getUrl()).into(iv2);
-            tvTiltle2.setText(image.getTitle());
+            tvTitle2.setText(image.getTitle());
 
-            image = comboImage.getP1Images().get(2);
+            image = p1ComboImage.getP1ImageList().get(2);
             Picasso.with(context).load(image.getUrl()).into(iv3);
-            tvTile3.setText(image.getTitle());
+            tvTitle3.setText(image.getTitle());
 
-            image = comboImage.getP1Images().get(3);
+            image = p1ComboImage.getP1ImageList().get(3);
             Picasso.with(context).load(image.getUrl()).into(iv4);
             tvTitle4.setText(image.getTitle());
         }
@@ -159,7 +154,7 @@ public class P1SectionAdapter extends RecyclerView.Adapter<P1SectionAdapter.Sect
     public class SectionVH3 extends SectionVH {
 
         private CircleImageView iv1, iv2, iv3;
-        private TextView tvTitle1, tvTiltle2, tvTile3;
+        private TextView tvTitle1, tvTitle2, tvTitle3;
 
         public SectionVH3(View itemView) {
             super(itemView);
@@ -170,26 +165,26 @@ public class P1SectionAdapter extends RecyclerView.Adapter<P1SectionAdapter.Sect
 
 
             tvTitle1 = itemView.findViewById(R.id.tv_title_1);
-            tvTiltle2 = itemView.findViewById(R.id.tv_title_2);
-            tvTile3 = itemView.findViewById(R.id.tv_title_3);
+            tvTitle2 = itemView.findViewById(R.id.tv_title_2);
+            tvTitle3 = itemView.findViewById(R.id.tv_title_3);
         }
 
         @Override
         public void onBindViewHolder(int position) {
 
-            ComboImage comboImage = comboImages.get(position);
+            P1ComboImage p1ComboImage = p1ComboImageList.get(position);
 
-            P1Image image = comboImage.getP1Images().get(0);
+            P1Image image = p1ComboImage.getP1ImageList().get(0);
             Picasso.with(context).load(image.getUrl()).into(iv1);
             tvTitle1.setText(image.getTitle());
 
-            image = comboImage.getP1Images().get(1);
+            image = p1ComboImage.getP1ImageList().get(1);
             Picasso.with(context).load(image.getUrl()).into(iv2);
-            tvTiltle2.setText(image.getTitle());
+            tvTitle2.setText(image.getTitle());
 
-            image = comboImage.getP1Images().get(2);
+            image = p1ComboImage.getP1ImageList().get(2);
             Picasso.with(context).load(image.getUrl()).into(iv3);
-            tvTile3.setText(image.getTitle());
+            tvTitle3.setText(image.getTitle());
         }
     }
 

@@ -16,7 +16,7 @@
         app:bb_activeTabColor="#334f9c"
         app:bb_behavior="iconsOnly"
         app:bb_inActiveTabColor="@color/text_color_second"
-        app:bb_tabXmlResource="@xml/bottom_bar_tabs" />
+        app:bb_tabXmlResource="@xml/bottom_bar_p3_tabs" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"

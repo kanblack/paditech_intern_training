@@ -19,7 +19,7 @@
             android:background="@android:color/white"
             android:scaleType="centerCrop"
             android:src="@drawable/iv_model_and_car"
-            app:riv_corner_radius="10dp" />
+            app:riv_corner_radius="@dimen/radius_image" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/gthd"
-                android:textColor="#FFFFFFFF"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_normal"
                 android:textStyle="bold" />
 
@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_title_1"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/margin_4dp"
                 android:text="@string/des"
                 android:textColor="#b7b7b7"
                 android:textSize="@dimen/text_size_small" />
@@ -68,7 +68,7 @@
                 android:background="@android:color/white"
                 android:scaleType="centerCrop"
                 android:src="@drawable/iv_repair_car"
-                app:riv_corner_radius="10dp" />
+                app:riv_corner_radius="@dimen/radius_image" />
 
             <TextView
                 android:id="@+id/tv_title_2"
@@ -78,7 +78,7 @@
                 android:background="@drawable/bg_gradient"
                 android:padding="@dimen/padding_8dp"
                 android:text="@string/bdx"
-                android:textColor="#FFFFFFFF"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_normal"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -96,7 +96,7 @@
                 android:background="@android:color/white"
                 android:scaleType="centerCrop"
                 android:src="@drawable/iv_nice_car"
-                app:riv_corner_radius="10dp" />
+                app:riv_corner_radius="@dimen/radius_image" />
 
             <TextView
                 android:id="@+id/tv_title_3"
@@ -106,7 +106,7 @@
                 android:background="@drawable/bg_gradient"
                 android:padding="@dimen/padding_8dp"
                 android:text="@string/xdd"
-                android:textColor="#FFFFFFFF"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/text_size_normal"
                 android:textStyle="bold" />
         </RelativeLayout>

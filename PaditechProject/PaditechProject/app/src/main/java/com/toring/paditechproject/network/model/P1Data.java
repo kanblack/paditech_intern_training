@@ -9,7 +9,7 @@ public class P1Data {
 
     @SerializedName("section")
     @Expose
-    private List<P1Section> p1Section = null;
+    private List<P1Section> p1SectionList = null;
 
     /**
      * No args constructor for use in serialization
@@ -18,18 +18,18 @@ public class P1Data {
     }
 
     /**
-     * @param p1Section
+     * @param p1SectionList
      */
-    public P1Data(List<P1Section> p1Section) {
+    public P1Data(List<P1Section> p1SectionList) {
         super();
-        this.p1Section = p1Section;
+        this.p1SectionList = p1SectionList;
     }
 
-    public List<P1Section> getP1Section() {
-        return p1Section;
+    public List<P1Section> getP1SectionList() {
+        return p1SectionList;
     }
 
-    public void setP1Section(List<P1Section> p1Section) {
-        this.p1Section = p1Section;
+    public void setP1SectionList(List<P1Section> p1SectionList) {
+        this.p1SectionList = p1SectionList;
     }
 }

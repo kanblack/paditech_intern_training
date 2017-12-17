@@ -6,18 +6,18 @@ import android.content.Intent;
  * Created by ToRing on 12/11/2017.
  */
 
-public class ItemMenu {
+public class P0ItemMenu {
     private String name;
     private String description;
     private Intent intent;
 
-    public ItemMenu(String name, String description, Intent intent) {
+    public P0ItemMenu(String name, String description, Intent intent) {
         this.name = name;
         this.description = description;
         this.intent = intent;
     }
 
-    public ItemMenu(String name, String description) {
+    public P0ItemMenu(String name, String description) {
         this.name = name;
         this.description = description;
     }

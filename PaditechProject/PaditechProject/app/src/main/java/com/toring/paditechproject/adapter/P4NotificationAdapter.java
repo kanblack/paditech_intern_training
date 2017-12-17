@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.text.SpannedString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.toring.paditechproject.R;
-import com.toring.paditechproject.model.Noti;
+import com.toring.paditechproject.model.P4Notification;
 
 import java.util.List;
 
@@ -23,39 +22,39 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by tr on 12/13/17.
  */
 
-public class NotifacationAdapter extends RecyclerView.Adapter<NotifacationAdapter.NotiVH> {
+public class P4NotificationAdapter extends RecyclerView.Adapter<P4NotificationAdapter.NotificationVH> {
     private Context context;
-    private List<Noti> notiList;
+    private List<P4Notification> p4NotificationList;
 
-    public NotifacationAdapter(Context context, List<Noti> notiList) {
+    public P4NotificationAdapter(Context context, List<P4Notification> p4NotificationList) {
         this.context = context;
-        this.notiList = notiList;
+        this.p4NotificationList = p4NotificationList;
     }
 
     @Override
-    public NotiVH onCreateViewHolder(ViewGroup parent, int viewType) {
+    public NotificationVH onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.item_noti, parent, false);
-        return new NotiVH(view);
+        return new NotificationVH(view);
     }
 
     @Override
-    public void onBindViewHolder(NotiVH holder, int position) {
-        holder.setData(notiList.get(position));
+    public void onBindViewHolder(NotificationVH holder, int position) {
+        holder.setData(p4NotificationList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return notiList.size();
+        return p4NotificationList.size();
     }
 
-    public class NotiVH extends RecyclerView.ViewHolder {
+    public class NotificationVH extends RecyclerView.ViewHolder {
         private View view;
         private TextView tvDes, tvTimeAgo;
         private ImageView ivAction;
         private CircleImageView ivAva;
 
-        public NotiVH(View itemView) {
+        public NotificationVH(View itemView) {
             super(itemView);
             view = itemView;
 
@@ -65,7 +64,7 @@ public class NotifacationAdapter extends RecyclerView.Adapter<NotifacationAdapte
             ivAction = itemView.findViewById(R.id.iv_ava);
         }
 
-        public void setData(Noti data) {
+        public void setData(P4Notification data) {
             if (!data.isSeen()) {
                 view.setBackgroundColor(Color.parseColor("#dfe5f2"));
             }
@@ -92,10 +91,7 @@ public class NotifacationAdapter extends RecyclerView.Adapter<NotifacationAdapte
             }
 
             Picasso.with(context).load(R.drawable.iv_car_hospital).into(ivAction);
-
             tvTimeAgo.setText(data.getTime());
-
-
             tvDes.setText(Html.fromHtml(convert(data.getNameList()) + "<pr>" + action_text + "</pr>"));
         }
     }
@@ -110,11 +106,10 @@ public class NotifacationAdapter extends RecyclerView.Adapter<NotifacationAdapte
                     + "<b>" + names.get(1) + "</b>" + "<pr> và </pr>"
                     + "<b>" + names.get(2) + "</b>");
         } else {
-            CharSequence c = "<b>" + names.get(0) + "</b>" + "<pr>, </pr>"
+            CharSequence content = "<b>" + names.get(0) + "</b>" + "<pr>, </pr>"
                     + "<b>" + names.get(1) + "</b>" + "<pr> và </pr>"
                     + "<b>" + (names.size() - 2) + " other people </b>";
-
-            return c;
+            return content;
         }
     }
 }

@@ -31,5 +31,5 @@
         android:layout_height="1px"
         android:layout_marginTop="@dimen/margin_2dp"
         android:layout_marginBottom="@dimen/margin_2dp"
-        android:background="@color/sepa"/>
+        android:background="@color/separator"/>
 </LinearLayout>

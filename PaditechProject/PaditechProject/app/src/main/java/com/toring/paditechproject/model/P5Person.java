@@ -4,19 +4,19 @@ package com.toring.paditechproject.model;
  * Created by ToRing on 12/13/2017.
  */
 
-public class Person {
+public class P5Person {
     private String name;
     private boolean on;
     private boolean new_;
-    private int bia;
-    private int ava;
+    private int profile;
+    private int acvatar;
 
-    public Person(String name, boolean on, boolean new_, int bia, int ava) {
+    public P5Person(String name, boolean on, boolean new_, int profile, int acvatar) {
         this.name = name;
         this.on = on;
         this.new_ = new_;
-        this.bia = bia;
-        this.ava = ava;
+        this.profile = profile;
+        this.acvatar = acvatar;
     }
 
     public String getName() {
@@ -43,19 +43,19 @@ public class Person {
         this.new_ = new_;
     }
 
-    public int getBia() {
-        return bia;
+    public int getProfile() {
+        return profile;
     }
 
-    public void setBia(int bia) {
-        this.bia = bia;
+    public void setProfile(int profile) {
+        this.profile = profile;
     }
 
-    public int getAva() {
-        return ava;
+    public int getAcvatar() {
+        return acvatar;
     }
 
-    public void setAva(int ava) {
-        this.ava = ava;
+    public void setAcvatar(int acvatar) {
+        this.acvatar = acvatar;
     }
 }

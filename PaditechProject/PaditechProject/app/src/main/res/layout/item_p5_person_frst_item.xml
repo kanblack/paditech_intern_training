@@ -5,13 +5,13 @@
     android:layout_height="wrap_content">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iv_bia"
+        android:id="@+id/iv_profile"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_centerHorizontal="true"
         android:layout_margin="4dp"
         android:background="@drawable/bg_oval"
-        android:backgroundTint="@color/sepa"
+        android:backgroundTint="@color/separator"
         android:padding="16dp"
         android:src="@drawable/ic_photo_camera_white_24dp" />
 
@@ -21,8 +21,8 @@
         app:civ_border_width="2dp"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_alignBottom="@id/iv_bia"
-        android:layout_alignEnd="@id/iv_bia"
+        android:layout_alignBottom="@id/iv_profile"
+        android:layout_alignEnd="@id/iv_profile"
         android:background="@drawable/bg_oval_green"
         android:backgroundTint="@color/colorPrimary"
         android:src="@drawable/ic_add_w_24dp" />
@@ -31,7 +31,7 @@
         android:id="@+id/tv_name"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/iv_bia"
+        android:layout_below="@id/iv_profile"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="4dp"
         android:gravity="center"

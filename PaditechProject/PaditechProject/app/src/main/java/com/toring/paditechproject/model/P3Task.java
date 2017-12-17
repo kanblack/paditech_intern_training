@@ -4,11 +4,11 @@ package com.toring.paditechproject.model;
  * Created by tr on 12/12/17.
  */
 
-public class Task {
+public class P3Task {
     private String name;
     private String color;
 
-    public Task(String name, String color) {
+    public P3Task(String name, String color) {
         this.name = name;
         this.color = color;
     }

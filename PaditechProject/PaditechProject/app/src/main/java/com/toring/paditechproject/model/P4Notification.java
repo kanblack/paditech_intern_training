@@ -6,13 +6,13 @@ import java.util.List;
  * Created by tr on 12/13/17.
  */
 
-public class Noti {
+public class P4Notification {
     private List<String> nameList;
     private int action;
     private String time;
     private boolean seen;
 
-    public Noti(List<String> nameList, int action, String time, boolean seen) {
+    public P4Notification(List<String> nameList, int action, String time, boolean seen) {
         this.nameList = nameList;
         this.action = action;
         this.time = time;

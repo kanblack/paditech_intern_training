@@ -4,7 +4,7 @@ package com.toring.paditechproject.model;
  * Created by ToRing on 12/14/2017.
  */
 
-public class Message {
+public class P5Message {
     private boolean online;
     private int avatar;
     private String name;
@@ -14,7 +14,7 @@ public class Message {
     private boolean make_friends;
     private String time;
 
-    public Message(boolean online, int avatar, String name, String mes, boolean seen, boolean my_seen, boolean make_friends, String time) {
+    public P5Message(boolean online, int avatar, String name, String mes, boolean seen, boolean my_seen, boolean make_friends, String time) {
         this.online = online;
         this.avatar = avatar;
         this.name = name;

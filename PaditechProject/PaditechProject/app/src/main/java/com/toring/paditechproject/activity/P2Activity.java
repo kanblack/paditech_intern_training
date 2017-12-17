@@ -9,9 +9,8 @@ import android.widget.Toast;
 
 import com.toring.paditechproject.R;
 import com.toring.paditechproject.network.RetrofitFactory;
-import com.toring.paditechproject.network.model.P1MainObject;
 import com.toring.paditechproject.network.model.P2MainObject;
-import com.toring.paditechproject.network.service.Login;
+import com.toring.paditechproject.network.service.ServiceLogin;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,7 +18,6 @@ import retrofit2.Response;
 
 public class P2Activity extends AppCompatActivity {
     private TextView etUsername, etPassword;
-    private Button btLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,13 +27,13 @@ public class P2Activity extends AppCompatActivity {
         etUsername = this.findViewById(R.id.et_user_name);
         etPassword = this.findViewById(R.id.et_password);
 
-        btLogin = this.findViewById(R.id.bt_login);
+        Button btLogin = this.findViewById(R.id.bt_login);
 
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Login login = RetrofitFactory.getInstance().createServiceClass(Login.class);
-                login.login(etUsername.getText().toString(), etPassword.getText().toString())
+                ServiceLogin serviceLogin = RetrofitFactory.getInstance().createServiceClass(ServiceLogin.class);
+                serviceLogin.login(etUsername.getText().toString(), etPassword.getText().toString())
                         .equals(new Callback<P2MainObject>() {
                             @Override
                             public void onResponse(Call<P2MainObject> call, Response<P2MainObject> response) {

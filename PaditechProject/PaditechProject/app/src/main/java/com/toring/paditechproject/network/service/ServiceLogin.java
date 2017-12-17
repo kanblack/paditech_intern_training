@@ -13,7 +13,7 @@ import retrofit2.http.Query;
  * Created by ToRing on 12/15/2017.
  */
 
-public interface Login {
+public interface ServiceLogin {
     @POST("https://demo0858711.mockable.io/login")
-    Callback<P2MainObject> login(@Header("username") String username, @Header("password") String password);
+    Callback<P2MainObject> login(@Query("username") String username, @Query("password") String password);
 }

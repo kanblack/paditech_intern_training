@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.toring.paditechproject.R;
-import com.toring.paditechproject.network.model.ComboImage;
+import com.toring.paditechproject.network.model.P1ComboImage;
 import com.toring.paditechproject.network.model.P1Image;
 import com.toring.paditechproject.network.model.P1Section;
 
@@ -32,7 +32,7 @@ public class P1Adapter extends RecyclerView.Adapter<P1Adapter.P1PartVH> {
     @Override
     public P1PartVH onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.item_p1_part, parent, false);
+        View view = inflater.inflate(R.layout.item_p1_main_item, parent, false);
         return new P1PartVH(view);
     }
 
@@ -53,20 +53,20 @@ public class P1Adapter extends RecyclerView.Adapter<P1Adapter.P1PartVH> {
         public P1PartVH(View itemView) {
             super(itemView);
             tvTitle = itemView.findViewById(R.id.tv_title);
-            rv = itemView.findViewById(R.id.rv);
+            rv = itemView.findViewById(R.id.rv_p1);
         }
 
         public void bindView(int pos) {
             P1Section section = sectionList.get(pos);
             tvTitle.setText(section.getTitle());
             tvTitle.setBackgroundResource(context.getResources().getIdentifier("bg_p1_" + (pos + 1), "drawable", context.getPackageName()));
-            List<ComboImage> comboImageList = new ArrayList<>();
+            List<P1ComboImage> p1ComboImageList = new ArrayList<>();
             if (pos == 1) {
                 List<P1Image> imageList = new ArrayList<>();
                 for (int i = 0; i < section.getP1Images().size(); i++) {
                     imageList.add(section.getP1Images().get(i));
                     if ((i + 1) % 4 == 0) {
-                        comboImageList.add(new ComboImage(imageList));
+                        p1ComboImageList.add(new P1ComboImage(imageList));
                         imageList = new ArrayList<>();
                     }
                 }
@@ -75,12 +75,12 @@ public class P1Adapter extends RecyclerView.Adapter<P1Adapter.P1PartVH> {
                 for (int i = 0; i < section.getP1Images().size(); i++) {
                     imageList.add(section.getP1Images().get(i));
                     if ((i + 1) % 3 == 0) {
-                        comboImageList.add(new ComboImage(imageList));
+                        p1ComboImageList.add(new P1ComboImage(imageList));
                         imageList = new ArrayList<>();
                     }
                 }
             }
-            P1SectionAdapter adapter = new P1SectionAdapter(context, comboImageList, pos);
+            P1SectionAdapter adapter = new P1SectionAdapter(context, p1ComboImageList, pos);
             rv.setAdapter(adapter);
             rv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         }
