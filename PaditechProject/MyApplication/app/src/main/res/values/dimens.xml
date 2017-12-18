@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="app_bar_heigth">40dp</dimen>
+    <dimen name="text_size_big">16sp</dimen>
+    <dimen name="margin_4dp">4dp</dimen>
+    <dimen name="padding_4dp">4dp</dimen>
+</resources>
