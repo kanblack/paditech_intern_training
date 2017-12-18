@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:background="@color/background_color"
     tools:context="com.toring.myapplication.activity.MainActivity">
 
     <RelativeLayout
@@ -23,12 +23,13 @@
             android:textStyle="bold" />
 
         <ImageView
+            android:id="@+id/iv_change_mode"
             android:layout_width="@dimen/app_bar_heigth"
             android:layout_height="@dimen/app_bar_heigth"
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/margin_4dp"
-            android:padding="@dimen/padding_4dp"
-            app:srcCompat="@drawable/ic_apps_black_24dp"
+            android:padding="@dimen/padding_8dp"
+            app:srcCompat="@drawable/ic_apps_white_24dp"
             tools:ignore="VectorDrawableCompat" />
     </RelativeLayout>
 
@@ -36,7 +37,9 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/appbar">
+        android:layout_below="@id/appbar"
+        android:layout_marginTop="@dimen/margin_4dp"
+        android:paddingBottom="@dimen/padding_8dp">
 
         <ProgressBar
             android:layout_width="wrap_content"
