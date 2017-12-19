@@ -1,4 +1,4 @@
-package com.pesteam.watchimage;
+package com.pesteam.watchimage.ScreenMain;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -10,15 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.pesteam.watchimage.getData.APIService;
-import com.pesteam.watchimage.getData.APIUtils;
-import com.pesteam.watchimage.getData.ChildScreen1Class;
+import com.pesteam.watchimage.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by bangindong on 12/13/2017.
@@ -29,7 +24,6 @@ public class FragmentScreen1 extends android.support.v4.app.Fragment {
     @BindView(R.id.rcv_screen1)
     RecyclerView rcv_screen1;
     private MainActivity mainActivity;
-    private APIService mApiService = APIUtils.getAPIService();
     private AdapterScreen1 adapter = new AdapterScreen1();
 
 
@@ -44,21 +38,10 @@ public class FragmentScreen1 extends android.support.v4.app.Fragment {
     }
 
     private void getData() {
-        mApiService.loadData().enqueue(new Callback<ChildScreen1Class>() {
-            @Override
-            public void onResponse(Call<ChildScreen1Class> call, Response<ChildScreen1Class> response) {
-                if(response.isSuccessful()){
-                    adapter.setLists(response.body().getData());
+                    adapter.setLists(mainActivity.getUrl_image());
                     rcv_screen1.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
                     rcv_screen1.setAdapter(adapter);
-                }
-            }
 
-            @Override
-            public void onFailure(Call<ChildScreen1Class> call, Throwable t) {
-
-            }
-        });
     }
 
     public void changeFragment(){

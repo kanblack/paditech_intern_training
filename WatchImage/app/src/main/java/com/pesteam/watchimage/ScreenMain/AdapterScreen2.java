@@ -1,6 +1,10 @@
-package com.pesteam.watchimage;
+package com.pesteam.watchimage.ScreenMain;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Point;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +13,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.pesteam.watchimage.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,8 +60,10 @@ public class AdapterScreen2 extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         View v;
         if (view == null) {
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             v = LayoutInflater.from(context).inflate(R.layout.child_grv_screen2,null);
-            v.setLayoutParams(new GridView.LayoutParams(200,200));
+            v.setLayoutParams(new GridView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, (displayMetrics.widthPixels)/3));
         } else {
             v = view;
         }

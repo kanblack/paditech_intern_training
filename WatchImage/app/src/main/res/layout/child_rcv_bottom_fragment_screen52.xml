@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="160dp"
     android:layout_height="wrap_content"
     android:background="#000000"
-    android:id="@+id/color_rcv_bottom_screen52">
+    android:id="@+id/color_rcv_bottom_screen52"
+    android:layout_gravity="center"
+    android:padding="5dp">
 
     <ImageView
+        android:scaleType="centerInside"
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

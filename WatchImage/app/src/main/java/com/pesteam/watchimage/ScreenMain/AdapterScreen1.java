@@ -1,8 +1,7 @@
-package com.pesteam.watchimage;
+package com.pesteam.watchimage.ScreenMain;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -15,13 +14,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.pesteam.watchimage.getData.ChildScreen1Class;
-import com.squareup.picasso.Picasso;
+import com.pesteam.watchimage.R;
+import com.pesteam.watchimage.Screen4Activity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeoutException;
-import java.util.zip.Inflater;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +31,7 @@ public class AdapterScreen1 extends RecyclerView.Adapter<AdapterScreen1.BaseHold
 
     private List<String> lists = new ArrayList<>();
 
-    public void setLists(List<String> lists) {
+    void setLists(List<String> lists) {
         this.lists = lists;
     }
 
@@ -84,7 +81,7 @@ public class AdapterScreen1 extends RecyclerView.Adapter<AdapterScreen1.BaseHold
 
         @Override
         protected void onBindingData(int position) {
-            Glide.with(itemView).load(lists.get(position)).into(img_child);
+            Glide.with(itemView.getContext()).load(lists.get(position)).into(img_child);
         }
 
         @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
@@ -92,6 +89,7 @@ public class AdapterScreen1 extends RecyclerView.Adapter<AdapterScreen1.BaseHold
         public void onClick(View view) {
             Intent intent = new Intent(itemView.getContext(),Screen4Activity.class);
             intent.putExtra("img_url",lists.get(getLayoutPosition()));
+            intent.putExtra("position",getLayoutPosition());
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.
                     makeSceneTransitionAnimation((Activity) itemView.getContext(),
                             img_child,
