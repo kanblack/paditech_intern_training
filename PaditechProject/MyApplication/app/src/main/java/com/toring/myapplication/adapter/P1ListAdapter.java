@@ -1,7 +1,9 @@
 package com.toring.myapplication.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +22,10 @@ import java.util.List;
  */
 
 public class P1ListAdapter extends RecyclerView.Adapter<P1ListAdapter.VHP1List> {
-    private Context context;
+    private Activity context;
     private List<String> pictureList;
 
-    public P1ListAdapter(Context context, List<String> pictureList) {
+    public P1ListAdapter(Activity context, List<String> pictureList) {
         this.context = context;
         this.pictureList = pictureList;
     }
@@ -48,23 +50,31 @@ public class P1ListAdapter extends RecyclerView.Adapter<P1ListAdapter.VHP1List> 
     public class VHP1List extends RecyclerView.ViewHolder{
         private ImageView ivPicture;
         private TextView tv;
+        private View view;
 
         public VHP1List(View itemView) {
             super(itemView);
             ivPicture = itemView.findViewById(R.id.iv_picture);
             tv = itemView.findViewById(R.id.tv_link);
 
+            view = itemView;
+        }
+
+        public void bindView(final int position) {
+            DisplayPicture.displayImage(context, pictureList.get(position), ivPicture);
+            tv.setText(pictureList.get(position));
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    context.startActivity(new Intent(context, P4Activity.class));
+                    Intent intent = new Intent(context, P4Activity.class);
+
+                    intent.putExtra(context.getResources().getString(R.string.picture), pictureList.get(position));
+                    ActivityOptionsCompat options = ActivityOptionsCompat.
+                            makeSceneTransitionAnimation(context, (View)ivPicture, "profile");
+                    context.startActivity(intent, options.toBundle());
                 }
             });
-        }
-
-        public void bindView(int position) {
-            DisplayPicture.displayImage(context, pictureList.get(position), ivPicture);
-            tv.setText(pictureList.get(position));
         }
     }
 }

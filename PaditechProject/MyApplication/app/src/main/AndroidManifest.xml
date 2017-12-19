@@ -21,7 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.P4Activity"></activity>
+        <activity android:name=".activity.P4Activity" />
+        <activity android:name=".activity.P5Activity"></activity>
     </application>
 
 </manifest>

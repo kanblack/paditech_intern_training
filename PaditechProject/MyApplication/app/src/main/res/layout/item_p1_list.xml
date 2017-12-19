@@ -11,6 +11,7 @@
         android:scaleType="centerCrop"
         android:layout_marginLeft="@dimen/margin_4dp"
         android:layout_width="150dp"
+        android:transitionName="detail"
         android:layout_height="100dp" />
 
     <TextView

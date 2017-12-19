@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_color"
     android:orientation="vertical"
     tools:context="com.toring.myapplication.activity.P4Activity">
 
@@ -14,13 +15,17 @@
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
+            android:background="@color/colorPrimaryDark"
             android:layout_width="match_parent"
             android:layout_height="@dimen/app_bar_heigth" />
 
         <ImageView
             android:id="@+id/iv_picture"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolbar"
+            android:transitionName="detail" />
+
     </RelativeLayout>
 
     <RelativeLayout
