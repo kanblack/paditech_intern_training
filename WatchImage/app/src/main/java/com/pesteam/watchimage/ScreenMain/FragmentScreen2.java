@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 
 import com.pesteam.watchimage.R;
 import com.pesteam.watchimage.Screen4Activity;
@@ -30,6 +31,8 @@ public class FragmentScreen2 extends android.support.v4.app.Fragment {
     private MainActivity mainActivity;
     @BindView(R.id.grid_screen2)
     GridView grd_view;
+    @BindView(R.id.progress)
+    ProgressBar progress;
     private AdapterScreen2 adapter;
 
     @Nullable
@@ -63,7 +66,7 @@ public class FragmentScreen2 extends android.support.v4.app.Fragment {
     }
 
     public void changeFragment() {
-        adapter = new AdapterScreen2(getActivity());
+        adapter = new AdapterScreen2(this);
         mainActivity.bt_change_frag.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("CommitTransaction")
             @Override

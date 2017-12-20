@@ -110,7 +110,9 @@ public class AdapterScreen51 extends RecyclerView.Adapter<AdapterScreen51.BaseHo
 
         @Override
         public void onClick(View view) {
-            fragmentScreen51.img_big.setImageBitmap(putFrameOnImg(bitmap, frame_horizontal[getLayoutPosition()],600));
+            Bitmap image = putFrameOnImg(bitmap, frame_horizontal[getLayoutPosition()],600);
+            fragmentScreen51.img_big.setImageBitmap(image);
+            fragmentScreen51.setImage(image);
         }
     }
 

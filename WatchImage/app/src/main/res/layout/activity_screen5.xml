@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pesteam.watchimage.Screen5.Screen5Activity">
+    tools:fragmentScreen2="com.pesteam.watchimage.Screen5.Screen5Activity">
 
     <include
         layout="@layout/tool_bar_p5"
@@ -16,5 +16,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="#86383838"
+        android:id="@+id/ln_have_progress">
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:visibility="visible"
+            android:layout_centerInParent="true"/>
+    </LinearLayout>
 
 </RelativeLayout>

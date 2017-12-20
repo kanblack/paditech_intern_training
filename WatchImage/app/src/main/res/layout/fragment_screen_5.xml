@@ -14,33 +14,32 @@
         android:layout_alignParentBottom="true"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="65dp">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="#757575"/>
+        android:layout_height="wrap_content">
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="60dp">
+            android:layout_height="60dp"
+            android:layout_marginBottom="2dp">
         <Button
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="1dp"
             android:id="@+id/bt_frame_screen5"
-            android:background="#f52222"
+            android:background="@drawable/background_button_frame_screen5"
             android:text="Frame"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent" />
-            <View
-                android:layout_width="3dp"
-                android:layout_height="match_parent"
-                android:background="#757575"/>
         <Button
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="2dp"
             android:id="@+id/bt_draw_screen5"
-            android:background="#37cdfa"
+            android:background="@drawable/background_button_draw_screen5"
             android:text="Draw"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="match_parent" />
         </LinearLayout>
     </LinearLayout>
+
 </RelativeLayout>

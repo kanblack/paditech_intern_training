@@ -1,6 +1,7 @@
 package com.pesteam.watchimage.Screen5;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -27,8 +28,13 @@ public class FragmentScreen51 extends Fragment {
     ImageView img_big;
     @BindView(R.id.rcv_screen_51_52)
     RecyclerView rcv;
+    private Bitmap image;
     private Screen5Activity mainActivity;
     private AdapterScreen51 adapter = new AdapterScreen51(this);
+
+    public void setImage(Bitmap image) {
+        this.image = image;
+    }
 
     @Nullable
     @Override
@@ -37,7 +43,6 @@ public class FragmentScreen51 extends Fragment {
         ButterKnife.bind(this, view);
         start();
         getData();
-        changeFragment();
         return view;
     }
 
@@ -46,15 +51,18 @@ public class FragmentScreen51 extends Fragment {
         adapter.setBitmap(mainActivity.getImage());
         rcv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rcv.setAdapter(adapter);
+        toolbarButtonAction();
     }
 
-
-    private void start() {
-            Glide.with(this).load(mainActivity.getImg_url()).into(img_big);
-        }
-
-
-    private void changeFragment() {
+    private void toolbarButtonAction() {
+        mainActivity.icon_accept.setVisibility(View.VISIBLE);
+        mainActivity.icon_accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivity.checkPermission(image);
+                mainActivity.finish();
+            }
+        });
         mainActivity.icon_back_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,6 +70,12 @@ public class FragmentScreen51 extends Fragment {
             }
         });
     }
+
+
+    private void start() {
+            Glide.with(this).load(mainActivity.getImg_url()).into(img_big);
+        }
+
 
     @Override
     public void onAttach(Context context) {

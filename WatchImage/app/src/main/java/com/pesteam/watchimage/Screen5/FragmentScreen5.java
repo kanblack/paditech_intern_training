@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
 import com.pesteam.watchimage.R;
@@ -34,6 +36,7 @@ public class FragmentScreen5 extends Fragment {
     @BindView(R.id.bt_frame_screen5)
     Button bt_frame;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -50,6 +53,13 @@ public class FragmentScreen5 extends Fragment {
 
 
     public void changeFragment(){
+        mainActivity.icon_back_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivity.finish();
+            }
+        });
+        mainActivity.icon_accept.setVisibility(View.INVISIBLE);
         bt_frame.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("CommitTransaction")
             @Override

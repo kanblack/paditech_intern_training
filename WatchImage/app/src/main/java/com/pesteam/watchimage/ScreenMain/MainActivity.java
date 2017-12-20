@@ -1,6 +1,10 @@
 package com.pesteam.watchimage.ScreenMain;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -67,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         ft_tran = fm.beginTransaction();
         bt_change_frag.setImageResource(R.drawable.icon_tool_bar_screen1);
     }
+
 
     public List<String> getUrl_image() {
         return url_image;

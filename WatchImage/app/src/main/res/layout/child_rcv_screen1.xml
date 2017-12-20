@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="120dp"
-    android:orientation="vertical">
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="#504e4e"/>
+    android:orientation="vertical"
+    android:paddingTop="5dp"
+    android:paddingRight="5dp"
+    android:paddingLeft="5dp"
+    android:background="#7b7b7b">
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -29,6 +30,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="4"
+        android:background="#ffffff"
         >
 
         <TextView

@@ -3,6 +3,7 @@ package com.pesteam.watchimage.Canvas;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -10,6 +11,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.pesteam.watchimage.R;
 
@@ -26,24 +28,21 @@ public class CanvasView extends View {
     public int height;
     private Bitmap mbitmap;
     private Canvas mcanvas;
-    ArrayList<Path> paths = new ArrayList<>();
+    private ArrayList<Path> paths = new ArrayList<>();
     private Path mpath;
     private Paint mPaint;
+    private ArrayList<Integer> color = new ArrayList<>();
     private float mX, mY;
     private static final float TOLERANCE = 5;
+    private Paint mBitmapPaint = new Paint(Paint.DITHER_FLAG);
     Context context;
 
-    public void ChangePaint(int color) {
+    public void ChangePaint(int colors) {
 
         mpath = new Path();
         paths.add(mpath);
-        mPaint = new Paint();
-        mPaint.setColor(color);
+        color.add(colors);
 
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeJoin(Paint.Join.ROUND);
-        mPaint.setStrokeWidth(4f);
-        mcanvas.drawPath(mpath, mPaint);
     }
 
     public CanvasView(Context context, @Nullable AttributeSet attrs) {
@@ -52,36 +51,45 @@ public class CanvasView extends View {
 
         mpath = new Path();
         paths.add(mpath);
-
         mPaint = new Paint();
         mPaint.setColor(context.getResources().getColor(R.color.material_amber200));
-
+        mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeWidth(4f);
+        color.add(R.color.material_amber200);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-
-        for(int i =0 ; i < paths.size() ;i++){
-            canvas.drawPath(paths.get(i), mPaint);
+        canvas.save();
+        for (int i = 0; i < paths.size(); i++) {
+            mPaint.setColor(context.getResources().getColor(color.get(i)));
+            mPaint.setAntiAlias(true);
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setStrokeJoin(Paint.Join.ROUND);
+            mPaint.setStrokeWidth(4f);
+            mcanvas.drawPath(paths.get(i),mPaint);
         }
+        canvas.drawBitmap(mbitmap, ((float)(width-mbitmap.getWidth()))/2, ((float)(height-mbitmap.getHeight()))/2, mBitmapPaint);
+        canvas.restore();
     }
 
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-
+    public void innit(int w, int h, int w_v, int h_v) {
+        width = w_v;
+        height = h_v;
         mbitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         mcanvas = new Canvas(mbitmap);
     }
 
+    public Bitmap scaleBitmap(int width,int height){
+        return Bitmap.createScaledBitmap(mbitmap, width, height,true);
+    }
+
     private void onStartTouch(float x, float y) {
-        mpath.moveTo(x, y);
-        mX = x;
-        mY = y;
+        mpath.moveTo(x-((float)(width-mbitmap.getWidth())/2), y-((float)(height-mbitmap.getHeight())/2));
+        mX = x-((float)(width-mbitmap.getWidth())/2);
+        mY = y-((float)(height-mbitmap.getHeight())/2);
     }
 
     private void moveTouch(float x, float y) {
@@ -95,7 +103,7 @@ public class CanvasView extends View {
     }
 
     private void clearCanvas() {
-        mpath.reset();
+        paths.clear();
         invalidate();
     }
 

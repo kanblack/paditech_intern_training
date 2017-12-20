@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.pesteam.watchimage.R;
 
@@ -23,14 +24,16 @@ public class FragmentScreen1 extends android.support.v4.app.Fragment {
 
     @BindView(R.id.rcv_screen1)
     RecyclerView rcv_screen1;
+    @BindView(R.id.progress)
+    ProgressBar progress;
     private MainActivity mainActivity;
-    private AdapterScreen1 adapter = new AdapterScreen1();
+    private AdapterScreen1 adapter = new AdapterScreen1(this);
 
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_screen_1,container,false);
+        View view = inflater.inflate(R.layout.fragment_screen_1, container, false);
         ButterKnife.bind(this, view);
         changeFragment();
         getData();
@@ -38,13 +41,12 @@ public class FragmentScreen1 extends android.support.v4.app.Fragment {
     }
 
     private void getData() {
-                    adapter.setLists(mainActivity.getUrl_image());
-                    rcv_screen1.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
-                    rcv_screen1.setAdapter(adapter);
-
+        adapter.setLists(mainActivity.getUrl_image());
+        rcv_screen1.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        rcv_screen1.setAdapter(adapter);
     }
 
-    public void changeFragment(){
+    public void changeFragment() {
         mainActivity.bt_change_frag.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("CommitTransaction")
             @Override
@@ -59,7 +61,7 @@ public class FragmentScreen1 extends android.support.v4.app.Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        if(context instanceof MainActivity){
+        if (context instanceof MainActivity) {
             this.mainActivity = (MainActivity) context;
         }
     }
