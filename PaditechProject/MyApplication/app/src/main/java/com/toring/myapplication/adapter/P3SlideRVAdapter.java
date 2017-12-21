@@ -1,6 +1,9 @@
 package com.toring.myapplication.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.toring.myapplication.R;
+import com.toring.myapplication.activity.P4Activity;
 import com.toring.myapplication.glide.DisplayPicture;
 
 import java.util.List;
@@ -44,13 +48,29 @@ public class P3SlideRVAdapter extends RecyclerView.Adapter<P3SlideRVAdapter.VHP3
 
     public class VHP3SLide extends RecyclerView.ViewHolder {
         private ImageView ivPicture;
+        private View view;
+
         public VHP3SLide(View itemView) {
             super(itemView);
             ivPicture = itemView.findViewById(R.id.iv_picture);
+            view = itemView;
         }
 
-        public void bindView(int position) {
+        public void bindView(final int position) {
             DisplayPicture.displayImage(context, pitureList.get(position), ivPicture);
+
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(context, P4Activity.class);
+
+                    intent.putExtra(context.getResources().getString(R.string.picture), pitureList.get(position));
+                    ActivityOptionsCompat options = ActivityOptionsCompat.
+                            makeSceneTransitionAnimation((Activity) context, (View) ivPicture, "detail");
+                    context.startActivity(intent, options.toBundle());
+                }
+            });
         }
     }
 }

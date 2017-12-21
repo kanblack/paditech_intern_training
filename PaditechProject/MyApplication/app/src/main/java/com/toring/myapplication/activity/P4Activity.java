@@ -38,13 +38,6 @@ public class P4Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // inside your activity (if you did not enable transitions in your theme)
-//        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-//// set an enter transition
-//        getWindow().setEnterTransition(new Explode());
-//// set an exit transition
-//        getWindow().setExitTransition(new Explode());
-
         setContentView(R.layout.activity_p4);
 
         toolbar = this.findViewById(R.id.toolbar);

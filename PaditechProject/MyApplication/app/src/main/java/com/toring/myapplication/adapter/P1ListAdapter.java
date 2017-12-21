@@ -64,14 +64,14 @@ public class P1ListAdapter extends RecyclerView.Adapter<P1ListAdapter.VHP1List> 
             DisplayPicture.displayImage(context, pictureList.get(position), ivPicture);
             tv.setText(pictureList.get(position));
 
-            itemView.setOnClickListener(new View.OnClickListener() {
+            view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context, P4Activity.class);
 
                     intent.putExtra(context.getResources().getString(R.string.picture), pictureList.get(position));
                     ActivityOptionsCompat options = ActivityOptionsCompat.
-                            makeSceneTransitionAnimation(context, (View)ivPicture, "profile");
+                            makeSceneTransitionAnimation(context, (View)ivPicture, "detail");
                     context.startActivity(intent, options.toBundle());
                 }
             });
