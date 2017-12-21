@@ -15,10 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.pesteam.watchimage.R;
 import com.pesteam.watchimage.Screen4Activity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,8 +50,13 @@ public class FragmentScreen2 extends android.support.v4.app.Fragment {
     }
 
     private void getData() {
-
-        adapter.setList(mainActivity.getUrl_image());
+        List<String> url_images = mainActivity.getUrls();
+        if(url_images.size()%3!=0){
+            for (int i = 0; i < url_images.size()%3; i++) {
+                url_images.add("");
+            }
+        }
+        adapter.setList(url_images);
         grd_view.setAdapter(adapter);
         grd_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)

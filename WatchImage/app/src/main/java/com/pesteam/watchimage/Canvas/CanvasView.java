@@ -37,12 +37,8 @@ public class CanvasView extends View {
     private Paint mBitmapPaint = new Paint(Paint.DITHER_FLAG);
     Context context;
 
-    public void ChangePaint(int colors) {
-
-        mpath = new Path();
-        paths.add(mpath);
-        color.add(colors);
-
+    public Bitmap getMbitmap() {
+        return mbitmap;
     }
 
     public CanvasView(Context context, @Nullable AttributeSet attrs) {
@@ -71,25 +67,40 @@ public class CanvasView extends View {
             mPaint.setStrokeWidth(4f);
             mcanvas.drawPath(paths.get(i),mPaint);
         }
-        canvas.drawBitmap(mbitmap, ((float)(width-mbitmap.getWidth()))/2, ((float)(height-mbitmap.getHeight()))/2, mBitmapPaint);
+        canvas.drawBitmap(mbitmap, 0, 0, mBitmapPaint);
         canvas.restore();
     }
 
-    public void innit(int w, int h, int w_v, int h_v) {
-        width = w_v;
-        height = h_v;
-        mbitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        mcanvas = new Canvas(mbitmap);
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        setMeasuredDimension(width,height);
     }
 
-    public Bitmap scaleBitmap(int width,int height){
-        return Bitmap.createScaledBitmap(mbitmap, width, height,true);
+    public void innit(int w, int h) {
+        width = w;
+        height = h;
+        mbitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
+        mcanvas = new Canvas(mbitmap);
+        requestLayout();
+    }
+
+
+    public void screen51DrawFrame(Bitmap frame){
+        Bitmap scaleFrame = Bitmap.createScaledBitmap(frame, width,height, true);
+        mcanvas.drawBitmap(scaleFrame,0,0, null);
+    }
+
+
+    public void screen52ChangePaint(int colors) {
+        mpath = new Path();
+        paths.add(mpath);
+        color.add(colors);
     }
 
     private void onStartTouch(float x, float y) {
-        mpath.moveTo(x-((float)(width-mbitmap.getWidth())/2), y-((float)(height-mbitmap.getHeight())/2));
-        mX = x-((float)(width-mbitmap.getWidth())/2);
-        mY = y-((float)(height-mbitmap.getHeight())/2);
+        mpath.moveTo(x, y);
+        mX = x;
+        mY = y;
     }
 
     private void moveTouch(float x, float y) {

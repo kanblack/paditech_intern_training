@@ -84,7 +84,7 @@ public class AdapterScreen52 extends RecyclerView.Adapter<AdapterScreen52.BaseHo
 
         @Override
         public void onClick(View view) {
-            fragmentScreen52.canvas_big.ChangePaint(color[getLayoutPosition()]);
+            fragmentScreen52.editable_img_screen52.canvasView.screen52ChangePaint(color[getLayoutPosition()]);
         }
     }
 }

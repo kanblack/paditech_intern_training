@@ -3,20 +3,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/img_big_screen_51_52"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/rcv_screen_52"
-        android:scaleType="fitCenter"
-        android:src="@drawable/background"
-        />
-    <com.pesteam.watchimage.Canvas.CanvasView
-        android:id="@+id/canvas_big_screen_52"
+        android:layout_gravity="center_horizontal">
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/rcv_screen_52" />
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
 
+        >
+        <com.pesteam.watchimage.Canvas.EditableImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editable_img_screen52"/>
+    </android.support.constraint.ConstraintLayout>
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
         android:background="#575757"

@@ -36,12 +36,13 @@ public class AdapterScreen51 extends RecyclerView.Adapter<AdapterScreen51.BaseHo
     };
     private Bitmap bitmap;
 
-    public AdapterScreen51(FragmentScreen51 fragmentScreen51) {
-        this.fragmentScreen51 = fragmentScreen51;
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
     }
 
-    void setBitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
+    public AdapterScreen51(FragmentScreen51 fragmentScreen51) {
+        this.fragmentScreen51 = fragmentScreen51;
     }
 
     void setImg_url(String img_url) {
@@ -91,27 +92,18 @@ public class AdapterScreen51 extends RecyclerView.Adapter<AdapterScreen51.BaseHo
             img.setImageBitmap(putFrameOnImg(bitmap, frame_horizontal[position],200));
         }
 
-        private Bitmap putFrameOnImg(Bitmap a, int res,int b){
+        private Bitmap getFrame(int res){
             final BitmapFactory.Options options = new BitmapFactory.Options();
             options.inSampleSize = 2;
-            int i = a.getWidth()/b;
-            if(i == 0){
-                i = 1;
-            }
-            Bitmap temp = Bitmap.createBitmap(a.getWidth()/i, a.getHeight()/i, Bitmap.Config.ARGB_8888);
-            Bitmap img_2 = Bitmap.createScaledBitmap(BitmapFactory.decodeResource(itemView.getResources(),res,options),a.getWidth()/i, a.getHeight()/i,true);
-            Bitmap img_3 = Bitmap.createScaledBitmap(a,a.getWidth()/i, a.getHeight()/i,true);
-            Canvas canvas = new Canvas(temp);
-            canvas.drawBitmap(img_3,0,0,null);
-            canvas.drawBitmap(img_2,0,0,null);
-            return temp;
+            Bitmap frame = BitmapFactory.decodeResource(itemView.getResources(),res,options);
+            return frame;
         }
 
 
         @Override
         public void onClick(View view) {
-            Bitmap image = putFrameOnImg(bitmap, frame_horizontal[getLayoutPosition()],600);
-            fragmentScreen51.img_big.setImageBitmap(image);
+            Bitmap image = getFrame(frame_horizontal[getLayoutPosition()]);
+            fragmentScreen51.editable_img_screen51.canvasView.screen51DrawFrame(image);
             fragmentScreen51.setImage(image);
         }
     }

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,7 +64,6 @@ public class AdapterScreen2 extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         View v;
         if (view == null) {
-            fragmentScreen2.progress.setVisibility(View.VISIBLE);
             DisplayMetrics displayMetrics = new DisplayMetrics();
              fragmentScreen2.getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
             v = LayoutInflater.from(fragmentScreen2.getActivity()).inflate(R.layout.child_grv_screen2,null);
@@ -86,6 +86,7 @@ public class AdapterScreen2 extends BaseAdapter {
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                         fragmentScreen2.progress.setVisibility(View.GONE);
+                        Log.e( "onResourceReady: ", imageView.getDrawingCache().getWidth()+"" );
                         return false;
                     }
                 })

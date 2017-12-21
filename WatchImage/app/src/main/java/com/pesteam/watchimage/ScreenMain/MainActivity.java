@@ -73,6 +73,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public List<String> getUrls(){
+        List<String> urls = new ArrayList<>();
+        for (int i = 0; i < url_image.size(); i++) {
+            urls.add(url_image.get(i));
+        }
+        return urls;
+    }
+
     public List<String> getUrl_image() {
         return url_image;
     }

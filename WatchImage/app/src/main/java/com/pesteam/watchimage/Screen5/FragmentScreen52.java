@@ -1,8 +1,10 @@
 package com.pesteam.watchimage.Screen5;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,10 +17,17 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.pesteam.watchimage.Canvas.CanvasView;
+import com.pesteam.watchimage.Canvas.EditableImageView;
 import com.pesteam.watchimage.R;
+import com.pesteam.watchimage.saveImage.SaveImage;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,17 +40,11 @@ public class FragmentScreen52 extends Fragment {
 
     @BindView(R.id.rcv_screen_52)
     RecyclerView rcv;
-    @BindView(R.id.canvas_big_screen_52)
-    CanvasView canvas_big;
-    @BindView(R.id.img_big_screen_51_52)
-    ImageView img_big;
+    @BindView(R.id.editable_img_screen52)
+    EditableImageView editable_img_screen52;
     private Screen5Activity mainActivity;
     private AdapterScreen52 adapter = new AdapterScreen52(this);
-    private String url_img;
-
-    public void setUrl_img(String url_img) {
-        this.url_img = url_img;
-    }
+    private SaveImage saveImage;
 
     @Nullable
     @Override
@@ -49,8 +52,17 @@ public class FragmentScreen52 extends Fragment {
         View view = inflater.inflate(R.layout.fragment_screen_52,container,false);
         ButterKnife.bind(this, view);
         start();
-        toolbarButtonAction();
         return view;
+    }
+
+
+
+    private void start() {
+        saveImage = new SaveImage(this.getContext(), mainActivity.getImg_url(), mainActivity.getPosition(), SaveImage.SCR_52);
+        editable_img_screen52.setImage(mainActivity.getImg_url());
+        rcv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rcv.setAdapter(adapter);
+        toolbarButtonAction();
     }
 
     private void toolbarButtonAction() {
@@ -58,13 +70,7 @@ public class FragmentScreen52 extends Fragment {
         mainActivity.icon_accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bitmap bitmap = canvas_big.scaleBitmap(mainActivity.getImage().getWidth(),mainActivity.getImage().getHeight());
-                Bitmap bitmap1 = Bitmap.createBitmap(mainActivity.getImage().getWidth(),mainActivity.getImage().getHeight(),Bitmap.Config.ARGB_8888);
-                Canvas canvas = new Canvas(bitmap1);
-                canvas.drawBitmap(mainActivity.getImage(),0,0,null);
-                canvas.drawBitmap(bitmap,0,0,null);
-                mainActivity.checkPermission(bitmap1);
-                mainActivity.finish();
+                saveImage.loadImage(editable_img_screen52.canvasView.getMbitmap());
             }
         });
         mainActivity.icon_back_img.setOnClickListener(new View.OnClickListener() {
@@ -76,36 +82,25 @@ public class FragmentScreen52 extends Fragment {
     }
 
 
-    private void start() {
-        Glide.with(this).load(mainActivity.getImg_url()).into(img_big);
-        img_big.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                img_big.getViewTreeObserver().removeOnPreDrawListener(this);
-                if(mainActivity.getImage().getWidth()>mainActivity.getImage().getHeight()){
-                    int height = (int) (mainActivity.getImage().getHeight()/(((float)mainActivity.getImage().getWidth())/img_big.getMeasuredWidth()));
-                    Log.e( "onPreDraw: ", mainActivity.getImage().getWidth()+"   "+ mainActivity.getImage().getHeight()+"   "+img_big.getMeasuredWidth()+"   "+height);
-                    canvas_big.innit(img_big.getMeasuredWidth(), height, img_big.getMeasuredWidth(),img_big.getMeasuredHeight());
-                    Log.e( "onPreDraw: ", img_big.getMeasuredWidth()+"   "+ height);
-                } else {
-                    Log.e( "onPreDraw: ", mainActivity.getImage().getWidth()+"   "+ mainActivity.getImage().getHeight());
-                    int width = (int) (mainActivity.getImage().getWidth()/(((float)mainActivity.getImage().getHeight())/img_big.getMeasuredHeight()));
-                    canvas_big.innit(width,img_big.getMeasuredHeight(),img_big.getMeasuredWidth(),img_big.getMeasuredHeight() );
-                    Log.e( "onPreDraw: ", width+"   "+ img_big.getMeasuredHeight());
-                }
-                return true;
-            }
-        });
-        rcv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        rcv.setAdapter(adapter);
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
 
         if(context instanceof Screen5Activity){
             this.mainActivity = (Screen5Activity) context;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.e( "onRequestPermission: ", ",,,,," );
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Log.v("Permission: ",  permissions[0] + "was " + grantResults[0]);
+            saveImage.saveToInternalStorage(saveImage.getImage(),saveImage.getPosition());
+        }
+        else {
+            Toast.makeText(this.getContext(),"Bạn không cho lưu vào thẻ nhớ, không thể lưu được",Toast.LENGTH_LONG).show();
         }
     }
 }

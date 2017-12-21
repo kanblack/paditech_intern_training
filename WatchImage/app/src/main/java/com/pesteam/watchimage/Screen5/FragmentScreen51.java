@@ -1,19 +1,30 @@
 package com.pesteam.watchimage.Screen5;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
+import com.pesteam.watchimage.Canvas.EditableImageView;
 import com.pesteam.watchimage.R;
+import com.pesteam.watchimage.saveImage.SaveImage;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,17 +35,13 @@ import butterknife.ButterKnife;
 
 public class FragmentScreen51 extends Fragment {
 
-    @BindView(R.id.img_big_screen_51_52)
-    ImageView img_big;
     @BindView(R.id.rcv_screen_51_52)
     RecyclerView rcv;
-    private Bitmap image;
+    @BindView(R.id.editable_img_screen51)
+    EditableImageView editable_img_screen51;
     private Screen5Activity mainActivity;
     private AdapterScreen51 adapter = new AdapterScreen51(this);
-
-    public void setImage(Bitmap image) {
-        this.image = image;
-    }
+    private SaveImage saveImage;
 
     @Nullable
     @Override
@@ -48,7 +55,6 @@ public class FragmentScreen51 extends Fragment {
 
     private void getData() {
         adapter.setImg_url(mainActivity.getImg_url());
-        adapter.setBitmap(mainActivity.getImage());
         rcv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rcv.setAdapter(adapter);
         toolbarButtonAction();
@@ -59,7 +65,6 @@ public class FragmentScreen51 extends Fragment {
         mainActivity.icon_accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivity.checkPermission(image);
                 mainActivity.finish();
             }
         });
@@ -73,7 +78,8 @@ public class FragmentScreen51 extends Fragment {
 
 
     private void start() {
-            Glide.with(this).load(mainActivity.getImg_url()).into(img_big);
+            saveImage = new SaveImage(this.getContext(), mainActivity.getImg_url(), mainActivity.getPosition(), SaveImage.SCR_52);
+            editable_img_screen51.setImage(mainActivity.getImg_url());
         }
 
 
@@ -83,6 +89,19 @@ public class FragmentScreen51 extends Fragment {
 
         if(context instanceof Screen5Activity){
             this.mainActivity = (Screen5Activity) context;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.e( "onRequestPermission: ", ",,,,," );
+        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            Log.v("Permission: ",  permissions[0] + "was " + grantResults[0]);
+            saveImage.saveToInternalStorage(saveImage.getImage(),saveImage.getPosition());
+        }
+        else {
+            Toast.makeText(this.getContext(),"Bạn không cho lưu vào thẻ nhớ, không thể lưu được",Toast.LENGTH_LONG).show();
         }
     }
 }

@@ -38,30 +38,17 @@ public class Screen5Activity extends AppCompatActivity {
     ImageButton icon_back_img;
     @BindView(R.id.icon_accept_screen5)
     ImageButton icon_accept;
-    @BindView(R.id.progress)
-    ProgressBar progress;
-    @BindView(R.id.ln_have_progress)
-    LinearLayout ln_have_progress;
-    public static final int FRAGMENT_5 = 0;
-    public static final int FRAGMENT_51 = 1;
-    public static final int FRAGMENT_52 = 2;
-    private int what_fragment;
     private android.support.v4.app.FragmentManager fm;
     private FragmentTransaction ft_tran;
     private String img_url;
-    private Bitmap image;
     private int position;
 
-    public Bitmap getImage() {
-        return image;
+    public int getPosition() {
+        return position;
     }
 
     public String getImg_url() {
         return img_url;
-    }
-
-    public void setImg_url(String img_url) {
-        this.img_url = img_url;
     }
 
     @Override
@@ -71,7 +58,13 @@ public class Screen5Activity extends AppCompatActivity {
         ButterKnife.bind(this);
         getData();
         start();
-        loadImage();
+        changefragment();
+    }
+
+    private void changefragment() {
+        ft_tran.replace(R.id.frag_activity5, new FragmentScreen5());
+        ft_tran.addToBackStack(null);
+        ft_tran.commitAllowingStateLoss();
     }
 
 
@@ -88,80 +81,7 @@ public class Screen5Activity extends AppCompatActivity {
 
     }
 
-    private void loadImage() {
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
-                .build();
-        ImageLoader.getInstance().init(config);
-        ImageLoader imageLoader = ImageLoader.getInstance();
-        imageLoader.loadImage(img_url, new SimpleImageLoadingListener(){
-            @Override
-            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-                ln_have_progress.setVisibility(View.GONE);
-                progress.setVisibility(View.GONE);
-
-                image = loadedImage;
-                Log.e("onLoadingComplete: ", "aaaa" );
-                ft_tran.replace(R.id.frag_activity5, new FragmentScreen5());
-                what_fragment = FRAGMENT_5;
-                ft_tran.addToBackStack(null);
-                ft_tran.commitAllowingStateLoss();
-            }
-
-            @Override
-            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-                Log.e("onLoadingFailed: ", "fail" );
-            }
-        });
-
-    }
-
-    public void checkPermission(Bitmap bitmap){
-        image = bitmap;
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (this.checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
-                saveToInternalStorage(image,position);
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-
-            }
-        } else {
-            saveToInternalStorage(image,position);
-        }
-    }
 
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            Log.v("Permission: ",  permissions[0] + "was " + grantResults[0]);
-            saveToInternalStorage(image,position);
-        }
-        else {
-            Toast.makeText(this,"Bạn không cho lưu vào thẻ nhớ, không thể lưu được",Toast.LENGTH_LONG).show();
-        }
-    }
 
-    private void saveToInternalStorage(Bitmap bitmapImage, int position){
-
-        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator;
-        String fname = "Image"+position+".jpg";
-        File file = new File(path + fname);
-        Log.e( "saveToInternalStorage: ", file.toString() );
-
-        try {
-            if(!file.getParentFile().exists()){
-                file.getParentFile().mkdirs();
-            }
-            FileOutputStream out = new FileOutputStream(file);
-            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 100, out);
-            out.flush();
-            out.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
 }
