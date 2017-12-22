@@ -1,5 +1,6 @@
 package com.toring.myapplication.activity;
 
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import com.toring.myapplication.R;
 import com.toring.myapplication.adapter.P5DrawColorAdapter;
 import com.toring.myapplication.customvie.DrawingView;
 import com.toring.myapplication.fragment.P5DrawFragment;
+import com.toring.myapplication.fragment.P5ImageFragment;
 import com.toring.myapplication.glide.DisplayPicture;
 import com.toring.myapplication.manager.ScreenManager;
 
@@ -25,6 +27,7 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
     private RelativeLayout rlOption, rlDraw;
 
     private View.OnClickListener changeColor;
+    private View.OnClickListener changeImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,18 +45,13 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onClick(View view) {
                 ivPicture.setColor((Integer) view.getTag());
-                View view1 = view.findViewById(R.id.iv_bg);
-                ImageView ivColor = view.findViewById(R.id.iv_color);
+            }
+        };
 
-
-                GradientDrawable bgShape = (GradientDrawable) view1.getBackground();
-                int idColor = P5Activity.this.getResources().getColor(R.color.text_color_primary);
-                bgShape.setColor(idColor);
-
-                ViewGroup.LayoutParams params = ivColor.getLayoutParams();
-                params.width = params.height - 10;
-                params.height = params.width - 10;
-                ivColor.setLayoutParams(params);
+        changeImage = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ivPicture.setBitmap((Integer) view.getTag());
             }
         };
 
@@ -68,7 +66,12 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                P5Activity.this.onBackPressed();
+                if (ScreenManager.backFragment(P5Activity.this)) {
+                    ivPicture.setCanDrawLine(false);
+                    ivPicture.setCanDrawImage(false);
+                } else {
+                    P5Activity.this.onBackPressed();
+                }
             }
         });
 
@@ -84,9 +87,16 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
                 p5DrawFragment.setOnClickListener(changeColor);
                 ScreenManager.replaceFragment(this, R.id.bottom_bar,
                         p5DrawFragment, true);
+                ivPicture.setCanDrawLine(true);
                 break;
             }
             case R.id.rl_option:
+                P5ImageFragment p5ImageFragment = new P5ImageFragment();
+                p5ImageFragment.setOnClickListener(changeImage);
+                ScreenManager.replaceFragment(this, R.id.bottom_bar,
+                        p5ImageFragment, true);
+                ivPicture.setCanDrawImage(true);
+                ivPicture.setBitmap(-1);
                 break;
         }
     }

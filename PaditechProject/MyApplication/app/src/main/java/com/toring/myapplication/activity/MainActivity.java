@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private int modeVIew = 0;
     private Fragment currentFragment;
     private int iconChangeMode = R.drawable.ic_apps_white_24dp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,41 +41,43 @@ public class MainActivity extends AppCompatActivity {
         ivChangeMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (modeVIew) {
-                    case 0: {
-                        iconChangeMode = R.drawable.ic_slideshow_white_24dp;
-                        P2GridFragment p2GridFragment = new P2GridFragment();
-                        p2GridFragment.setPictureList(pictureList);
-                        currentFragment = p2GridFragment;
-                        break;
+                if (pictureList != null) {
+                    switch (modeVIew) {
+                        case 0: {
+                            iconChangeMode = R.drawable.ic_slideshow_white_24dp;
+                            P2GridFragment p2GridFragment = new P2GridFragment();
+                            p2GridFragment.setPictureList(pictureList);
+                            currentFragment = p2GridFragment;
+                            break;
+                        }
+
+                        case 1: {
+                            iconChangeMode = R.drawable.ic_view_list_white_24dp;
+                            P3SlideFragment p3SlideFragment = new P3SlideFragment();
+                            p3SlideFragment.setPictureList(pictureList);
+                            currentFragment = p3SlideFragment;
+                            break;
+                        }
+
+                        case 2: {
+                            iconChangeMode = R.drawable.ic_apps_white_24dp;
+                            P1ListFragment p1ListFragment = new P1ListFragment();
+                            p1ListFragment.setPictureList(pictureList);
+                            currentFragment = p1ListFragment;
+                            modeVIew = -1;
+                            break;
+                        }
                     }
 
-                    case 1: {
-                        iconChangeMode = R.drawable.ic_view_list_white_24dp;
-                        P3SlideFragment p3SlideFragment = new P3SlideFragment();
-                        p3SlideFragment.setPictureList(pictureList);
-                        currentFragment = p3SlideFragment;
-                        break;
-                    }
+                    ivChangeMode.setImageResource(iconChangeMode);
 
-                    case 2: {
-                        iconChangeMode = R.drawable.ic_apps_white_24dp;
-                        P1ListFragment p1ListFragment = new P1ListFragment();
-                        p1ListFragment.setPictureList(pictureList);
-                        currentFragment = p1ListFragment;
-                        modeVIew = -1;
-                        break;
-                    }
+                    ScreenManager.replaceFragment(MainActivity.this,
+                            R.id.content,
+                            currentFragment,
+                            false);
+
+                    modeVIew++;
                 }
-
-                ivChangeMode.setImageResource(iconChangeMode);
-
-                ScreenManager.replaceFragment(MainActivity.this,
-                        R.id.content,
-                        currentFragment,
-                        false);
-
-                modeVIew++;
             }
         });
 

@@ -24,6 +24,12 @@ public class P3SlideRVAdapter extends RecyclerView.Adapter<P3SlideRVAdapter.VHP3
     private Context context;
     private List<String> pitureList;
 
+    private View.OnClickListener onClickListener;
+
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+
     public P3SlideRVAdapter(Context context, List<String> pitureList) {
         this.context = context;
         this.pitureList = pitureList;
@@ -58,19 +64,9 @@ public class P3SlideRVAdapter extends RecyclerView.Adapter<P3SlideRVAdapter.VHP3
 
         public void bindView(final int position) {
             DisplayPicture.displayImage(context, pitureList.get(position), ivPicture);
+            view.setTag(position);
+            view.setOnClickListener(onClickListener);
 
-
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(context, P4Activity.class);
-
-                    intent.putExtra(context.getResources().getString(R.string.picture), pitureList.get(position));
-                    ActivityOptionsCompat options = ActivityOptionsCompat.
-                            makeSceneTransitionAnimation((Activity) context, (View) ivPicture, "detail");
-                    context.startActivity(intent, options.toBundle());
-                }
-            });
         }
     }
 }

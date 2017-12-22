@@ -19,8 +19,12 @@ public class ScreenManager {
         transaction.commit();
     }
 
-    public static void backFragment(AppCompatActivity appCompatActivity) {
+    public static boolean backFragment(AppCompatActivity appCompatActivity) {
         FragmentManager manager = appCompatActivity.getSupportFragmentManager();
         manager.popBackStack();
+        if (manager.getBackStackEntryCount() == 0) {
+            return false;
+        }
+        return true;
     }
 }
