@@ -58,7 +58,7 @@ public class FragmentScreen52 extends Fragment {
 
 
     private void start() {
-        saveImage = new SaveImage(this.getContext(), mainActivity.getImg_url(), mainActivity.getPosition(), SaveImage.SCR_52);
+        saveImage = new SaveImage(mainActivity, mainActivity.getImg_url(), mainActivity.getPosition(), SaveImage.SCR_52);
         editable_img_screen52.setImage(mainActivity.getImg_url());
         rcv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rcv.setAdapter(adapter);
@@ -77,6 +77,7 @@ public class FragmentScreen52 extends Fragment {
             @Override
             public void onClick(View view) {
                 getFragmentManager().beginTransaction().replace(R.id.frag_activity5, new FragmentScreen5()).addToBackStack(null).commit();
+                mainActivity.setWwhatFrag(Screen5Activity.FRAG_5);
             }
         });
     }

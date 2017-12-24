@@ -7,7 +7,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -17,8 +17,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.pesteam.watchimage.R;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,15 +65,11 @@ public class FragmentScreen3 extends android.support.v4.app.Fragment {
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            final List<String> img_urls = mainActivity.getUrl_image();
-            int nextPosition;
             if (e2.getX() - e1.getX() > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
-                Log.e("onFling1: ", position +"");
                 flingImage(nextPosition(LEFT_TO_RIGHT));
             }
 
             if (e1.getX() - e2.getX() > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
-                Log.e("onFling1: ", position +"");
                 flingImage(nextPosition(RIGHT_TO_LEFT));
             }
             return super.onFling(e1, e2, velocityX, velocityY);
@@ -95,12 +89,10 @@ public class FragmentScreen3 extends android.support.v4.app.Fragment {
                         if(rcv_screen3.findViewHolderForAdapterPosition(i)!= null){
                             if(i != finalNextPosition1){
                                 AdapterScreen3.ChildHolder childHolder = (AdapterScreen3.ChildHolder) rcv_screen3.findViewHolderForLayoutPosition(i);
-                                Log.e( "onFlingchild1: ", i+"" );
                                 childHolder.changeColor(childHolder, AdapterScreen3.ChildHolder.CHANGE_TO_MOREGREYWHITE);
                             }
                             else {
                                 AdapterScreen3.ChildHolder childHolder = (AdapterScreen3.ChildHolder) rcv_screen3.findViewHolderForLayoutPosition(i);
-                                Log.e( "onFlingchild: ", i+"" );
                                 adapter.setChildHolder(childHolder);
                                 childHolder.changeColor(childHolder, AdapterScreen3.ChildHolder.CHANGE_TO_GREYWHITE);
                             }
@@ -110,7 +102,6 @@ public class FragmentScreen3 extends android.support.v4.app.Fragment {
             }, 50);
 
             position = position_img;
-            Log.e("onFling: ", position_img +"");
         }
     }
 

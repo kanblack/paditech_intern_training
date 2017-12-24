@@ -6,8 +6,8 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +23,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.pesteam.watchimage.Screen5.Screen5Activity;
+import com.pesteam.watchimage.ScreenMain.MainActivity;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -41,6 +42,7 @@ public class Screen4Activity extends AppCompatActivity {
     private String url_img_big;
     private Bitmap image;
     private int position;
+    private Boolean exit = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +104,6 @@ public class Screen4Activity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.edit_screen4:
-                        Toast.makeText(Screen4Activity.this,"sdsdsd",Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(Screen4Activity.this, Screen5Activity.class);
                         intent.putExtra("img_url",url_img_big);
                         intent.putExtra("position",position);
@@ -167,6 +168,12 @@ public class Screen4Activity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
 
     }
 

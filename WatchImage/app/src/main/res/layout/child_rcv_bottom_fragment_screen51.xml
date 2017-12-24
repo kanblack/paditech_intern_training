@@ -4,13 +4,16 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:layout_gravity="center">
+
     <ImageView
-        android:layout_centerInParent="true"
-        android:src="@drawable/background"
-        android:scaleType="centerInside"
-        android:id="@+id/img_rcv_screen51"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:foregroundGravity="center"
-       />
+        android:layout_height="match_parent"
+        android:src="@drawable/background"
+        android:scaleType="fitXY"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/frame_bottom_frag_scr51"
+        android:scaleType="fitXY"/>
 </RelativeLayout>

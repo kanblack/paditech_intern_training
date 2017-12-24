@@ -1,33 +1,16 @@
 package com.pesteam.watchimage.Screen5;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.os.Build;
-import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
+import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.pesteam.watchimage.R;
-import com.pesteam.watchimage.ScreenMain.FragmentScreen1;
-
-import java.io.File;
-import java.io.FileOutputStream;
+import com.pesteam.watchimage.ScreenMain.MainActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +25,11 @@ public class Screen5Activity extends AppCompatActivity {
     private FragmentTransaction ft_tran;
     private String img_url;
     private int position;
+    private Boolean exit = false;
+    private int wwhatFrag;
+    public static final int FRAG_5 = 0;
+    public static final int FRAG_51 = 1;
+    public static final int FRAG_52 = 2;
 
     public int getPosition() {
         return position;
@@ -49,6 +37,10 @@ public class Screen5Activity extends AppCompatActivity {
 
     public String getImg_url() {
         return img_url;
+    }
+
+    public void setWwhatFrag(int wwhatFrag) {
+        this.wwhatFrag = wwhatFrag;
     }
 
     @Override
@@ -65,6 +57,7 @@ public class Screen5Activity extends AppCompatActivity {
         ft_tran.replace(R.id.frag_activity5, new FragmentScreen5());
         ft_tran.addToBackStack(null);
         ft_tran.commitAllowingStateLoss();
+        wwhatFrag = FRAG_5;
     }
 
 
@@ -81,7 +74,15 @@ public class Screen5Activity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        switch (wwhatFrag){
+            case FRAG_5:
+                finish();
+                break;
+        }
 
+    }
 
 
 }

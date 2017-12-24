@@ -45,7 +45,7 @@ public class AdapterScreen1 extends RecyclerView.Adapter<AdapterScreen1.BaseHold
         this.lists = lists;
     }
 
-    public AdapterScreen1(FragmentScreen1 fragmentScreen1) {
+    AdapterScreen1(FragmentScreen1 fragmentScreen1) {
         this.fragmentScreen1 = fragmentScreen1;
     }
 

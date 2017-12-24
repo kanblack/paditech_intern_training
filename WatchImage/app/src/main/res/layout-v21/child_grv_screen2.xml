@@ -11,6 +11,6 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:background="#646464"
-        android:padding="5dp"
+        android:padding="1dp"
         android:src="@drawable/background"/>
 </RelativeLayout>

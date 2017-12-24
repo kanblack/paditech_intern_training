@@ -86,7 +86,6 @@ public class AdapterScreen2 extends BaseAdapter {
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
                         fragmentScreen2.progress.setVisibility(View.GONE);
-                        Log.e( "onResourceReady: ", imageView.getDrawingCache().getWidth()+"" );
                         return false;
                     }
                 })

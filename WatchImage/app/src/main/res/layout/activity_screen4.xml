@@ -9,13 +9,15 @@
 
 
     <ImageView
+        android:layout_below="@+id/bt_im_back_screen4"
         android:transitionName="transition_picture"
         android:src="@drawable/background"
         android:id="@+id/img_big_screen4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitCenter"
-        tools:ignore="UnusedAttribute" />
+        tools:ignore="UnusedAttribute"
+        android:layout_above="@+id/ln_screen4"/>
 
     <LinearLayout
         android:id="@+id/ln_screen4"

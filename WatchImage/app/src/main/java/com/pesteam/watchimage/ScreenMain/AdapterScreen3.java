@@ -23,21 +23,16 @@ import butterknife.ButterKnife;
 
 public class AdapterScreen3 extends RecyclerView.Adapter<AdapterScreen3.BaseHolder> {
 
-    private ArrayList<ChildHolder> childHolders = new ArrayList<>();
     private List<String> list_url_img = new ArrayList<>();
     private FragmentScreen3 fragmentScreen3;
     private int img_chose = 0;
     private ChildHolder childHolder;
 
-    public void setChildHolder(ChildHolder childHolder) {
+    void setChildHolder(ChildHolder childHolder) {
         this.childHolder = childHolder;
     }
 
-    ArrayList<ChildHolder> getChildHolders() {
-        return childHolders;
-    }
-
-    public void setImg_chose(int img_chose) {
+    void setImg_chose(int img_chose) {
         this.img_chose = img_chose;
     }
 
@@ -51,9 +46,7 @@ public class AdapterScreen3 extends RecyclerView.Adapter<AdapterScreen3.BaseHold
 
     @Override
     public BaseHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ChildHolder childHolder = new ChildHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.child_rcv_bottom_fragment_screen3, parent, false));
-        Log.e( "onCreateViewHolder: ", childHolders.size()+"" );
-        return childHolder;
+        return new ChildHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.child_rcv_bottom_fragment_screen3, parent, false));
     }
 
     @Override
@@ -103,10 +96,8 @@ public class AdapterScreen3 extends RecyclerView.Adapter<AdapterScreen3.BaseHold
         void onBindingData(int position) {
             Glide.with(itemView.getContext()).load(list_url_img.get(position)).into(img_child_rcv);
             this.position1 = position;
-            Log.e( "onBindingData: ", position+"" );
             if (childHolder == null) {
                 childHolder = this;
-                Log.e( "binding: ", img_chose +"" );
             }
                 if(position == img_chose){
                     changeColor(this,CHANGE_TO_GREYWHITE);

@@ -39,7 +39,7 @@ public class FragmentScreen51 extends Fragment {
     RecyclerView rcv;
     @BindView(R.id.editable_img_screen51)
     EditableImageView editable_img_screen51;
-    private Screen5Activity mainActivity;
+   Screen5Activity mainActivity;
     private AdapterScreen51 adapter = new AdapterScreen51(this);
     private SaveImage saveImage;
 
@@ -49,37 +49,34 @@ public class FragmentScreen51 extends Fragment {
         View view = inflater.inflate(R.layout.fragment_screen_51,container,false);
         ButterKnife.bind(this, view);
         start();
-        getData();
         return view;
     }
 
-    private void getData() {
-        adapter.setImg_url(mainActivity.getImg_url());
-        rcv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        rcv.setAdapter(adapter);
-        toolbarButtonAction();
-    }
 
     private void toolbarButtonAction() {
         mainActivity.icon_accept.setVisibility(View.VISIBLE);
         mainActivity.icon_accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivity.finish();
+                saveImage.loadImage(editable_img_screen51.canvasView.getMbitmap());
             }
         });
         mainActivity.icon_back_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getFragmentManager().beginTransaction().replace(R.id.frag_activity5, new FragmentScreen5()).addToBackStack(null).commit();
+                mainActivity.setWwhatFrag(Screen5Activity.FRAG_5);
             }
         });
     }
 
 
     private void start() {
-            saveImage = new SaveImage(this.getContext(), mainActivity.getImg_url(), mainActivity.getPosition(), SaveImage.SCR_52);
+            saveImage = new SaveImage(this.getContext(), mainActivity.getImg_url(), mainActivity.getPosition(), SaveImage.SCR_51);
             editable_img_screen51.setImage(mainActivity.getImg_url());
+        rcv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        rcv.setAdapter(adapter);
+        toolbarButtonAction();
         }
 
 

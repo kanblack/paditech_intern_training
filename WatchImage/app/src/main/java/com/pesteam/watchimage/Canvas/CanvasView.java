@@ -9,6 +9,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -33,12 +34,19 @@ public class CanvasView extends View {
     private Paint mPaint;
     private ArrayList<Integer> color = new ArrayList<>();
     private float mX, mY;
-    private static final float TOLERANCE = 5;
+    private static final float TOLERANCE = 4;
     private Paint mBitmapPaint = new Paint(Paint.DITHER_FLAG);
+    private int what_view;
     Context context;
+
+
 
     public Bitmap getMbitmap() {
         return mbitmap;
+    }
+
+    public void setWhat_view(int what_view) {
+        this.what_view = what_view;
     }
 
     public CanvasView(Context context, @Nullable AttributeSet attrs) {
@@ -52,7 +60,7 @@ public class CanvasView extends View {
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
-        mPaint.setStrokeWidth(4f);
+        mPaint.setStrokeWidth(2f);
         color.add(R.color.material_amber200);
     }
 
@@ -64,7 +72,7 @@ public class CanvasView extends View {
             mPaint.setAntiAlias(true);
             mPaint.setStyle(Paint.Style.STROKE);
             mPaint.setStrokeJoin(Paint.Join.ROUND);
-            mPaint.setStrokeWidth(4f);
+            mPaint.setStrokeWidth(2f);
             mcanvas.drawPath(paths.get(i),mPaint);
         }
         canvas.drawBitmap(mbitmap, 0, 0, mBitmapPaint);
@@ -76,6 +84,7 @@ public class CanvasView extends View {
         setMeasuredDimension(width,height);
     }
 
+
     public void innit(int w, int h) {
         width = w;
         height = h;
@@ -86,8 +95,15 @@ public class CanvasView extends View {
 
 
     public void screen51DrawFrame(Bitmap frame){
+        mcanvas.save();
+        mcanvas.restore();
+        mbitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        mcanvas = new Canvas(mbitmap);
+        Log.e("screen51DrawFrame: ", "abc" );
         Bitmap scaleFrame = Bitmap.createScaledBitmap(frame, width,height, true);
         mcanvas.drawBitmap(scaleFrame,0,0, null);
+        paths.clear();
+        invalidate();
     }
 
 
@@ -124,23 +140,27 @@ public class CanvasView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        float x = event.getX();
-        float y = event.getY();
+        if(what_view == 0) {
+            float x = event.getX();
+            float y = event.getY();
 
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                onStartTouch(x, y);
-                invalidate();
-                break;
-            case MotionEvent.ACTION_MOVE:
-                moveTouch(x, y);
-                invalidate();
-                break;
-            case MotionEvent.ACTION_UP:
-                upTouch();
-                invalidate();
-                break;
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    onStartTouch(x, y);
+                    invalidate();
+                    break;
+                case MotionEvent.ACTION_MOVE:
+                    moveTouch(x, y);
+                    invalidate();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    upTouch();
+                    invalidate();
+                    break;
+            }
+            return true;
+        } else {
+            return super.onTouchEvent(event);
         }
-        return true;
     }
 }

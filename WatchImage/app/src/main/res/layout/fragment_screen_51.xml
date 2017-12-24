@@ -6,19 +6,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/rcv_screen_51_52"
-        android:layout_gravity="center_horizontal">
-        <android.support.constraint.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-
-            >
+        android:layout_above="@+id/rcv_screen_51_52">
             <com.pesteam.watchimage.Canvas.EditableImageView
+                android:layout_centerInParent="true"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:id="@+id/editable_img_screen51"/>
-        </android.support.constraint.ConstraintLayout>
     </RelativeLayout>
 
 

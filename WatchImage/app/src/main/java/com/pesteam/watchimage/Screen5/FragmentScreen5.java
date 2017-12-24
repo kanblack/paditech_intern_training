@@ -65,12 +65,14 @@ public class FragmentScreen5 extends Fragment {
             @Override
             public void onClick(View view) {
                 getFragmentManager().beginTransaction().replace(R.id.frag_activity5, new FragmentScreen51()).addToBackStack(null).commit();
+                mainActivity.setWwhatFrag(Screen5Activity.FRAG_51);
             }
         });
         bt_draw.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getFragmentManager().beginTransaction().replace(R.id.frag_activity5, new FragmentScreen52()).addToBackStack(null).commit();
+                mainActivity.setWwhatFrag(Screen5Activity.FRAG_52);
             }
         });
     }

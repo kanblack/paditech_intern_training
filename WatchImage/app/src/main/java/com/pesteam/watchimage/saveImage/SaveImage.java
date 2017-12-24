@@ -115,7 +115,7 @@ public class SaveImage {
                         break;
                 }
                 Log.e("onLoadingComplete: ", "aaaa" );
-
+                ((Activity) context).finish();
             }
 
             @Override
