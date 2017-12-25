@@ -42,6 +42,9 @@ public class P5ImageFragment extends Fragment {
         imageList = new ArrayList<>();
         imageList.add(R.drawable.image_1);
         imageList.add(R.drawable.image_2);
+        imageList.add(R.drawable.image_3);
+        imageList.add(R.drawable.image_4);
+        imageList.add(R.drawable.image_5);
 
         rvImage = view.findViewById(R.id.rv_draw_image);
         P5DrawImageAdapter adapter = new P5DrawImageAdapter(this.getContext(), imageList);
