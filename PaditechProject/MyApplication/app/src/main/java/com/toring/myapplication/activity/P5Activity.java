@@ -4,6 +4,7 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -49,10 +50,10 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
             public void onClick(View view) {
                 if (ScreenManager.backFragment(P5Activity.this)) {
                     ivPicture.setCountPaths(0);
-                    ivPicture.setCountBitmaps(0);
                     ivPicture.setCanDrawImage(false);
+                    ivPicture.setCanDrawLine(false);
+                    ivPicture.saveImage();
                     tvDone.setText(getResources().getString(R.string.save));
-
                 } else {
                     P5Activity.super.onBackPressed();
                     ivPicture.setDrawingCacheEnabled(true);
@@ -60,6 +61,7 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
                     String imgSaved = MediaStore.Images.Media.insertImage(
                             getContentResolver(), ivPicture.getDrawingCache(),
                             UUID.randomUUID().toString()+".png", "drawing");
+                    Log.e("", "onClick: " );
                 }
             }
         });
@@ -136,7 +138,6 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
                 ScreenManager.replaceFragment(this, R.id.bottom_bar,
                         p5ImageFragment, true);
                 ivPicture.setCanDrawImage(true);
-                ivPicture.setBitmap(-1);
                 break;
         }
 

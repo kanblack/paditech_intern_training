@@ -115,7 +115,7 @@ public class P4Activity extends AppCompatActivity {
         s = s.replace("-", "_");
         s = s.replace(":", "_");
 
-        Log.e("", "saveImage: " + picturePath);
+        Log.e("", "saveImage: " + s);
 
         String imageFileName = "JPEG_" + s + ".jpg";
         File storageDir = new File(

@@ -30,16 +30,20 @@ public class DrawingView extends ImageView {
     private List<Bitmap> bitmaps = new ArrayList<>();
     private List<Integer> colorList = new ArrayList<>();
     private List<Point> pointList = new ArrayList<>();
-    int res, color = R.color.color_1;
+    int color = R.color.color_1;
     int countPaths = 0;
-    int countBitmaps = 0;
 
     Paint mPaint;
     Path mPath;
 
     private Context context;
 
-    private Bitmap bitmap;
+    private Bitmap bitmap, old;
+
+    public void saveImage(){
+        old = bitmap;
+    }
+
     private boolean canDrawLine = false, canDrawImage = false;
 
     public void setCanDrawLine(boolean canDrawLine) {
@@ -54,13 +58,9 @@ public class DrawingView extends ImageView {
         this.countPaths = countPaths;
     }
 
-    public void setCountBitmaps(int countBitmaps) {
-        this.countBitmaps = countBitmaps;
-    }
-
     public void setBitmap(int res) {
         this.bitmap = BitmapFactory.decodeResource(context.getResources(), res);
-        this.res = res;
+        invalidate();
     }
 
     public void setColor(int color) {
@@ -92,15 +92,8 @@ public class DrawingView extends ImageView {
                 colorList.remove(colorList.size() - 1);
             }
         }
-        if (countBitmaps > 0) {
-            for (int i = 1; i <= countBitmaps; i++) {
-                bitmaps.remove(bitmaps.size() - 1);
-                pointList.remove(pointList.size() - 1);
-            }
-        }
         postInvalidate();
         countPaths = 0;
-        countBitmaps = 0;
     }
 
     @Override
@@ -115,15 +108,15 @@ public class DrawingView extends ImageView {
         if (canDrawLine)
             canvas.drawPath(mPath, mPaint);
 
-        for (int i = 0; i < bitmaps.size(); i++) {
-            canvas.drawBitmap(bitmaps.get(i), pointList.get(i).x, pointList.get(i).y, mPaint);
-        }
+//        for (int i = 0; i < bitmaps.size(); i++) {
+//            canvas.drawBitmap(bitmaps.get(i), pointList.get(i).x, pointList.get(i).y, mPaint);
+//        }
+        if (old != null)
+            canvas.drawBitmap(old, 0, 0, mPaint);
         if (canDrawImage && bitmap != null) {
-            canvas.drawBitmap(bitmap, x, y, mPaint);
+            canvas.drawBitmap(bitmap, 0, 0, mPaint);
         }
     }
-
-    private float x, y;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -136,8 +129,6 @@ public class DrawingView extends ImageView {
                 return true;
             case MotionEvent.ACTION_MOVE:
                 mPath.lineTo(pointX, pointY);
-                x = pointX;
-                y = pointY;
                 break;
             case MotionEvent.ACTION_UP:
                 if (canDrawLine) {
@@ -146,14 +137,6 @@ public class DrawingView extends ImageView {
                     countPaths++;
                 }
                 mPath = new Path();
-
-                if (canDrawImage) {
-                    bitmaps.add(bitmap);
-                    pointList.add(new Point(x, y));
-                    countBitmaps++;
-                }
-                this.bitmap = BitmapFactory.decodeResource(context.getResources(), res);
-
                 break;
             default:
                 return false;
