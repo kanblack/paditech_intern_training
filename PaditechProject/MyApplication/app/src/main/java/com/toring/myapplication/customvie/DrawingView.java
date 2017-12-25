@@ -4,25 +4,37 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.toring.myapplication.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
+class Point {
+    float x, y;
+
+    public Point(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
 public class DrawingView extends ImageView {
+    private List<Path> paths = new ArrayList<>();
+    private List<Bitmap> bitmaps = new ArrayList<>();
+    private List<Integer> colorList = new ArrayList<>();
+    private List<Point> pointList = new ArrayList<>();
+    int res, color = R.color.color_1;
+    int countPaths = 0;
+    int countBitmaps = 0;
+
     Paint mPaint;
-    //MaskFilter  mEmboss;
-    //MaskFilter  mBlur;
-    Bitmap bitmapAll;
-    Canvas mCanvas, m;
     Path mPath;
 
     private Context context;
@@ -38,12 +50,22 @@ public class DrawingView extends ImageView {
         this.canDrawImage = canDrawImage;
     }
 
+    public void setCountPaths(int countPaths) {
+        this.countPaths = countPaths;
+    }
+
+    public void setCountBitmaps(int countBitmaps) {
+        this.countBitmaps = countBitmaps;
+    }
+
     public void setBitmap(int res) {
         this.bitmap = BitmapFactory.decodeResource(context.getResources(), res);
+        this.res = res;
     }
 
     public void setColor(int color) {
         mPaint.setColor(context.getResources().getColor(color));
+        this.color = color;
     }
 
     public DrawingView(Context context, @Nullable AttributeSet attrs) {
@@ -64,79 +86,80 @@ public class DrawingView extends ImageView {
     }
 
     public void reset() {
-        mPaint.setColor(Color.BLACK);
-//        mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-        mCanvas.drawPath(mPath, mPaint);
-//        mPaint.setXfermode(null);
-    }
-
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        bitmapAll = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        mCanvas = new Canvas(bitmapAll);
+        if (countPaths > 0) {
+            for (int i = 1; i <= countPaths; i++) {
+                paths.remove(paths.size() - 1);
+                colorList.remove(colorList.size() - 1);
+            }
+        }
+        if (countBitmaps > 0) {
+            for (int i = 1; i <= countBitmaps; i++) {
+                bitmaps.remove(bitmaps.size() - 1);
+                pointList.remove(pointList.size() - 1);
+            }
+        }
+        postInvalidate();
+        countPaths = 0;
+        countBitmaps = 0;
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        m = canvas;
-        canvas.drawBitmap(bitmapAll, 0, 0, mPaint);
-        canvas.drawPath(mPath, mPaint);
 
-        if (canDrawImage && bitmap != null)
-            canvas.drawBitmap(bitmap, mX, mY, mPaint);
-    }
-
-    private float mX, mY;
-
-    private void touch_start(float x, float y) {
-        mPath = new Path();
-        if (canDrawLine) {
-            mPath.moveTo(x, y);
+        for (int i = 0; i < paths.size(); i++) {
+            mPaint.setColor(context.getResources().getColor(colorList.get(i)));
+            canvas.drawPath(paths.get(i), mPaint);
         }
-        mX = x;
-        mY = y;
-    }
+        mPaint.setColor(context.getResources().getColor(color));
+        if (canDrawLine)
+            canvas.drawPath(mPath, mPaint);
 
-    private void touch_move(float x, float y) {
-        if (canDrawLine) {
-            mPath.quadTo(mX, mY, x, y);
-        }
-        mX = x;
-        mY = y;
-    }
-
-    private void touch_up() {
-        if (canDrawLine) {
-            mCanvas.drawPath(mPath, mPaint);
-            mPath.reset();
+        for (int i = 0; i < bitmaps.size(); i++) {
+            canvas.drawBitmap(bitmaps.get(i), pointList.get(i).x, pointList.get(i).y, mPaint);
         }
         if (canDrawImage && bitmap != null) {
-            mCanvas.drawBitmap(bitmap, mX, mY, mPaint);
-            mPath.reset();
+            canvas.drawBitmap(bitmap, x, y, mPaint);
         }
     }
+
+    private float x, y;
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        float x = event.getX();
-        float y = event.getY();
-
+        float pointX = event.getX();
+        float pointY = event.getY();
+        // Checks for the event that occurs
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                touch_start(x, y);
-                invalidate();
-                break;
+                mPath.moveTo(pointX, pointY);
+                return true;
             case MotionEvent.ACTION_MOVE:
-                touch_move(x, y);
-                invalidate();
+                mPath.lineTo(pointX, pointY);
+                x = pointX;
+                y = pointY;
                 break;
             case MotionEvent.ACTION_UP:
-                touch_up();
-                invalidate();
+                if (canDrawLine) {
+                    paths.add(mPath);
+                    colorList.add(color);
+                    countPaths++;
+                }
+                mPath = new Path();
+
+                if (canDrawImage) {
+                    bitmaps.add(bitmap);
+                    pointList.add(new Point(x, y));
+                    countBitmaps++;
+                }
+                this.bitmap = BitmapFactory.decodeResource(context.getResources(), res);
+
                 break;
+            default:
+                return false;
         }
+        // Force a view to draw again
+        postInvalidate();
         return true;
     }
 }

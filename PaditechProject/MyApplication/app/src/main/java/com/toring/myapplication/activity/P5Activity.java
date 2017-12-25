@@ -1,15 +1,11 @@
 package com.toring.myapplication.activity;
 
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.toring.myapplication.R;
 import com.toring.myapplication.customvie.DrawingView;
@@ -28,6 +24,8 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
     private View.OnClickListener changeColor;
     private View.OnClickListener changeImage;
 
+    private TextView tvDone;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +37,19 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
         toolbar = this.findViewById(R.id.toolbar);
         rlOption = this.findViewById(R.id.rl_option);
         rlDraw = this.findViewById(R.id.rl_draw);
+
+        tvDone = this.findViewById(R.id.tv_done);
+
+        tvDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                P5Activity.super.onBackPressed();
+                ivPicture.setCountPaths(0);
+                ivPicture.setCountBitmaps(0);
+                ivPicture.setCanDrawImage(false);
+                ivPicture.setCanDrawLine(false);
+            }
+        });
 
         changeColor = new View.OnClickListener() {
             @Override
@@ -65,18 +76,23 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ScreenManager.backFragment(P5Activity.this)) {
-                    ivPicture.setCanDrawLine(false);
-                    ivPicture.setCanDrawImage(false);
-                    ivPicture.reset();
-                } else {
-                    P5Activity.this.onBackPressed();
-                }
+                P5Activity.this.onBackPressed();
             }
         });
 
         rlDraw.setOnClickListener(this);
         rlOption.setOnClickListener(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (ScreenManager.backFragment(P5Activity.this)) {
+            ivPicture.setCanDrawLine(false);
+            ivPicture.setCanDrawImage(false);
+            ivPicture.reset();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     @Override
