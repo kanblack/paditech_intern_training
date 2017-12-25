@@ -3,6 +3,7 @@ package com.toring.myapplication.glide;
 import android.content.Context;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.toring.myapplication.R;
 
 /**

@@ -11,7 +11,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_bar_heigth"
-        android:background="@color/colorPrimaryDark" />
+        android:background="@color/colorPrimary" />
 
     <TextView
         android:id="@+id/tv_done"
@@ -54,7 +54,8 @@
         </RelativeLayout>
 
         <View
-            android:layout_width="3px"
+            android:layout_width="1px"
+            android:layout_margin="@dimen/margin_4dp"
             android:layout_height="match_parent"
             android:background="@color/text_color_second" />
 
@@ -85,14 +86,6 @@
 
     <com.toring.myapplication.customvie.DrawingView
         android:id="@+id/iv_picture"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/separator"
-        android:layout_below="@id/toolbar"
-        android:layout_marginTop="@dimen/margin_16dp" />
-
-    <com.toring.myapplication.customvie.SimpleDrawingView
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/separator"

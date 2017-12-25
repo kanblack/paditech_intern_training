@@ -1,5 +1,6 @@
 package com.toring.myapplication.activity;
 
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -14,6 +15,8 @@ import com.toring.myapplication.fragment.P5ImageFragment;
 import com.toring.myapplication.glide.DisplayPicture;
 import com.toring.myapplication.manager.ScreenManager;
 
+import java.util.UUID;
+
 public class P5Activity extends AppCompatActivity implements View.OnClickListener {
     private String picturePath;
     private DrawingView ivPicture;
@@ -25,6 +28,7 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
     private View.OnClickListener changeImage;
 
     private TextView tvDone;
+    private View currentViewDraw, currentViewImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +47,19 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
         tvDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                P5Activity.super.onBackPressed();
-                ivPicture.setCountPaths(0);
-                ivPicture.setCountBitmaps(0);
-                ivPicture.setCanDrawImage(false);
-                ivPicture.setCanDrawLine(false);
+                if (ScreenManager.backFragment(P5Activity.this)) {
+                    ivPicture.setCountPaths(0);
+                    ivPicture.setCountBitmaps(0);
+                    ivPicture.setCanDrawImage(false);
+                    ivPicture.setCanDrawLine(false);
+                } else {
+                    P5Activity.super.onBackPressed();
+                    ivPicture.setDrawingCacheEnabled(true);
+                    //attempt to save
+                    String imgSaved = MediaStore.Images.Media.insertImage(
+                            getContentResolver(), ivPicture.getDrawingCache(),
+                            UUID.randomUUID().toString()+".png", "drawing");
+                }
             }
         });
 
@@ -55,6 +67,11 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onClick(View view) {
                 ivPicture.setColor((Integer) view.getTag());
+                view.setBackgroundColor(getResources().getColor(R.color.background_color));
+                if (currentViewDraw != null){
+                    currentViewDraw.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                }
+                currentViewDraw = view;
             }
         };
 
@@ -62,6 +79,11 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
             @Override
             public void onClick(View view) {
                 ivPicture.setBitmap((Integer) view.getTag());
+                view.setBackgroundColor(getResources().getColor(R.color.background_color));
+                if (currentViewImage != null){
+                    currentViewImage.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                }
+                currentViewImage = view;
             }
         };
 
