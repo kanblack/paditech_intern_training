@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.toring.myapplication.R;
-import com.toring.myapplication.adapter.P5DrawColorAdapter;
 import com.toring.myapplication.customvie.DrawingView;
 import com.toring.myapplication.fragment.P5DrawFragment;
 import com.toring.myapplication.fragment.P5ImageFragment;
@@ -69,6 +68,7 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
                 if (ScreenManager.backFragment(P5Activity.this)) {
                     ivPicture.setCanDrawLine(false);
                     ivPicture.setCanDrawImage(false);
+                    ivPicture.reset();
                 } else {
                     P5Activity.this.onBackPressed();
                 }

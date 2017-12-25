@@ -23,7 +23,7 @@ public class P5DrawColorAdapter extends RecyclerView.Adapter<P5DrawColorAdapter.
     private Context context;
     private List<Integer> colorList;
 
-    private P5DrawVH currentItem;
+    private View currentItem;
 
     private View.OnClickListener onClickListener;
 
@@ -55,12 +55,11 @@ public class P5DrawColorAdapter extends RecyclerView.Adapter<P5DrawColorAdapter.
 
     public class P5DrawVH extends RecyclerView.ViewHolder {
         private ImageView ivColor;
-        private View view, view1;
+        private View view;
 
         public P5DrawVH(View itemView) {
             super(itemView);
             ivColor = itemView.findViewById(R.id.iv_color);
-            view1 = itemView.findViewById(R.id.iv_bg);
             view = itemView;
         }
 
@@ -69,30 +68,9 @@ public class P5DrawColorAdapter extends RecyclerView.Adapter<P5DrawColorAdapter.
             int idColor = colorList.get(position);
             bgShape.setColor(context.getResources().getColor(idColor));
 
+
             view.setTag(colorList.get(position));
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    view.setOnClickListener(onClickListener);
-                    if (currentItem != null){
-                        deselectVH(currentItem);
-                    }
-                    selectVH();
-                    currentItem = P5DrawVH.this;
-                }
-            });
-        }
-
-        public void selectVH(){
-            GradientDrawable bgShape = (GradientDrawable) this.view1.getBackground();
-            int idColor = context.getResources().getColor(R.color.color_1);
-            bgShape.setColor(idColor);
-        }
-
-        public void deselectVH(P5DrawVH vh){
-            GradientDrawable bgShape = (GradientDrawable) vh.view1.getBackground();
-            int idColor = context.getResources().getColor(R.color.text_color_second);
-            bgShape.setColor(idColor);
+            view.setOnClickListener(onClickListener);
         }
     }
 }
