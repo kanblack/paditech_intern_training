@@ -23,7 +23,7 @@
         android:layout_alignTop="@id/toolbar"
         android:layout_alignBottom="@id/toolbar"
         android:layout_alignParentRight="true"
-        android:text="@string/done"
+        android:text="@string/save"
         android:gravity="center"
         android:textSize="@dimen/text_size_normal"
         android:textStyle="bold"

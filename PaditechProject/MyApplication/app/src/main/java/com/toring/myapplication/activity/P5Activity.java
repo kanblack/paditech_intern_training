@@ -51,7 +51,8 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
                     ivPicture.setCountPaths(0);
                     ivPicture.setCountBitmaps(0);
                     ivPicture.setCanDrawImage(false);
-                    ivPicture.setCanDrawLine(false);
+                    tvDone.setText(getResources().getString(R.string.save));
+
                 } else {
                     P5Activity.super.onBackPressed();
                     ivPicture.setDrawingCacheEnabled(true);
@@ -112,6 +113,7 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
             ivPicture.setCanDrawLine(false);
             ivPicture.setCanDrawImage(false);
             ivPicture.reset();
+            tvDone.setText(getResources().getString(R.string.save));
         } else {
             super.onBackPressed();
         }
@@ -137,5 +139,7 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
                 ivPicture.setBitmap(-1);
                 break;
         }
+
+        tvDone.setText(getResources().getString(R.string.done));
     }
 }
