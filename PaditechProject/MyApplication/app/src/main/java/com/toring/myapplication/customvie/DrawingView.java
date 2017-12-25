@@ -60,6 +60,7 @@ public class DrawingView extends ImageView {
 
     public void setBitmap(int res) {
         this.bitmap = BitmapFactory.decodeResource(context.getResources(), res);
+        this.bitmap = Bitmap.createScaledBitmap(this.bitmap, this.getWidth(), this.getHeight(), false);
         invalidate();
     }
 
@@ -108,9 +109,6 @@ public class DrawingView extends ImageView {
         if (canDrawLine)
             canvas.drawPath(mPath, mPaint);
 
-//        for (int i = 0; i < bitmaps.size(); i++) {
-//            canvas.drawBitmap(bitmaps.get(i), pointList.get(i).x, pointList.get(i).y, mPaint);
-//        }
         if (old != null)
             canvas.drawBitmap(old, 0, 0, mPaint);
         if (canDrawImage && bitmap != null) {
