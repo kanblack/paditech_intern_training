@@ -16,7 +16,9 @@ import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.transition.Explode;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -119,8 +121,11 @@ public class P4Activity extends AppCompatActivity {
                 View layout = inflater.inflate(R.layout.popup,
                         (ViewGroup) findViewById(R.id.popup_element));
                 // create a 300px width and 470px height PopupWindow
-                final PopupWindow pw = new PopupWindow(layout, 450,
-                        250, true);
+                DisplayMetrics metrics = P4Activity.this.getResources().getDisplayMetrics();
+                int w = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 180, metrics);
+                int h = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 90, metrics);
+                final PopupWindow pw = new PopupWindow(layout, w,
+                        h, true);
                 // display the popup in the center
                 pw.showAsDropDown(ivPopup, 0, 0, Gravity.RIGHT);
 
