@@ -23,8 +23,6 @@ public class P5DrawColorAdapter extends RecyclerView.Adapter<P5DrawColorAdapter.
     private Context context;
     private List<Integer> colorList;
 
-    private View currentItem;
-
     private View.OnClickListener onClickListener;
 
     public void setOnClickListener(View.OnClickListener onClickListener) {
@@ -64,10 +62,10 @@ public class P5DrawColorAdapter extends RecyclerView.Adapter<P5DrawColorAdapter.
         }
 
         public void bindData(int position) {
+
             GradientDrawable bgShape = (GradientDrawable) ivColor.getBackground();
             int idColor = colorList.get(position);
             bgShape.setColor(context.getResources().getColor(idColor));
-
 
             view.setTag(colorList.get(position));
             view.setOnClickListener(onClickListener);

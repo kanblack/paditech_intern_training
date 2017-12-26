@@ -18,4 +18,9 @@
             <!--@transition/change_image_transform</item>-->
     </style>
 
+    <style name="dialog" parent="@android:style/Theme.Material.Dialog">
+        <item name="android:textColor">#FFaa00</item>
+        <item name="android:textColorAlertDialogListItem">@color/background_color</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 </resources>

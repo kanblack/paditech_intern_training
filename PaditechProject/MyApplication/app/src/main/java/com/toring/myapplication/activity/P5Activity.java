@@ -1,8 +1,10 @@
 package com.toring.myapplication.activity;
 
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -57,12 +59,13 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
         tvDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ScreenManager.backFragment(P5Activity.this)) {
+                if (ScreenManager.canBackFragment(P5Activity.this)) {
                     ivPicture.setCountPaths(0);
                     ivPicture.setCanDrawImage(false);
                     ivPicture.setCanDrawLine(false);
                     ivPicture.saveImage();
                     tvDone.setText(getResources().getString(R.string.save));
+                    ScreenManager.backFragment(P5Activity.this);
                 } else {
                     P5Activity.super.onBackPressed();
 //                    ivPicture.setDrawingCacheEnabled(true);
@@ -166,11 +169,30 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onBackPressed() {
-        if (ScreenManager.backFragment(P5Activity.this)) {
-            ivPicture.setCanDrawLine(false);
-            ivPicture.setCanDrawImage(false);
-            ivPicture.reset();
-            tvDone.setText(getResources().getString(R.string.save));
+        if (ScreenManager.canBackFragment(P5Activity.this)) {
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(P5Activity.this, R.style.dialog);
+//            builder.setTitle("Back");
+            builder.setMessage("Những thay đổi sẽ không được lưu lại. Bạn chắc chắn?");
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    ivPicture.setCanDrawLine(false);
+                    ivPicture.setCanDrawImage(false);
+                    ivPicture.reset();
+                    tvDone.setText(getResources().getString(R.string.save));
+
+                    ScreenManager.backFragment(P5Activity.this);
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            builder.show();
+
         } else {
             super.onBackPressed();
         }
