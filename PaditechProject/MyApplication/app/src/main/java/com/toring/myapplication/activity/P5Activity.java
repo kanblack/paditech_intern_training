@@ -104,7 +104,8 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
     }
 
     private void setData() {
-        DisplayPicture.displayImage(this, picturePath, ivPicture);
+        DisplayPicture.displayImage(P5Activity.this
+                , picturePath, ivPicture);
 
         ivPicture.post(new Runnable() {
             @Override

@@ -61,7 +61,7 @@ public class P4Activity extends AppCompatActivity {
         ivPopup = this.findViewById(R.id.popup);
 
         picturePath = getIntent().getStringExtra(this.getResources().getString(R.string.picture));
-        DisplayPicture.displayImage(this, picturePath, ivPicture);
+        DisplayPicture.displayImage(P4Activity.this, picturePath, ivPicture);
         tvLink.setText(picturePath);
 
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
