@@ -79,7 +79,7 @@ public class DrawingView extends ImageView {
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setStrokeWidth(5);
+        mPaint.setStrokeWidth(3);
 
         mPath = new Path();
         this.context = context;
@@ -142,5 +142,25 @@ public class DrawingView extends ImageView {
         // Force a view to draw again
         postInvalidate();
         return true;
+    }
+
+
+    public Bitmap get (Bitmap bitmap){
+        Bitmap mbitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(), false);
+        Canvas canvas = new Canvas(mbitmap);
+        Bitmap bitmap1 = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas1 = new Canvas(bitmap1);
+        for (int i = 0; i < paths.size(); i++) {
+            mPaint.setColor(context.getResources().getColor(colorList.get(i)));
+            canvas1.drawPath(paths.get(i), mPaint);
+        }
+        mPaint.setColor(context.getResources().getColor(color));
+        if (old != null)
+            canvas1.drawBitmap(old, 0, 0, mPaint);
+
+        bitmap1 = Bitmap.createScaledBitmap(bitmap1, bitmap.getWidth(), bitmap.getHeight(), false);
+        canvas.drawBitmap(bitmap1, 0, 0, mPaint);
+
+        return mbitmap;
     }
 }

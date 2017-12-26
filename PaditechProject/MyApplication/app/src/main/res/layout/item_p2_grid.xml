@@ -7,6 +7,7 @@
         android:id="@+id/iv_picture"
         android:layout_width="match_parent"
         android:layout_height="90dp"
+        android:scaleType="centerCrop"
         android:layout_margin="2px"
         android:background="@color/text_color_second" />
 </RelativeLayout>

@@ -65,13 +65,26 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
                     tvDone.setText(getResources().getString(R.string.save));
                 } else {
                     P5Activity.super.onBackPressed();
-                    ivPicture.setDrawingCacheEnabled(true);
+//                    ivPicture.setDrawingCacheEnabled(true);
                     //attempt to save
 //                    String imgSaved = MediaStore.Images.Media.insertImage(
 //                            getContentResolver(), ivPicture.getDrawingCache(),
 //                            UUID.randomUUID().toString() + ".png", "drawing");
 //                    Log.e("", "onClick: ");
-                    SaveImage.saveImage(ivPicture.getDrawingCache(), P5Activity.this, UUID.randomUUID().toString());
+                    ivPicture.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            GlideApp.with(P5Activity.this)
+                                    .asBitmap()
+                                    .load(picturePath)
+                                    .into(new SimpleTarget<Bitmap>() {
+                                        @Override
+                                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                                            SaveImage.saveImage(ivPicture.get(resource), P5Activity.this, UUID.randomUUID().toString());
+                                        }
+                                    });
+                        }
+                    });
                 }
             }
         });

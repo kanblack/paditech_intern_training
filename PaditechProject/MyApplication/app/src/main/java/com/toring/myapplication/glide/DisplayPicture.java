@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.toring.myapplication.R;
 
 /**
@@ -15,7 +16,7 @@ public class DisplayPicture {
         GlideApp.with(context)
                 .load(picturePath)
                 .centerInside()
-                .placeholder(R.drawable.ic_loading_rotate)
+//                .placeholder(R.drawable.ic_loading)
                 .error(R.mipmap.ic_launcher)
                 .into(iv);
     }
@@ -24,7 +25,7 @@ public class DisplayPicture {
         GlideApp.with(context)
                 .load(picturePath)
                 .centerCrop()
-                .placeholder(R.drawable.ic_loading_rotate)
+//                .placeholder(R.drawable.ic_loading)
                 .error(R.mipmap.ic_launcher)
                 .into(iv);
     }
