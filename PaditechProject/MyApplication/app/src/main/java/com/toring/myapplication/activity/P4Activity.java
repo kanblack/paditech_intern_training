@@ -88,7 +88,7 @@ public class P4Activity extends AppCompatActivity {
                             intent.putExtra(P4Activity.this.getResources().getString(R.string.picture), picturePath);
                             P4Activity.this.startActivity(intent);
                         } else {
-                            Glide.with(P4Activity.this)
+                            GlideApp.with(P4Activity.this)
                                     .asBitmap()
                                     .load(picturePath)
                                     .into(new SimpleTarget<Bitmap>() {

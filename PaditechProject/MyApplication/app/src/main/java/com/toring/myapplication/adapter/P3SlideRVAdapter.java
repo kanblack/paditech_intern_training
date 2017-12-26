@@ -47,22 +47,22 @@ public class P3SlideRVAdapter extends RecyclerView.Adapter<P3SlideRVAdapter.VHP3
 
         if (position == currentIndex) {
             holder.view.setBackgroundColor(context.getResources().getColor(R.color.colorAccent));
-
-            ViewGroup.LayoutParams params1 = holder.ivPicture.getLayoutParams();
-            params1.width += 30;
-            params1.height += 50;
-            holder.ivPicture.setLayoutParams(params1);
-            holder.view.setPadding(10,5,10,5);
+//
+//            ViewGroup.LayoutParams params1 = holder.ivPicture.getLayoutParams();
+//            params1.width += 30;
+//            params1.height += 50;
+//            holder.ivPicture.setLayoutParams(params1);
+//            holder.view.setPadding(10,5,10,5);
         } else {
             holder.view.setBackgroundColor(context.getResources().getColor(R.color.background_color));
-            DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-            float w = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50F, metrics);
-            float h = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 75F, metrics);
-            ViewGroup.LayoutParams params1 = holder.ivPicture.getLayoutParams();
-            params1.width = (int) w;
-            params1.height = (int) h;
-            holder.ivPicture.setLayoutParams(params1);
-            holder.view.setPadding(5,5,5,5);
+//            DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+//            float w = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50F, metrics);
+//            float h = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 75F, metrics);
+//            ViewGroup.LayoutParams params1 = holder.ivPicture.getLayoutParams();
+//            params1.width = (int) w;
+//            params1.height = (int) h;
+//            holder.ivPicture.setLayoutParams(params1);
+//            holder.view.setPadding(5,5,5,5);
         }
     }
 

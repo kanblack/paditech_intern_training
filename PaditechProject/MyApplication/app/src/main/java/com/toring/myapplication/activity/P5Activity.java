@@ -21,6 +21,7 @@ import com.toring.myapplication.customvie.DrawingView;
 import com.toring.myapplication.fragment.P5DrawFragment;
 import com.toring.myapplication.fragment.P5ImageFragment;
 import com.toring.myapplication.glide.DisplayPicture;
+import com.toring.myapplication.glide.GlideApp;
 import com.toring.myapplication.glide.SaveImage;
 import com.toring.myapplication.manager.ScreenManager;
 
@@ -70,7 +71,7 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
 //                            getContentResolver(), ivPicture.getDrawingCache(),
 //                            UUID.randomUUID().toString() + ".png", "drawing");
 //                    Log.e("", "onClick: ");
-                    SaveImage.saveImage(ivPicture.getDrawingCache(), P5Activity.this, UUID.randomUUID().toString() );
+                    SaveImage.saveImage(ivPicture.getDrawingCache(), P5Activity.this, UUID.randomUUID().toString());
                 }
             }
         });
@@ -103,33 +104,36 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
     }
 
     private void setData() {
-//        DisplayPicture.displayImage(this, picturePath, ivPicture);
+        DisplayPicture.displayImage(this, picturePath, ivPicture);
 
-        Glide.with(this)
-                .asBitmap()
-                .load(picturePath)
-                .into(new SimpleTarget<Bitmap>() {
-                    @Override
-                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                        float n =  (resource.getWidth() / (float)resource.getHeight());
-                        float m = (ivPicture.getWidth() / (float) ivPicture.getHeight());
+        ivPicture.post(new Runnable() {
+            @Override
+            public void run() {
+                GlideApp.with(P5Activity.this)
+                        .asBitmap()
+                        .load(picturePath)
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                                float n = (resource.getWidth() / (float) resource.getHeight());
+                                float m = (ivPicture.getWidth() / (float) ivPicture.getHeight());
 
-                        ViewGroup.LayoutParams params =  ivPicture.getLayoutParams();
-                        // image fit width
-                        if (n > m){
-                            float k = (ivPicture.getWidth()/ (float)resource.getWidth());
-                            params.height = (int) (resource.getHeight() * k);
-                            params.width = ivPicture.getWidth();
-                        }else {
-                            float k = (ivPicture.getHeight()/ (float) resource.getHeight());
-                            params.width = (int) (resource.getWidth() * k);
-                            params.height = ivPicture.getHeight();
-                        }
-                        ivPicture.setLayoutParams(params);
-
-                        ivPicture.setImageBitmap(resource);
-                    }
-                });
+                                ViewGroup.LayoutParams params = ivPicture.getLayoutParams();
+                                // image fit width
+                                if (n > m) {
+                                    float k = (ivPicture.getWidth() / (float) resource.getWidth());
+                                    params.height = (int) (resource.getHeight() * k);
+                                    params.width = ivPicture.getWidth();
+                                } else {
+                                    float k = (ivPicture.getHeight() / (float) resource.getHeight());
+                                    params.width = (int) (resource.getWidth() * k);
+                                    params.height = ivPicture.getHeight();
+                                }
+                                ivPicture.setLayoutParams(params);
+                            }
+                        });
+            }
+        });
 
 
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
