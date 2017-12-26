@@ -58,7 +58,7 @@ public class P2GridAdapter extends RecyclerView.Adapter<P2GridAdapter.VHP2Grid> 
         }
 
         public void bindData(final int position) {
-            DisplayPicture.displayImage(context, pictureList.get(position), ivPicture);
+            DisplayPicture.displayImageCrop(context, pictureList.get(position), ivPicture);
 
 
             view.setOnClickListener(new View.OnClickListener() {

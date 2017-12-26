@@ -6,7 +6,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,8 +35,6 @@ public class P3SlideFragment extends Fragment {
         // Required empty public constructor
     }
 
-    private View currentView;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,7 +48,7 @@ public class P3SlideFragment extends Fragment {
                 this.getContext(), pictureList);
         vp.setAdapter(vpAdapter);
 
-        P3SlideRVAdapter rvAdapter = new P3SlideRVAdapter(this.getContext(), pictureList);
+        final P3SlideRVAdapter rvAdapter = new P3SlideRVAdapter(this.getContext(), pictureList);
         rv.setAdapter(rvAdapter);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL, false);
         rv.setLayoutManager(linearLayoutManager);
@@ -60,13 +60,24 @@ public class P3SlideFragment extends Fragment {
 
             @Override
             public void onPageSelected(int position) {
-                rv.scrollToPosition(position);
-               select(linearLayoutManager.getChildAt(position));
+//                rv.scrollToPosition(position);
+
+                DisplayMetrics metrics = P3SlideFragment.this.getActivity().getResources().getDisplayMetrics();
+                float w = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 51, metrics);
+                w += 50;
+                linearLayoutManager.scrollToPositionWithOffset(position,
+                        (int) ((P3SlideFragment.this.getView().getWidth()-w)/2));
+
+                int oldIndex = rvAdapter.currentIndex;
+                rvAdapter.currentIndex = position;
+                rvAdapter.notifyItemChanged(position);
+                rvAdapter.notifyItemChanged(oldIndex);
+
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                Log.e("ok", "onPageScrollStateChanged: " + state);
             }
         });
 
@@ -74,19 +85,12 @@ public class P3SlideFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 vp.setCurrentItem((Integer) view.getTag(), true);
-                select(view);
+                int oldIndex = rvAdapter.currentIndex;
+                rvAdapter.currentIndex = (Integer) view.getTag();
+                rvAdapter.notifyItemChanged((Integer) view.getTag());
+                rvAdapter.notifyItemChanged(oldIndex);
             }
         });
-
         return view;
     }
-
-    public void select(View view){
-        if (currentView != null){
-            currentView.setBackgroundColor(getResources().getColor(R.color.background_color));
-        }
-        view.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-        currentView = view;
-    }
-
 }

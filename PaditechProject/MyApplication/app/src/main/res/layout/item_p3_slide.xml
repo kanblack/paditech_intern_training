@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:padding="1dp"
+    android:layout_height="100dp">
 
     <ImageView
         android:id="@+id/iv_picture"
-        android:layout_margin="9dp"
         android:layout_width="50dp"
         android:layout_centerInParent="true"
-        android:layout_height="75dp"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        android:layout_height="75dp"/>
 </RelativeLayout>

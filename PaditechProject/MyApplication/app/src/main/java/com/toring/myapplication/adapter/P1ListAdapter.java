@@ -61,7 +61,7 @@ public class P1ListAdapter extends RecyclerView.Adapter<P1ListAdapter.VHP1List> 
         }
 
         public void bindView(final int position) {
-            DisplayPicture.displayImage(context, pictureList.get(position), ivPicture);
+            DisplayPicture.displayImageCrop(context, pictureList.get(position), ivPicture);
             tv.setText(pictureList.get(position));
 
             view.setOnClickListener(new View.OnClickListener() {

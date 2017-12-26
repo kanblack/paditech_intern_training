@@ -48,7 +48,7 @@ public class ItemP3VPFragment extends Fragment {
                 ItemP3VPFragment.this.getContext().startActivity(intent, options.toBundle());
             }
         });
-        DisplayPicture.displayImage(this.getContext(), picturePath, ivPicture);
+        DisplayPicture.displayImageCrop(this.getContext(), picturePath, ivPicture);
         return view;
     }
 

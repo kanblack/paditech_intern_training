@@ -103,7 +103,7 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
     }
 
     private void setData() {
-        DisplayPicture.displayImage(this, picturePath, ivPicture);
+//        DisplayPicture.displayImage(this, picturePath, ivPicture);
 
         Glide.with(this)
                 .asBitmap()
@@ -126,6 +126,8 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
                             params.height = ivPicture.getHeight();
                         }
                         ivPicture.setLayoutParams(params);
+
+                        ivPicture.setImageBitmap(resource);
                     }
                 });
 
