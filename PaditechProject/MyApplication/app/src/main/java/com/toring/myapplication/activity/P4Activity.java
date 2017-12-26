@@ -33,6 +33,7 @@ import com.bumptech.glide.request.transition.Transition;
 import com.toring.myapplication.R;
 import com.toring.myapplication.glide.DisplayPicture;
 import com.toring.myapplication.glide.GlideApp;
+import com.toring.myapplication.glide.SaveImage;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -93,7 +94,7 @@ public class P4Activity extends AppCompatActivity {
                                     .into(new SimpleTarget<Bitmap>() {
                                         @Override
                                         public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                                            saveImage(resource);
+                                            SaveImage.saveImage(resource, P4Activity.this, picturePath);
                                         }
                                     });
                         }
@@ -107,48 +108,5 @@ public class P4Activity extends AppCompatActivity {
         });
     }
 
-    private String saveImage(Bitmap image) {
-        String savedImagePath = null;
 
-        String s = picturePath.replace(".", "_");
-        s = s.replace("/", "_");
-        s = s.replace("-", "_");
-        s = s.replace(":", "_");
-
-        Log.e("", "saveImage: " + s);
-
-        String imageFileName = "JPEG_" + s + ".jpg";
-        File storageDir = new File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
-                        + "/my_app");
-        boolean success = true;
-        if (!storageDir.exists()) {
-            success = storageDir.mkdirs();
-        }
-        if (success) {
-            File imageFile = new File(storageDir, imageFileName);
-            savedImagePath = imageFile.getAbsolutePath();
-            try {
-                OutputStream fOut = new FileOutputStream(imageFile);
-                image.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
-                fOut.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            // Add the image to the system gallery
-            galleryAddPic(savedImagePath);
-            Toast.makeText(P4Activity.this, "IMAGE SAVED", Toast.LENGTH_LONG)
-                    .show();
-        }
-        return savedImagePath;
-    }
-
-    private void galleryAddPic(String imagePath) {
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(imagePath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        sendBroadcast(mediaScanIntent);
-    }
 }

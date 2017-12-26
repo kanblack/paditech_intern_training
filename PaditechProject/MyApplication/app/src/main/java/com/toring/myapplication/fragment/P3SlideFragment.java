@@ -33,6 +33,8 @@ public class P3SlideFragment extends Fragment {
         // Required empty public constructor
     }
 
+    private View currentView;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,6 +61,7 @@ public class P3SlideFragment extends Fragment {
             @Override
             public void onPageSelected(int position) {
                 rv.scrollToPosition(position);
+               select(linearLayoutManager.getChildAt(position));
             }
 
             @Override
@@ -71,10 +74,19 @@ public class P3SlideFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 vp.setCurrentItem((Integer) view.getTag(), true);
+                select(view);
             }
         });
 
         return view;
+    }
+
+    public void select(View view){
+        if (currentView != null){
+            currentView.setBackgroundColor(getResources().getColor(R.color.background_color));
+        }
+        view.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+        currentView = view;
     }
 
 }

@@ -1,9 +1,6 @@
 package com.toring.myapplication.adapter;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.toring.myapplication.R;
-import com.toring.myapplication.activity.P4Activity;
 import com.toring.myapplication.glide.DisplayPicture;
 
 import java.util.List;
@@ -20,7 +16,7 @@ import java.util.List;
  * Created by tr on 12/18/17.
  */
 
-public class P3SlideRVAdapter extends RecyclerView.Adapter<P3SlideRVAdapter.VHP3SLide> {
+public class P3SlideRVAdapter extends RecyclerView.Adapter<P3SlideRVAdapter.VHP3Slide> {
     private Context context;
     private List<String> pitureList;
 
@@ -36,14 +32,14 @@ public class P3SlideRVAdapter extends RecyclerView.Adapter<P3SlideRVAdapter.VHP3
     }
 
     @Override
-    public VHP3SLide onCreateViewHolder(ViewGroup parent, int viewType) {
+    public VHP3Slide onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.item_p3_slide, parent, false);
-        return new VHP3SLide(view);
+        return new VHP3Slide(view);
     }
 
     @Override
-    public void onBindViewHolder(VHP3SLide holder, int position) {
+    public void onBindViewHolder(VHP3Slide holder, int position) {
         holder.bindView(position);
     }
 
@@ -52,11 +48,11 @@ public class P3SlideRVAdapter extends RecyclerView.Adapter<P3SlideRVAdapter.VHP3
         return pitureList.size();
     }
 
-    public class VHP3SLide extends RecyclerView.ViewHolder {
+    public class VHP3Slide extends RecyclerView.ViewHolder {
         private ImageView ivPicture;
         private View view;
 
-        public VHP3SLide(View itemView) {
+        public VHP3Slide(View itemView) {
             super(itemView);
             ivPicture = itemView.findViewById(R.id.iv_picture);
             view = itemView;
@@ -66,7 +62,6 @@ public class P3SlideRVAdapter extends RecyclerView.Adapter<P3SlideRVAdapter.VHP3
             DisplayPicture.displayImage(context, pitureList.get(position), ivPicture);
             view.setTag(position);
             view.setOnClickListener(onClickListener);
-
         }
     }
 }

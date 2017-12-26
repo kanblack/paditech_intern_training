@@ -16,18 +16,18 @@
     <TextView
         android:id="@+id/tv_done"
         android:layout_width="wrap_content"
-        android:paddingRight="@dimen/padding_8dp"
-        android:layout_marginRight="@dimen/margin_8dp"
-        android:paddingLeft="@dimen/padding_8dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/toolbar"
         android:layout_alignBottom="@id/toolbar"
         android:layout_alignParentRight="true"
-        android:text="@string/save"
+        android:layout_alignTop="@id/toolbar"
+        android:layout_marginRight="@dimen/margin_8dp"
         android:gravity="center"
+        android:paddingLeft="@dimen/padding_8dp"
+        android:paddingRight="@dimen/padding_8dp"
+        android:text="@string/save"
+        android:textColor="@android:color/white"
         android:textSize="@dimen/text_size_normal"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"/>
+        android:textStyle="bold" />
 
 
     <LinearLayout
@@ -55,8 +55,8 @@
 
         <View
             android:layout_width="1px"
-            android:layout_margin="@dimen/margin_4dp"
             android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_4dp"
             android:background="@color/text_color_second" />
 
         <RelativeLayout
@@ -84,11 +84,18 @@
         android:layout_marginTop="@dimen/margin_16dp"
         android:background="@color/text_color_second" />
 
-    <com.toring.myapplication.customvie.DrawingView
-        android:id="@+id/iv_picture"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:layout_above="@id/separator"
         android:layout_below="@id/toolbar"
-        android:layout_marginTop="@dimen/margin_16dp" />
+        android:layout_marginTop="@dimen/margin_16dp"
+        android:layout_height="match_parent">
+
+        <com.toring.myapplication.customvie.DrawingView
+            android:id="@+id/iv_picture"
+            android:scaleType="fitCenter"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
 </RelativeLayout>
