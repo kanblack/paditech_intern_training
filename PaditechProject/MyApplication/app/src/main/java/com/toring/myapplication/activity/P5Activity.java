@@ -18,6 +18,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.toring.myapplication.R;
 import com.toring.myapplication.customvie.DrawingView;
 import com.toring.myapplication.fragment.P5DrawFragment;
@@ -56,6 +58,15 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
 
         tvDone = this.findViewById(R.id.tv_done);
 
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.loadImage(picturePath, new SimpleImageLoadingListener() {
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                Bitmap bitmap = loadedImage.copy(Bitmap.Config.ARGB_8888, true);
+                ivPicture.setImage(bitmap);
+            }
+        });
+
         tvDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,20 +85,18 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
 //                            getContentResolver(), ivPicture.getDrawingCache(),
 //                            UUID.randomUUID().toString() + ".png", "drawing");
 //                    Log.e("", "onClick: ");
-                    ivPicture.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            GlideApp.with(P5Activity.this)
-                                    .asBitmap()
-                                    .load(picturePath)
-                                    .into(new SimpleTarget<Bitmap>() {
-                                        @Override
-                                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                                            SaveImage.saveImage(ivPicture.get(resource), P5Activity.this, UUID.randomUUID().toString());
-                                        }
-                                    });
-                        }
-                    });
+                    ImageLoader imageLoader = ImageLoader.getInstance();
+                    if (ivPicture.getImage() == null) {
+                        imageLoader.loadImage(picturePath, new SimpleImageLoadingListener() {
+                            @Override
+                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                Bitmap bitmap = loadedImage.copy(Bitmap.Config.ARGB_8888, true);
+                                SaveImage.saveImage(ivPicture.get(bitmap), P5Activity.this, UUID.randomUUID().toString());
+                            }
+                        });
+                    } else {
+                        SaveImage.saveImage(ivPicture.get(), P5Activity.this, UUID.randomUUID().toString());
+                    }
                 }
             }
         });

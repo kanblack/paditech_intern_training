@@ -12,16 +12,17 @@ import com.toring.myapplication.R;
  */
 
 public class DisplayPicture {
-    public static void displayImage(Context context, String picturePath, ImageView iv){
+    public static void displayImage(Context context, String picturePath, ImageView iv) {
         GlideApp.with(context)
                 .load(picturePath)
                 .centerInside()
+                .thumbnail(0.5f)
 //                .placeholder(R.drawable.ic_loading)
                 .error(R.mipmap.ic_launcher)
                 .into(iv);
     }
 
-    public static void displayImageCrop(Context context, String picturePath, ImageView iv){
+    public static void displayImageCrop(Context context, String picturePath, ImageView iv) {
         GlideApp.with(context)
                 .load(picturePath)
                 .centerCrop()

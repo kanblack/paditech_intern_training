@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -37,6 +38,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.toring.myapplication.R;
 import com.toring.myapplication.glide.DisplayPicture;
 import com.toring.myapplication.glide.GlideApp;
@@ -45,6 +48,7 @@ import com.toring.myapplication.glide.SaveImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 public class P4Activity extends AppCompatActivity {
@@ -54,6 +58,7 @@ public class P4Activity extends AppCompatActivity {
     private ImageView ivPicture;
 
     private String picturePath;
+    Bitmap bitmap;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -79,6 +84,14 @@ public class P4Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 P4Activity.this.onBackPressed();
+            }
+        });
+
+        ImageLoader imageLoader = ImageLoader.getInstance();
+        imageLoader.loadImage(picturePath, new SimpleImageLoadingListener() {
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                bitmap = loadedImage.copy(Bitmap.Config.ARGB_8888, true);
             }
         });
 
@@ -127,6 +140,8 @@ public class P4Activity extends AppCompatActivity {
                 final PopupWindow pw = new PopupWindow(layout, w,
                         h, true);
                 // display the popup in the center
+                pw.setBackgroundDrawable(new BitmapDrawable());
+                pw.setOutsideTouchable(true);
                 pw.showAsDropDown(ivPopup, 0, 0, Gravity.RIGHT);
 
                 RelativeLayout rlDownLoad = layout.findViewById(R.id.rl_download);
@@ -145,16 +160,18 @@ public class P4Activity extends AppCompatActivity {
                 rlDownLoad.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        GlideApp.with(P4Activity.this)
-                                .asBitmap()
-                                .load(picturePath)
-                                .into(new SimpleTarget<Bitmap>() {
-                                    @Override
-                                    public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                                        SaveImage.saveImage(resource, P4Activity.this, picturePath);
-                                    }
-                                });
-
+                        if (bitmap == null) {
+                            ImageLoader imageLoader = ImageLoader.getInstance();
+                            imageLoader.loadImage(picturePath, new SimpleImageLoadingListener() {
+                                @Override
+                                public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                                    bitmap = loadedImage.copy(Bitmap.Config.ARGB_8888, true);
+                                    SaveImage.saveImage(bitmap, P4Activity.this, UUID.randomUUID().toString());
+                                }
+                            });
+                        }else {
+                            SaveImage.saveImage(bitmap, P4Activity.this, UUID.randomUUID().toString());
+                        }
                         pw.dismiss();
                     }
                 });

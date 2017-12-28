@@ -27,9 +27,8 @@ class Point {
 
 public class DrawingView extends ImageView {
     private List<Path> paths = new ArrayList<>();
-    private List<Bitmap> bitmaps = new ArrayList<>();
     private List<Integer> colorList = new ArrayList<>();
-    private List<Point> pointList = new ArrayList<>();
+
     int color = R.color.color_1;
     int countPaths = 0;
 
@@ -38,7 +37,15 @@ public class DrawingView extends ImageView {
 
     private Context context;
 
-    private Bitmap bitmap, old;
+    private Bitmap bitmap, old, image;
+
+    public void setImage(Bitmap image) {
+        this.image = image;
+    }
+
+    public Bitmap getImage() {
+        return image;
+    }
 
     public void saveImage(){
         old = bitmap;
@@ -146,7 +153,7 @@ public class DrawingView extends ImageView {
 
 
     public Bitmap get (Bitmap bitmap){
-        Bitmap mbitmap = Bitmap.createScaledBitmap(bitmap, bitmap.getWidth(), bitmap.getHeight(), false);
+        Bitmap mbitmap = Bitmap.createScaledBitmap(image, bitmap.getWidth(), bitmap.getHeight(), false);
         Canvas canvas = new Canvas(mbitmap);
         Bitmap bitmap1 = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas1 = new Canvas(bitmap1);
@@ -159,6 +166,25 @@ public class DrawingView extends ImageView {
             canvas1.drawBitmap(old, 0, 0, mPaint);
 
         bitmap1 = Bitmap.createScaledBitmap(bitmap1, bitmap.getWidth(), bitmap.getHeight(), false);
+        canvas.drawBitmap(bitmap1, 0, 0, mPaint);
+
+        return mbitmap;
+    }
+
+    public Bitmap get (){
+        Bitmap mbitmap = Bitmap.createScaledBitmap(image, image.getWidth(), image.getHeight(), false);
+        Canvas canvas = new Canvas(mbitmap);
+        Bitmap bitmap1 = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas1 = new Canvas(bitmap1);
+        for (int i = 0; i < paths.size(); i++) {
+            mPaint.setColor(context.getResources().getColor(colorList.get(i)));
+            canvas1.drawPath(paths.get(i), mPaint);
+        }
+        mPaint.setColor(context.getResources().getColor(color));
+        if (old != null)
+            canvas1.drawBitmap(old, 0, 0, mPaint);
+
+        bitmap1 = Bitmap.createScaledBitmap(bitmap1, image.getWidth(), image.getHeight(), false);
         canvas.drawBitmap(bitmap1, 0, 0, mPaint);
 
         return mbitmap;
