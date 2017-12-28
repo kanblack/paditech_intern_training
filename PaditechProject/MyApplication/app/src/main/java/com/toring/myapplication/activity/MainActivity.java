@@ -11,6 +11,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginBehavior;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.toring.myapplication.R;
 import com.toring.myapplication.adapter.P2GridAdapter;
 import com.toring.myapplication.fragment.P1ListFragment;
@@ -34,10 +42,13 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     private List<String> pictureList;
     private ImageView ivChangeMode;
+    private LoginButton btLoginFace;
 
     private int modeVIew = 0;
     private Fragment currentFragment;
     private int iconChangeMode = R.drawable.ic_apps_white_24dp;
+
+    private CallbackManager callbackManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,57 +56,42 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ivChangeMode = this.findViewById(R.id.iv_change_mode);
+        btLoginFace = this.findViewById(R.id.bt_login_face);
+
+        callbackManager = CallbackManager.Factory.create();
+
 
         ivChangeMode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (pictureList != null) {
-                    switch (modeVIew) {
-                        case 0: {
-                            iconChangeMode = R.drawable.ic_slideshow_white_24dp;
-                            P2GridFragment p2GridFragment = new P2GridFragment();
-                            p2GridFragment.setPictureList(pictureList);
-                            currentFragment = p2GridFragment;
-                            break;
-                        }
+                changeMode();
+            }
+        });
 
-                        case 1: {
-                            iconChangeMode = R.drawable.ic_view_list_white_24dp;
-                            P3SlideFragment p3SlideFragment = new P3SlideFragment();
-                            p3SlideFragment.setPictureList(pictureList);
-                            currentFragment = p3SlideFragment;
-                            break;
-                        }
+//        btLoginFace.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                loginFacebook();
+//            }
+//        });
+        btLoginFace.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
 
-                        case 2: {
-                            iconChangeMode = R.drawable.ic_apps_white_24dp;
-                            P1ListFragment p1ListFragment = new P1ListFragment();
-                            p1ListFragment.setPictureList(pictureList);
-                            currentFragment = p1ListFragment;
-                            modeVIew = -1;
-                            break;
-                        }
-                    }
+            }
 
-                    ivChangeMode.setImageResource(iconChangeMode);
+            @Override
+            public void onCancel() {
 
-                    ScreenManager.replaceFragment(MainActivity.this,
-                            R.id.content,
-                            currentFragment,
-                            false);
+            }
 
-                    modeVIew++;
-                }
+            @Override
+            public void onError(FacebookException error) {
+
             }
         });
 
         getData();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-//        getData();
     }
 
     private void getData() {
@@ -160,5 +156,72 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
         }
+    }
+
+    private void changeMode() {
+        if (pictureList != null) {
+            switch (modeVIew) {
+                case 0: {
+                    iconChangeMode = R.drawable.ic_slideshow_white_24dp;
+                    P2GridFragment p2GridFragment = new P2GridFragment();
+                    p2GridFragment.setPictureList(pictureList);
+                    currentFragment = p2GridFragment;
+                    break;
+                }
+
+                case 1: {
+                    iconChangeMode = R.drawable.ic_view_list_white_24dp;
+                    P3SlideFragment p3SlideFragment = new P3SlideFragment();
+                    p3SlideFragment.setPictureList(pictureList);
+                    currentFragment = p3SlideFragment;
+                    break;
+                }
+
+                case 2: {
+                    iconChangeMode = R.drawable.ic_apps_white_24dp;
+                    P1ListFragment p1ListFragment = new P1ListFragment();
+                    p1ListFragment.setPictureList(pictureList);
+                    currentFragment = p1ListFragment;
+                    modeVIew = -1;
+                    break;
+                }
+            }
+
+            ivChangeMode.setImageResource(iconChangeMode);
+
+            ScreenManager.replaceFragment(MainActivity.this,
+                    R.id.content,
+                    currentFragment,
+                    false);
+
+            modeVIew++;
+        }
+    }
+
+    private void loginFacebook(){
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                Log.e("", "onSuccess: "+loginResult.getAccessToken().getToken() );
+            }
+
+            @Override
+            public void onCancel() {
+                Log.e("", "onCancel: " );
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Log.e("", "onCancel: " );
+
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+//        super.onActivityResult(requestCode, resultCode, data);
     }
 }

@@ -13,6 +13,15 @@
         android:layout_height="@dimen/app_bar_heigth"
         android:background="@color/colorPrimary">
 
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/bt_login_face"
+            android:layout_width="@dimen/app_bar_heigth"
+            android:layout_height="@dimen/app_bar_heigth"
+            android:layout_marginRight="@dimen/margin_4dp"
+            android:padding="@dimen/padding_8dp"
+            android:src="@drawable/ic_facebook"
+            tools:ignore="VectorDrawableCompat"  />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
