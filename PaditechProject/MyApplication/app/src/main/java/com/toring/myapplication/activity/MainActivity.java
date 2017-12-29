@@ -2,6 +2,7 @@ package com.toring.myapplication.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -11,9 +12,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.Profile;
 import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
@@ -30,7 +38,11 @@ import com.toring.myapplication.network.modle.DataObject;
 import com.toring.myapplication.network.modle.MainObject;
 import com.toring.myapplication.network.service.ServiceGetPicture;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.realm.Realm;
@@ -42,7 +54,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     private List<String> pictureList;
     private ImageView ivChangeMode;
-    private LoginButton btLoginFace;
+    private ImageView btLoginFace;
 
     private int modeVIew = 0;
     private Fragment currentFragment;
@@ -55,29 +67,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
         ivChangeMode = this.findViewById(R.id.iv_change_mode);
         btLoginFace = this.findViewById(R.id.bt_login_face);
 
         callbackManager = CallbackManager.Factory.create();
 
-
-        ivChangeMode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeMode();
-            }
-        });
-
-//        btLoginFace.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                loginFacebook();
-//            }
-//        });
-        btLoginFace.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-
+                Log.e("OK", "onSuccess: " + loginResult.getAccessToken().getToken());
             }
 
             @Override
@@ -91,7 +91,62 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ivChangeMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeMode();
+            }
+        });
+
+        btLoginFace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (AccessToken.getCurrentAccessToken() == null) {
+                    loginFacebook();
+                } else {
+                    loginDone();
+                }
+            }
+        });
+
         getData();
+    }
+
+    private void loginDone() {
+        final GraphRequest request = GraphRequest.newGraphPathRequest(
+                AccessToken.getCurrentAccessToken(),
+                "/" + AccessToken.getCurrentAccessToken().getUserId(),
+                new GraphRequest.Callback() {
+                    @Override
+                    public void onCompleted(GraphResponse response) {
+                        Log.e("OKKOKO", "onCompleted: " + response.getJSONObject().toString());
+                    }
+                });
+
+        Bundle bundle = new Bundle();
+        bundle.putString("fields", "id, name");
+        request.setParameters(bundle);
+        request.executeAsync();
+
+        Uri s = Profile.getCurrentProfile().getProfilePictureUri(500, 500);
+
+
+        GraphRequest request1 = new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                "/" + AccessToken.getCurrentAccessToken().getUserId() + "/albums",
+                null,
+                HttpMethod.GET,
+                new GraphRequest.Callback() {
+                    public void onCompleted(GraphResponse response) {
+                        Log.e("OKOKOKOKOOOKO", "onCompleted: " + response.getJSONObject().toString());
+                    }
+                }
+        );
+
+        Bundle bundle1 = new Bundle();
+        bundle.putString("fields", "id, name");
+        request1.setParameters(bundle1);
+        request1.executeAsync();
     }
 
     private void getData() {
@@ -198,30 +253,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void loginFacebook(){
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                Log.e("", "onSuccess: "+loginResult.getAccessToken().getToken() );
-            }
-
-            @Override
-            public void onCancel() {
-                Log.e("", "onCancel: " );
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Log.e("", "onCancel: " );
-
-            }
-        });
+    private void loginFacebook() {
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList(
+                "public_profile", "user_photos", "user_friends", "profile_pic"));
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
-//        super.onActivityResult(requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

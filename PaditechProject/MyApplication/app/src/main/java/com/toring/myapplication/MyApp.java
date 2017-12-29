@@ -1,6 +1,8 @@
 package com.toring.myapplication;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
@@ -31,7 +33,5 @@ public class MyApp extends Application {
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this).build();
         ImageLoader.getInstance().init(config);
-
-        FacebookSdk.sdkInitialize(getApplicationContext());
     }
 }

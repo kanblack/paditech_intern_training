@@ -13,7 +13,7 @@
         android:layout_height="@dimen/app_bar_heigth"
         android:background="@color/colorPrimary">
 
-        <com.facebook.login.widget.LoginButton
+        <ImageView
             android:id="@+id/bt_login_face"
             android:layout_width="@dimen/app_bar_heigth"
             android:layout_height="@dimen/app_bar_heigth"
