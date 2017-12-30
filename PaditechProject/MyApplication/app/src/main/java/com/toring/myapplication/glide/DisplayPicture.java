@@ -17,7 +17,6 @@ public class DisplayPicture {
                 .load(picturePath)
                 .centerInside()
                 .thumbnail(0.5f)
-//                .placeholder(R.drawable.ic_loading)
                 .error(R.mipmap.ic_launcher)
                 .into(iv);
     }
@@ -26,7 +25,30 @@ public class DisplayPicture {
         GlideApp.with(context)
                 .load(picturePath)
                 .centerCrop()
-//                .placeholder(R.drawable.ic_loading)
+                .error(R.mipmap.ic_launcher)
+                .into(iv);
+    }
+
+    public static void displayImageCrop(Context context, int picturePath, ImageView iv) {
+        GlideApp.with(context)
+                .load(picturePath)
+                .centerCrop()
+                .error(R.mipmap.ic_launcher)
+                .into(iv);
+    }
+
+    public static void displayImageCircleCrop(Context context, String picturePath, ImageView iv) {
+        GlideApp.with(context)
+                .load(picturePath)
+                .circleCrop()
+                .error(R.mipmap.ic_launcher)
+                .into(iv);
+    }
+
+    public static void displayImageCircleCrop(Context context, int picturePath, ImageView iv) {
+        GlideApp.with(context)
+                .load(picturePath)
+                .circleCrop()
                 .error(R.mipmap.ic_launcher)
                 .into(iv);
     }

@@ -20,9 +20,10 @@
             android:layout_marginRight="@dimen/margin_4dp"
             android:padding="@dimen/padding_8dp"
             android:src="@drawable/ic_facebook"
-            tools:ignore="VectorDrawableCompat"  />
+            tools:ignore="VectorDrawableCompat" />
 
         <TextView
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -40,6 +41,19 @@
             android:padding="@dimen/padding_8dp"
             app:srcCompat="@drawable/ic_apps_white_24dp"
             tools:ignore="VectorDrawableCompat" />
+
+        <TextView
+            android:id="@+id/tv_logout"
+            android:visibility="gone"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:paddingRight="@dimen/padding_16dp"
+            android:text="@string/logout"
+            android:textColor="@color/background_color"
+            android:textSize="@dimen/text_size_normal"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     <RelativeLayout

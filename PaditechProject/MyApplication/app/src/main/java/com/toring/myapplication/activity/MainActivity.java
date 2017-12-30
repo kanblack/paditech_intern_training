@@ -2,18 +2,17 @@ package com.toring.myapplication.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -22,22 +21,22 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.Profile;
-import com.facebook.login.LoginBehavior;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.toring.myapplication.R;
-import com.toring.myapplication.adapter.P2GridAdapter;
+import com.toring.myapplication.fragment.AlbumListFragment;
 import com.toring.myapplication.fragment.P1ListFragment;
 import com.toring.myapplication.fragment.P2GridFragment;
 import com.toring.myapplication.fragment.P3SlideFragment;
+import com.toring.myapplication.glide.DisplayPicture;
 import com.toring.myapplication.manager.ScreenManager;
 import com.toring.myapplication.network.RetrofitFactory;
+import com.toring.myapplication.network.facebook_model.Album;
 import com.toring.myapplication.network.modle.DataObject;
 import com.toring.myapplication.network.modle.MainObject;
 import com.toring.myapplication.network.service.ServiceGetPicture;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,7 +45,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmResults;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -55,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private List<String> pictureList;
     private ImageView ivChangeMode;
     private ImageView btLoginFace;
+    private TextView tvLogout, tvTitle;
 
     private int modeVIew = 0;
     private Fragment currentFragment;
@@ -67,17 +66,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FacebookSdk.sdkInitialize(getApplicationContext());
-
         ivChangeMode = this.findViewById(R.id.iv_change_mode);
         btLoginFace = this.findViewById(R.id.bt_login_face);
+        tvLogout = this.findViewById(R.id.tv_logout);
+        tvTitle = this.findViewById(R.id.tv_title);
 
+        FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
-
         LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                Log.e("OK", "onSuccess: " + loginResult.getAccessToken().getToken());
+                loginDone();
             }
 
             @Override
@@ -91,13 +90,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ivChangeMode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeMode();
-            }
-        });
+        setEvent();
 
+        if (AccessToken.getCurrentAccessToken() == null) {
+            getDataNotLogin();
+        } else {
+            loginDone();
+        }
+
+    }
+
+    private void setEvent() {
         btLoginFace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,47 +112,111 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        getData();
+        ivChangeMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeMode();
+            }
+        });
+    }
+
+    private void loginFacebook() {
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList(
+                "public_profile", "user_photos", "user_friends", "profile_pic"));
     }
 
     private void loginDone() {
-        final GraphRequest request = GraphRequest.newGraphPathRequest(
+        getProfile();
+
+        changeUIWithLogin(true);
+
+        getDataLogin();
+    }
+
+    private void getProfile() {
+        GraphRequest request = GraphRequest.newGraphPathRequest(
                 AccessToken.getCurrentAccessToken(),
                 "/" + AccessToken.getCurrentAccessToken().getUserId(),
                 new GraphRequest.Callback() {
                     @Override
                     public void onCompleted(GraphResponse response) {
-                        Log.e("OKKOKO", "onCompleted: " + response.getJSONObject().toString());
+                        DisplayPicture.displayImageCircleCrop(MainActivity.this,
+                                Profile.getCurrentProfile().getProfilePictureUri(500, 500).toString(),
+                                btLoginFace);
                     }
                 });
-
-        Bundle bundle = new Bundle();
-        bundle.putString("fields", "id, name");
-        request.setParameters(bundle);
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "profile_pic");
+        request.setParameters(parameters);
         request.executeAsync();
+    }
 
-        Uri s = Profile.getCurrentProfile().getProfilePictureUri(500, 500);
+    private void getDataLogin() {
+        getListAlbum();
+    }
 
-
-        GraphRequest request1 = new GraphRequest(
+    private void getListAlbum() {
+        GraphRequest request = new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
                 "/" + AccessToken.getCurrentAccessToken().getUserId() + "/albums",
                 null,
                 HttpMethod.GET,
                 new GraphRequest.Callback() {
                     public void onCompleted(GraphResponse response) {
-                        Log.e("OKOKOKOKOOOKO", "onCompleted: " + response.getJSONObject().toString());
+                        try {
+                            ArrayList<Album> arrayList = new ArrayList<>();
+                            JSONArray albums = response.getJSONObject().getJSONArray("data");
+                            for (int j = 0; j < albums.length(); j++) {
+                                JSONObject object = (JSONObject) albums.get(j);
+                                Album album = new Album();
+                                album.setId(object.getString("id"));
+                                album.setName(object.getString("name"));
+                                arrayList.add(album);
+                            }
+                            AlbumListFragment albumListFragment = new AlbumListFragment();
+                            albumListFragment.setAlbumList(arrayList);
+                            ScreenManager.replaceFragment(MainActivity.this, R.id.content,
+                                    albumListFragment, false);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
         );
 
-        Bundle bundle1 = new Bundle();
-        bundle.putString("fields", "id, name");
-        request1.setParameters(bundle1);
-        request1.executeAsync();
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id, name");
+        request.setParameters(parameters);
+        request.executeAsync();
     }
 
-    private void getData() {
+    private void changeUIWithLogin(boolean b) {
+        if (b) {
+            ivChangeMode.setVisibility(View.GONE);
+            tvLogout.setVisibility(View.VISIBLE);
+            if (Profile.getCurrentProfile().getProfilePictureUri(500, 500) != null) {
+                DisplayPicture.displayImageCircleCrop(this,
+                        Profile.getCurrentProfile().getProfilePictureUri(500, 500).toString(),
+                        btLoginFace);
+            } else {
+                DisplayPicture.displayImageCircleCrop(this,
+                        R.drawable.ic_person_white_24dp,
+                        btLoginFace);
+            }
+            tvTitle.setText(Profile.getCurrentProfile().getName());
+        } else {
+            ivChangeMode.setVisibility(View.GONE);
+            tvLogout.setVisibility(View.VISIBLE);
+            DisplayPicture.displayImageCircleCrop(this,
+                    R.drawable.ic_facebook,
+                    btLoginFace);
+
+            tvTitle.setText(getResources().getText(R.string.app_name));
+        }
+    }
+
+
+    private void getDataNotLogin() {
         final Realm realm = Realm.getDefaultInstance();
         List<DataObject> myData = realm.where(DataObject.class).findAll();
         if (myData.size() != 0) {
@@ -195,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
                             alertDialog.setPositiveButton("Tải lại", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    MainActivity.this.getData();
+                                    MainActivity.this.getDataNotLogin();
                                 }
                             });
 
@@ -251,11 +318,6 @@ public class MainActivity extends AppCompatActivity {
 
             modeVIew++;
         }
-    }
-
-    private void loginFacebook() {
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList(
-                "public_profile", "user_photos", "user_friends", "profile_pic"));
     }
 
     @Override
