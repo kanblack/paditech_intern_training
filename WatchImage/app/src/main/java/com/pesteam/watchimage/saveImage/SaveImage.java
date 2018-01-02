@@ -11,7 +11,6 @@ import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -31,10 +30,9 @@ public class SaveImage {
     private String img_url;
     private Bitmap image;
     private int position;
-    private int what_screen;
-    public static final int SCR_5 = 0;
-    public static final int SCR_51 = 1;
-    public static final int SCR_52 = 2;
+    private int whatTypeSave;
+    public static final int NO_FRAME = 0;
+    public static final int FRAME = 1;
 
     public Bitmap getImage() {
         return image;
@@ -44,14 +42,14 @@ public class SaveImage {
         return position;
     }
 
-    public SaveImage(Context context, String img_url, int position, int what_screen) {
+    public SaveImage(Context context, String img_url, int position, int whatTypeScreen) {
         this.context = context;
         this.img_url = img_url;
         this.position = position;
-        this.what_screen = what_screen;
+        this.whatTypeSave = whatTypeScreen;
     }
 
-    public void checkPermission(Bitmap bitmap){
+    void checkPermission(Bitmap bitmap){
         image = bitmap;
         Log.e("checkPermission: ", "sdsđsds" );
         if (Build.VERSION.SDK_INT >= 23) {
@@ -102,16 +100,12 @@ public class SaveImage {
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
 
                 image = loadedImage;
-                switch (what_screen){
-                    case SCR_5:
+                switch (whatTypeSave){
+                    case NO_FRAME:
                         checkPermission(image);
                         break;
-                    case SCR_51:
-                        saveImageScreen51_52(bitmapPath);
-                        break;
-                    case SCR_52:
-                        saveImageScreen51_52(bitmapPath);
-                        Log.e("case scr_52: ", SCR_52+"" );
+                    case FRAME:
+                        saveImageScreenHasFrame(bitmapPath);
                         break;
                 }
                 Log.e("onLoadingComplete: ", "aaaa" );
@@ -126,8 +120,8 @@ public class SaveImage {
     }
 
 
-    private void saveImageScreen51_52(Bitmap bitmapPath){
-        Log.e("saveImageScreen51_52: ", " " );
+    private void saveImageScreenHasFrame(Bitmap bitmapPath){
+        Log.e("saveImageScr: ", " " );
         Bitmap bitmapPathScale = Bitmap.createScaledBitmap(bitmapPath,image.getWidth(),image.getHeight(),true);
         Bitmap bitmapBackground = Bitmap.createBitmap(image.getWidth(),image.getHeight(),Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmapBackground);

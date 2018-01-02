@@ -106,6 +106,16 @@ public class CanvasView extends View {
         invalidate();
     }
 
+    public void screen5DrawFrame(Bitmap frame){
+        mbitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        mcanvas = new Canvas(mbitmap);
+        Log.e("screen51DrawFrame: ", "abc" );
+        Bitmap scaleFrame = Bitmap.createScaledBitmap(frame, width,height, true);
+        mcanvas.drawBitmap(scaleFrame,0,0, null);
+        paths.clear();
+        invalidate();
+    }
+
 
     public void screen52ChangePaint(int colors) {
         mpath = new Path();

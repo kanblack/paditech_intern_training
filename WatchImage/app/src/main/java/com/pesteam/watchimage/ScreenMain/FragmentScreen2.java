@@ -19,8 +19,11 @@ import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.pesteam.watchimage.R;
 import com.pesteam.watchimage.Screen4Activity;
+import com.pesteam.watchimage.facebook.Albums;
+import com.pesteam.watchimage.facebook.GetFbData;
 
 import java.util.List;
 
@@ -44,32 +47,34 @@ public class FragmentScreen2 extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_screen_2, container, false);
         ButterKnife.bind(this, view);
+        mainActivity.setWhatFragment(MainActivity.FRAG_2);
         changeFragment();
         getData();
         return view;
     }
 
     private void getData() {
-        List<String> url_images = mainActivity.getUrls();
-        if(url_images.size()%3!=0){
-            for (int i = 0; i < url_images.size()%3; i++) {
-                url_images.add("");
-            }
-        }
+        final List<Albums> url_images = mainActivity.getAlbums();
         adapter.setList(url_images);
         grd_view.setAdapter(adapter);
         grd_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getContext(), Screen4Activity.class);
-                intent.putExtra("img_url", mainActivity.getUrl_image().get(i));
-                intent.putExtra("position", i);
-                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.
-                        makeSceneTransitionAnimation((Activity) getContext(),
-                                view,
-                                ViewCompat.getTransitionName(view));
-                mainActivity.startActivity(intent, optionsCompat.toBundle());
+                if(mainActivity.getWhatStyle() == MainActivity.STYLE_PHOTOS
+                        || mainActivity.getWhatStyle() == MainActivity.STYPE_NOTFB) {
+                    Intent intent = new Intent(getContext(), Screen4Activity.class);
+                    intent.putExtra("img_url", mainActivity.getAlbums().get(i).getUrlCoverPhoto());
+                    intent.putExtra("position", i);
+                    ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.
+                            makeSceneTransitionAnimation((Activity) getContext(),
+                                    view,
+                                    ViewCompat.getTransitionName(view));
+                    mainActivity.startActivity(intent, optionsCompat.toBundle());
+                } else {
+                    GetFbData getFbData = new GetFbData(mainActivity);
+                    getFbData.getDataPhotoFromFb(url_images.get(i).getId(), AccessToken.getCurrentAccessToken(), "");
+                }
             }
         });
     }
@@ -80,8 +85,14 @@ public class FragmentScreen2 extends android.support.v4.app.Fragment {
             @SuppressLint("CommitTransaction")
             @Override
             public void onClick(View view) {
-                getFragmentManager().beginTransaction().replace(R.id.frag_screen123, new FragmentScreen3()).addToBackStack(null).commit();
-                mainActivity.bt_change_frag.setImageResource(R.drawable.icon_tool_bar_screen3);
+                if(mainActivity.getWhatStyle() == MainActivity.STYLE_PHOTOS
+                        || mainActivity.getWhatStyle() == MainActivity.STYPE_NOTFB) {
+                    getFragmentManager().beginTransaction().replace(R.id.frag_screen123, new FragmentScreen3()).addToBackStack(null).commit();
+                    mainActivity.bt_change_frag.setImageResource(R.drawable.icon_tool_bar_screen3);
+                } else {
+                    getFragmentManager().beginTransaction().replace(R.id.frag_screen123, new FragmentScreen1()).addToBackStack(null).commit();
+                    mainActivity.bt_change_frag.setImageResource(R.drawable.icon_tool_bar_screen1);
+                }
             }
         });
     }

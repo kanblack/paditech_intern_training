@@ -13,4 +13,14 @@
         android:background="#646464"
         android:padding="1dp"
         android:src="@drawable/background"/>
+    <TextView
+        android:id="@+id/tex_title_child_grv_screen2"
+        android:gravity="center"
+        android:padding="1dp"
+        android:textColor="#ffffff"
+        android:text="sdsdsd"
+        android:layout_width="match_parent"
+        android:background="#a2181818"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>

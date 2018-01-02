@@ -2,14 +2,18 @@ package com.pesteam.watchimage.Screen5;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.os.Handler;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.pesteam.watchimage.R;
+import com.pesteam.watchimage.ScreenMain.AdapterScreen3;
 import com.pesteam.watchimage.ScreenMain.MainActivity;
 
 import butterknife.BindView;
@@ -27,6 +31,8 @@ public class Screen5Activity extends AppCompatActivity {
     private int position;
     private Boolean exit = false;
     private int wwhatFrag;
+    private Canvas mcanvas;
+    private Bitmap bitmap;
     public static final int FRAG_5 = 0;
     public static final int FRAG_51 = 1;
     public static final int FRAG_52 = 2;
@@ -56,7 +62,7 @@ public class Screen5Activity extends AppCompatActivity {
     private void changefragment() {
         ft_tran.replace(R.id.frag_activity5, new FragmentScreen5());
         ft_tran.addToBackStack(null);
-        ft_tran.commitAllowingStateLoss();
+        ft_tran.commit();
         wwhatFrag = FRAG_5;
     }
 
@@ -84,5 +90,20 @@ public class Screen5Activity extends AppCompatActivity {
 
     }
 
+    public void drawBitmap(Bitmap mbitmap){
+        Log.e( "drawBitmap: ", mbitmap.getWidth() + "   "+ mbitmap.getHeight() );
+        Bitmap bitmap1 = Bitmap.createScaledBitmap(mbitmap, bitmap.getWidth(),bitmap.getHeight(),true);
+        mcanvas.drawBitmap(bitmap1,0,0,null);
+    }
 
+    public void creatBitMap(final int width, final int height) {
+
+            bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+            mcanvas = new Canvas(bitmap);
+            Log.e("creatBitMap: ", width+"   "+height);
+    }
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
 }

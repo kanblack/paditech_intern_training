@@ -35,7 +35,7 @@ public class AdapterScreen52 extends RecyclerView.Adapter<AdapterScreen52.BaseHo
     };
     private FragmentScreen52 fragmentScreen52;
 
-    public AdapterScreen52(FragmentScreen52 fragmentScreen52) {
+    AdapterScreen52(FragmentScreen52 fragmentScreen52) {
         this.fragmentScreen52 = fragmentScreen52;
     }
 

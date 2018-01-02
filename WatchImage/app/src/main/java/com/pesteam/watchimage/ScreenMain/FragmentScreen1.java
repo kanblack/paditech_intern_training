@@ -26,7 +26,7 @@ public class FragmentScreen1 extends android.support.v4.app.Fragment {
     RecyclerView rcv_screen1;
     @BindView(R.id.progress)
     ProgressBar progress;
-    private MainActivity mainActivity;
+    MainActivity mainActivity;
     private AdapterScreen1 adapter = new AdapterScreen1(this);
 
 
@@ -36,12 +36,13 @@ public class FragmentScreen1 extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.fragment_screen_1, container, false);
         ButterKnife.bind(this, view);
         changeFragment();
+        mainActivity.setWhatFragment(MainActivity.FRAG_1);
         getData();
         return view;
     }
 
     private void getData() {
-        adapter.setLists(mainActivity.getUrl_image());
+        adapter.setLists(mainActivity.getAlbums());
         rcv_screen1.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         rcv_screen1.setAdapter(adapter);
     }

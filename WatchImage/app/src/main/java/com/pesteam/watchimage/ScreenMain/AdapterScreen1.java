@@ -24,8 +24,11 @@ import com.bumptech.glide.request.RequestFutureTarget;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
+import com.facebook.AccessToken;
 import com.pesteam.watchimage.R;
 import com.pesteam.watchimage.Screen4Activity;
+import com.pesteam.watchimage.facebook.Albums;
+import com.pesteam.watchimage.facebook.GetFbData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,9 +42,10 @@ import butterknife.ButterKnife;
 
 public class AdapterScreen1 extends RecyclerView.Adapter<AdapterScreen1.BaseHolder> {
 
-    private List<String> lists = new ArrayList<>();
+    private List<Albums> lists = new ArrayList<>();
     private FragmentScreen1 fragmentScreen1;
-    void setLists(List<String> lists) {
+
+    void setLists(List<Albums> lists) {
         this.lists = lists;
     }
 
@@ -96,9 +100,10 @@ public class AdapterScreen1 extends RecyclerView.Adapter<AdapterScreen1.BaseHold
 
         @Override
         protected void onBindingData(int position) {
+            MainActivity mainActivity = fragmentScreen1.mainActivity;
             fragmentScreen1.progress.setVisibility(View.VISIBLE);
             Glide.with(itemView.getContext())
-                    .load(lists.get(position))
+                    .load(lists.get(position).getUrlCoverPhoto())
                     .apply(new RequestOptions().placeholder(R.drawable.image))
                     .listener(new RequestListener<Drawable>() {
                         @Override
@@ -113,19 +118,32 @@ public class AdapterScreen1 extends RecyclerView.Adapter<AdapterScreen1.BaseHold
                             return false;
                         }
                     }).into(img_child);
+            if (mainActivity.getWhatStyle() == MainActivity.STYLE_ALBUMS) {
+                tx_title.setText(lists.get(position).getName());
+                tx_des.setText(lists.get(position).getCount() + " images");
+            } else {
+
+            }
         }
 
         @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(itemView.getContext(), Screen4Activity.class);
-            intent.putExtra("img_url", lists.get(getLayoutPosition()));
-            intent.putExtra("position", getLayoutPosition());
-            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.
-                    makeSceneTransitionAnimation((Activity) itemView.getContext(),
-                            img_child,
-                            ViewCompat.getTransitionName(img_child));
-            itemView.getContext().startActivity(intent, optionsCompat.toBundle());
+            MainActivity mainActivity = fragmentScreen1.mainActivity;
+            if (mainActivity.getWhatStyle() == MainActivity.STYLE_PHOTOS
+                    || mainActivity.getWhatStyle() == MainActivity.STYPE_NOTFB) {
+                Intent intent = new Intent(itemView.getContext(), Screen4Activity.class);
+                intent.putExtra("img_url", lists.get(getLayoutPosition()).getUrlCoverPhoto());
+                intent.putExtra("position", getLayoutPosition());
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.
+                        makeSceneTransitionAnimation((Activity) itemView.getContext(),
+                                img_child,
+                                ViewCompat.getTransitionName(img_child));
+                itemView.getContext().startActivity(intent, optionsCompat.toBundle());
+            } else {
+                GetFbData getFbData = new GetFbData(mainActivity);
+                getFbData.getDataPhotoFromFb(lists.get(getLayoutPosition()).getId(), AccessToken.getCurrentAccessToken(), "");
+            }
         }
     }
 }

@@ -15,4 +15,7 @@
         android:background="#646464"
         android:padding="1dp"
         android:src="@drawable/background"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>

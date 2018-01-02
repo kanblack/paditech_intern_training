@@ -3,11 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/img_screen5"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/ln_bottom_screen5"/>
+        android:layout_above="@+id/ln_bottom_screen5">
+        <com.pesteam.watchimage.Canvas.EditableImageView
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/editable_img_screen5"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/ln_bottom_screen5"

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.os.Message;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
+
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -25,6 +27,10 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.pesteam.watchimage.R;
 import com.pesteam.watchimage.Screen5.FragmentScreen5;
+import com.pesteam.watchimage.Screen5.Screen5Activity;
+import com.pesteam.watchimage.ScreenMain.MainActivity;
+
+import javax.security.auth.login.LoginException;
 
 /**
  * Created by bangindong on 12/20/2017.
@@ -35,7 +41,7 @@ public class EditableImageView extends RelativeLayout {
     private int width;
     private int height;
     private Context context;
-    View imageView;
+    ImageView imageView;
     View rootView;
     private Bitmap frame;
 
@@ -59,8 +65,32 @@ public class EditableImageView extends RelativeLayout {
                     @Override
                     public boolean onPreDraw() {
                         imageView.getViewTreeObserver().removeOnPreDrawListener(this);
+//                        Log.e( "onPreDraw: ", getMeasuredWidth() + "   " + getMeasuredHeight() );
                         width = imageView.getMeasuredWidth();
                         height = imageView.getMeasuredHeight();
+                        if(width > height) {
+//                            Log.e( "onPreDraw: before ", + width +"    "+height );
+                            int heightNew = (height * getMeasuredWidth())/width;
+                            imageView.getLayoutParams().width = getMeasuredWidth();
+                            imageView.getLayoutParams().height = heightNew;
+                            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                            width = getMeasuredWidth();
+                            height = heightNew;
+//                            Log.e( "onPreDraw: after ", + width +"    "+height );
+                        } else {
+                            if (width <= height) {
+//                                Log.e("onPreDraw: before ", +width + "    " + height);
+//                                Log.e("onPreDraw: before ", +width + "    " + height);
+                                int widthNew = (width * getMeasuredHeight()) / height;
+                                imageView.getLayoutParams().width = widthNew;
+                                imageView.getLayoutParams().height = getMeasuredHeight();
+                                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                                width = widthNew;
+                                height = getMeasuredHeight();
+//                                Log.e("onPreDraw: after ", +width + "    " + height);
+                            }
+                        }
+
 //                        resize();
                         requestLayout();
                         return false;
@@ -69,7 +99,7 @@ public class EditableImageView extends RelativeLayout {
                 return false;
             }
         })
-                .into((ImageView) imageView);
+                .into(imageView);
 
     }
 
@@ -89,6 +119,7 @@ public class EditableImageView extends RelativeLayout {
     public EditableImageView(Context context) {
         super(context);
         this.context = context;
+        innit(context);
     }
 
 
@@ -103,13 +134,15 @@ public class EditableImageView extends RelativeLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         if(width>0) {
-            setMeasuredDimension(width,height);
+//            Log.e( "onMeasure: after ", + width +"    "+height );
             canvasView.innit(width, height);
             if(frame!= null){
                 canvasView.screen51DrawFrame(frame);
             }
-            width = 0;
         }
+//        Log.e( "onMeasure: after ", + width +"    "+height );
+//        Log.e( "onMeasure: after ", + getMeasuredWidth() +"    "+ getMeasuredHeight() );
+
     }
 
     @Override

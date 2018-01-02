@@ -4,8 +4,10 @@
     android:layout_height="match_parent"
     android:background="#454343">
 
-    <ImageView
-        android:id="@+id/big_img_screen3"
+    <android.support.v4.view.ViewPager
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/view_paper_screen3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/rcv_screen3"
@@ -14,7 +16,8 @@
         android:layout_alignParentBottom="true"
         android:id="@+id/rcv_screen3"
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
 
     </android.support.v7.widget.RecyclerView>
 </RelativeLayout>

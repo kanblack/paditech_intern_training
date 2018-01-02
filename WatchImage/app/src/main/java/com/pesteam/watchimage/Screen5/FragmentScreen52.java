@@ -58,8 +58,28 @@ public class FragmentScreen52 extends Fragment {
 
 
     private void start() {
-        saveImage = new SaveImage(mainActivity, mainActivity.getImg_url(), mainActivity.getPosition(), SaveImage.SCR_52);
         editable_img_screen52.setImage(mainActivity.getImg_url());
+        if (mainActivity.getBitmap() != null) {
+            final Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    while (editable_img_screen52.canvasView.width == 0) {
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    mainActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            editable_img_screen52.canvasView.screen5DrawFrame(mainActivity.getBitmap());
+                        }
+                    });
+                }
+            });
+            thread.start();
+        }
         rcv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         rcv.setAdapter(adapter);
         toolbarButtonAction();
@@ -70,13 +90,15 @@ public class FragmentScreen52 extends Fragment {
         mainActivity.icon_accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                saveImage.loadImage(editable_img_screen52.canvasView.getMbitmap());
+                mainActivity.drawBitmap(editable_img_screen52.canvasView.getMbitmap());
+                mainActivity.getSupportFragmentManager().beginTransaction().replace(R.id.frag_activity5, new FragmentScreen5()).addToBackStack(null).commit();
+                mainActivity.setWwhatFrag(Screen5Activity.FRAG_5);
             }
         });
         mainActivity.icon_back_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentManager().beginTransaction().replace(R.id.frag_activity5, new FragmentScreen5()).addToBackStack(null).commit();
+                mainActivity.getSupportFragmentManager().beginTransaction().replace(R.id.frag_activity5, new FragmentScreen5()).addToBackStack(null).commit();
                 mainActivity.setWwhatFrag(Screen5Activity.FRAG_5);
             }
         });
@@ -92,16 +114,4 @@ public class FragmentScreen52 extends Fragment {
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        Log.e( "onRequestPermission: ", ",,,,," );
-        if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            Log.v("Permission: ",  permissions[0] + "was " + grantResults[0]);
-            saveImage.saveToInternalStorage(saveImage.getImage(),saveImage.getPosition());
-        }
-        else {
-            Toast.makeText(this.getContext(),"Bạn không cho lưu vào thẻ nhớ, không thể lưu được",Toast.LENGTH_LONG).show();
-        }
-    }
 }

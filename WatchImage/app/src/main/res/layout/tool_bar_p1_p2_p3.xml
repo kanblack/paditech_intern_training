@@ -5,7 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:background="@color/colorBlueSky">
+    <ImageButton
+        android:id="@+id/bt_login_fb_screen1"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:background="@color/colorBlueSky"
+        android:src="@drawable/icon_login_screen1"
+        android:layout_marginLeft="7dp"/>
     <TextView
+        android:id="@+id/tex_title_toolbar_screen1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"

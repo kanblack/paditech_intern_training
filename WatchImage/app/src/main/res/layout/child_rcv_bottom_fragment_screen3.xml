@@ -2,34 +2,25 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="150dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="#575757"
     android:id="@+id/background_rl_child_rcv_bottom_screen3"
     android:gravity="center"
+    android:background="#454343"
     android:layout_gravity="center">
     <ImageView
-        android:padding="5dp"
         android:layout_centerInParent="true"
         android:id="@+id/img_child_rcv_screen3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/background"
-        android:scaleType="centerInside"
-        android:transitionName="simple_activity_transition"
-        tools:ignore="UnusedAttribute"
+        android:scaleType="centerCrop"
         />
     <View
-        android:layout_alignLeft="@+id/img_rcv_screen51"
-        android:layout_alignRight="@+id/img_rcv_screen51"
-        android:layout_alignBottom="@+id/img_rcv_screen51"
-        android:layout_alignTop="@+id/img_rcv_screen51"
+        android:layout_centerInParent="true"
         android:id="@+id/view_child_rcv_bottom_fragment_screen3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/view_img_whenclick_rcv_bt_screen3"
-        tools:ignore="UnknownIdInLayout"
-        android:layout_alignEnd="@+id/img_rcv_screen51"
-        android:layout_alignStart="@+id/img_rcv_screen51" />
+        />
 
 </RelativeLayout>
