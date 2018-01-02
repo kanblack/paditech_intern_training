@@ -3,6 +3,7 @@ package com.toring.myapplication.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,6 +26,11 @@ public class AlbumListFragment extends Fragment {
     private RecyclerView rvAlbum;
     private ArrayList<Album> albumList;
     private AlbumAdapter albumAdapter;
+    private View.OnClickListener onClickListener;
+
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
 
     public void setAlbumList(ArrayList<Album> albumList) {
         this.albumList = albumList;
@@ -42,8 +48,9 @@ public class AlbumListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_album_list, container, false);
         rvAlbum = view.findViewById(R.id.rv_album);
         albumAdapter = new AlbumAdapter(this.getContext(), albumList);
+        albumAdapter.setOnClickListener(onClickListener);
         rvAlbum.setAdapter(albumAdapter);
-        rvAlbum.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        rvAlbum.setLayoutManager(new GridLayoutManager(this.getContext(), 2, LinearLayoutManager.VERTICAL, false));
         return view;
     }
 

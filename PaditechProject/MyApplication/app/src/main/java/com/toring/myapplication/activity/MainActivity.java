@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private int iconChangeMode = R.drawable.ic_apps_white_24dp;
 
     private CallbackManager callbackManager;
+    private View.OnClickListener albumClick;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +99,45 @@ public class MainActivity extends AppCompatActivity {
             loginDone();
         }
 
+        albumClick = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btLoginFace.setImageResource(R.drawable.ic_arrow_back_black_24dp);
+                tvLogout.setVisibility(View.GONE);
+                ivChangeMode.setVisibility(View.VISIBLE);
+                tvTitle.setText(((Album) view.getTag()).getName());
+                getAlbumPhoto(((Album) view.getTag()).getId());
+            }
+        };
+    }
+
+    private void getAlbumPhoto(String albumID) {
+        new GraphRequest(
+                AccessToken.getCurrentAccessToken(),
+                "/" + albumID + "/photos",
+                null,
+                HttpMethod.GET,
+                new GraphRequest.Callback() {
+                    public void onCompleted(GraphResponse response) {
+                        try {
+                            List<String> images = new ArrayList<>();
+                            JSONArray temp = response.getJSONObject().getJSONArray("data");
+                            for (int i = 0; i < temp.length(); i++) {
+                                temp.get(i);
+                                images.add(((JSONObject) temp.get(i)).getString("id"));
+                            }
+                            P1ListFragment p1ListFragment = new P1ListFragment();
+                            p1ListFragment.setPictureList(images);
+                            currentFragment = p1ListFragment;
+                            ScreenManager.replaceFragment(MainActivity.this,
+                                    R.id.content,
+                                    currentFragment, true);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        ).executeAsync();
     }
 
     private void setEvent() {
@@ -156,10 +196,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getListAlbum() {
+        Bundle parameters = new Bundle();
+        parameters.putString("fields", "id, name");
         GraphRequest request = new GraphRequest(
                 AccessToken.getCurrentAccessToken(),
                 "/" + AccessToken.getCurrentAccessToken().getUserId() + "/albums",
-                null,
+                parameters,
                 HttpMethod.GET,
                 new GraphRequest.Callback() {
                     public void onCompleted(GraphResponse response) {
@@ -174,19 +216,17 @@ public class MainActivity extends AppCompatActivity {
                                 arrayList.add(album);
                             }
                             AlbumListFragment albumListFragment = new AlbumListFragment();
+                            albumListFragment.setOnClickListener(albumClick);
                             albumListFragment.setAlbumList(arrayList);
+                            currentFragment = albumListFragment;
                             ScreenManager.replaceFragment(MainActivity.this, R.id.content,
-                                    albumListFragment, false);
+                                    currentFragment, false);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
                 }
         );
-
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id, name");
-        request.setParameters(parameters);
         request.executeAsync();
     }
 
@@ -226,9 +266,10 @@ public class MainActivity extends AppCompatActivity {
             }
             P1ListFragment p1ListFragment = new P1ListFragment();
             p1ListFragment.setPictureList(pictureList);
+            currentFragment = p1ListFragment;
             ScreenManager.replaceFragment(MainActivity.this,
                     R.id.content,
-                    p1ListFragment,
+                    currentFragment,
                     false);
         } else {
             ServiceGetPicture getPicture = RetrofitFactory.getInstance().createService(ServiceGetPicture.class);
@@ -242,9 +283,10 @@ public class MainActivity extends AppCompatActivity {
 
                             P1ListFragment p1ListFragment = new P1ListFragment();
                             p1ListFragment.setPictureList(pictureList);
+                            currentFragment = p1ListFragment;
                             ScreenManager.replaceFragment(MainActivity.this,
                                     R.id.content,
-                                    p1ListFragment,
+                                    currentFragment,
                                     false);
 
                             realm.beginTransaction();

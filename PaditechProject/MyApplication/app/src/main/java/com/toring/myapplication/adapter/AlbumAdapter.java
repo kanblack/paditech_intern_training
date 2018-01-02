@@ -28,6 +28,11 @@ import java.util.List;
 public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumVH> {
     private Context context;
     private List<Album> albumList;
+    private View.OnClickListener onClickListener;
+
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
 
     public AlbumAdapter(Context context, List<Album> albumList) {
         this.context = context;
@@ -54,6 +59,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumVH> {
     public class AlbumVH extends RecyclerView.ViewHolder {
         private ImageView ivCover;
         private TextView tvName, tvCount;
+        private View view;
 
         public AlbumVH(View itemView) {
             super(itemView);
@@ -61,9 +67,13 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumVH> {
             ivCover = itemView.findViewById(R.id.iv_cover);
             tvName = itemView.findViewById(R.id.tv_album_name);
             tvCount = itemView.findViewById(R.id.tv_count);
+            view = itemView;
         }
 
         public void onBindView(int position) {
+            view.setTag(albumList.get(position));
+            view.setOnClickListener(onClickListener);
+
             tvName.setText(albumList.get(position).getName());
             Bundle bundle = new Bundle();
             bundle.putString("fields", "id, count, cover_photo, name");
