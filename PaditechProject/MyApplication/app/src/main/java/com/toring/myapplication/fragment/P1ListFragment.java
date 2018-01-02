@@ -18,13 +18,13 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class P1ListFragment extends Fragment {
+public class P1ListFragment extends FragmentBase {
     private RecyclerView rvList;
-    private List<String> pictureList;
+//    private List<String> pictureList;
 
-    public void setPictureList(List<String> pictureList) {
-        this.pictureList = pictureList;
-    }
+//    public void setPictureList(List<String> pictureList) {
+//        this.pictureList = pictureList;
+//    }
 
     public P1ListFragment() {
         // Required empty public constructor
@@ -37,7 +37,7 @@ public class P1ListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_p1_list, container, false);
         rvList = view.findViewById(R.id.rv_list);
-        P1ListAdapter adapter = new P1ListAdapter(this.getActivity(), pictureList);
+        P1ListAdapter adapter = new P1ListAdapter(this.getActivity(), pictureList, isFacebook);
         rvList.setAdapter(adapter);
         rvList.setLayoutManager(new LinearLayoutManager(this.getContext()));
         return view;

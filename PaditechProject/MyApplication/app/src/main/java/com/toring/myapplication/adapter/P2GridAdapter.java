@@ -20,13 +20,10 @@ import java.util.List;
  * Created by tr on 12/18/17.
  */
 
-public class P2GridAdapter extends RecyclerView.Adapter<P2GridAdapter.VHP2Grid> {
-    private Context context;
-    private List<String> pictureList;
+public class P2GridAdapter extends BaseAdapter {
 
-    public P2GridAdapter(Context context, List<String> pictureList) {
-        this.context = context;
-        this.pictureList = pictureList;
+    public P2GridAdapter(Activity context, List<String> pictureList, boolean isFacebook) {
+        super(context, pictureList, isFacebook);
     }
 
     @Override
@@ -37,8 +34,8 @@ public class P2GridAdapter extends RecyclerView.Adapter<P2GridAdapter.VHP2Grid> 
     }
 
     @Override
-    public void onBindViewHolder(VHP2Grid holder, int position) {
-        holder.bindData(position);
+    public void onBindViewHolder(VH holder, int position) {
+        holder.bindView(position);
     }
 
     @Override
@@ -46,9 +43,7 @@ public class P2GridAdapter extends RecyclerView.Adapter<P2GridAdapter.VHP2Grid> 
         return pictureList.size();
     }
 
-    public class VHP2Grid extends RecyclerView.ViewHolder{
-
-        private ImageView ivPicture;
+    public class VHP2Grid extends BaseAdapter.VH{
         private View view;
 
         public VHP2Grid(View itemView) {
@@ -57,9 +52,10 @@ public class P2GridAdapter extends RecyclerView.Adapter<P2GridAdapter.VHP2Grid> 
             view = itemView;
         }
 
-        public void bindData(final int position) {
-            DisplayPicture.displayImageCrop(context, pictureList.get(position), ivPicture);
+        public void bindView(final int position) {
+//            DisplayPicture.displayImageCrop(context, pictureList.get(position), ivPicture);
 
+            super.bindView(position);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override

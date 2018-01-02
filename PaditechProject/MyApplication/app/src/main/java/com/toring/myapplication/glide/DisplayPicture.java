@@ -21,6 +21,15 @@ public class DisplayPicture {
                 .into(iv);
     }
 
+    public static void displayImage(Context context, int picturePath, ImageView iv) {
+        GlideApp.with(context)
+                .load(picturePath)
+                .centerInside()
+                .thumbnail(0.5f)
+                .error(R.mipmap.ic_launcher)
+                .into(iv);
+    }
+
     public static void displayImageCrop(Context context, String picturePath, ImageView iv) {
         GlideApp.with(context)
                 .load(picturePath)

@@ -22,14 +22,14 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class P3SlideFragment extends Fragment {
+public class P3SlideFragment extends FragmentBase {
     private ViewPager vp;
     private RecyclerView rv;
-    private List<String> pictureList;
+//    private List<String> pictureList;
 
-    public void setPictureList(List<String> pictureList) {
-        this.pictureList = pictureList;
-    }
+//    public void setPictureList(List<String> pictureList) {
+//        this.pictureList = pictureList;
+//    }
 
     public P3SlideFragment() {
         // Required empty public constructor
@@ -48,7 +48,7 @@ public class P3SlideFragment extends Fragment {
                 this.getContext(), pictureList);
         vp.setAdapter(vpAdapter);
 
-        final P3SlideRVAdapter rvAdapter = new P3SlideRVAdapter(this.getContext(), pictureList);
+        final P3SlideRVAdapter rvAdapter = new P3SlideRVAdapter(this.getActivity(), pictureList, isFacebook);
         rv.setAdapter(rvAdapter);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL, false);
         rv.setLayoutManager(linearLayoutManager);

@@ -3,31 +3,32 @@ package com.toring.myapplication.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.toring.myapplication.R;
 import com.toring.myapplication.activity.P4Activity;
 import com.toring.myapplication.glide.DisplayPicture;
 
+import org.json.JSONException;
+
 import java.util.List;
 
-/**
- * Created by tr on 12/18/17.
- */
+public class P1ListAdapter extends BaseAdapter {
 
-public class P1ListAdapter extends RecyclerView.Adapter<P1ListAdapter.VHP1List> {
-    private Activity context;
-    private List<String> pictureList;
-
-    public P1ListAdapter(Activity context, List<String> pictureList) {
-        this.context = context;
-        this.pictureList = pictureList;
+    public P1ListAdapter(Activity context, List<String> pictureList, boolean isFacebook) {
+        super(context, pictureList, isFacebook);
     }
 
     @Override
@@ -38,7 +39,7 @@ public class P1ListAdapter extends RecyclerView.Adapter<P1ListAdapter.VHP1List> 
     }
 
     @Override
-    public void onBindViewHolder(VHP1List holder, int position) {
+    public void onBindViewHolder(VH holder, int position) {
         holder.bindView(position);
     }
 
@@ -47,8 +48,7 @@ public class P1ListAdapter extends RecyclerView.Adapter<P1ListAdapter.VHP1List> 
         return pictureList.size();
     }
 
-    public class VHP1List extends RecyclerView.ViewHolder{
-        private ImageView ivPicture;
+    public class VHP1List extends BaseAdapter.VH {
         private TextView tv;
         private View view;
 
@@ -61,7 +61,8 @@ public class P1ListAdapter extends RecyclerView.Adapter<P1ListAdapter.VHP1List> 
         }
 
         public void bindView(final int position) {
-            DisplayPicture.displayImageCrop(context, pictureList.get(position), ivPicture);
+            super.bindView(position);
+
             tv.setText(pictureList.get(position));
 
             view.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +72,7 @@ public class P1ListAdapter extends RecyclerView.Adapter<P1ListAdapter.VHP1List> 
 
                     intent.putExtra(context.getResources().getString(R.string.picture), pictureList.get(position));
                     ActivityOptionsCompat options = ActivityOptionsCompat.
-                            makeSceneTransitionAnimation(context, (View)ivPicture, "detail");
+                            makeSceneTransitionAnimation(context, (View) ivPicture, "detail");
                     context.startActivity(intent, options.toBundle());
                 }
             });

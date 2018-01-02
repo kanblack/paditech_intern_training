@@ -1,5 +1,6 @@
 package com.toring.myapplication.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
@@ -18,9 +19,7 @@ import java.util.List;
  * Created by tr on 12/18/17.
  */
 
-public class P3SlideRVAdapter extends RecyclerView.Adapter<P3SlideRVAdapter.VHP3Slide> {
-    private Context context;
-    private List<String> pictureList;
+public class P3SlideRVAdapter extends BaseAdapter {
     public int currentIndex = 0;
 
     private View.OnClickListener onClickListener;
@@ -29,9 +28,8 @@ public class P3SlideRVAdapter extends RecyclerView.Adapter<P3SlideRVAdapter.VHP3
         this.onClickListener = onClickListener;
     }
 
-    public P3SlideRVAdapter(Context context, List<String> pictureList) {
-        this.context = context;
-        this.pictureList = pictureList;
+    public P3SlideRVAdapter(Activity context, List<String> pictureList, boolean isFacebook) {
+        super(context, pictureList, isFacebook);
     }
 
     @Override
@@ -42,7 +40,7 @@ public class P3SlideRVAdapter extends RecyclerView.Adapter<P3SlideRVAdapter.VHP3
     }
 
     @Override
-    public void onBindViewHolder(final VHP3Slide holder, final int position) {
+    public void onBindViewHolder(final VH holder, final int position) {
         holder.bindView(position);
 
         if (position == currentIndex) {
@@ -71,8 +69,7 @@ public class P3SlideRVAdapter extends RecyclerView.Adapter<P3SlideRVAdapter.VHP3
         return pictureList.size();
     }
 
-    public class VHP3Slide extends RecyclerView.ViewHolder {
-        private ImageView ivPicture;
+    public class VHP3Slide extends BaseAdapter.VH {
         private View view;
 
         public VHP3Slide(View itemView) {
@@ -82,7 +79,9 @@ public class P3SlideRVAdapter extends RecyclerView.Adapter<P3SlideRVAdapter.VHP3
         }
 
         public void bindView(final int position) {
-            DisplayPicture.displayImageCrop(context, pictureList.get(position), ivPicture);
+//            DisplayPicture.displayImageCrop(context, pictureList.get(position), ivPicture);
+            super.bindView(position);
+
             view.setTag(position);
             view.setOnClickListener(onClickListener);
         }

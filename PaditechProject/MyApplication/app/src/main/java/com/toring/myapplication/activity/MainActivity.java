@@ -52,7 +52,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     private List<String> pictureList;
     private ImageView ivChangeMode;
-    private ImageView btLoginFace;
+    private ImageView btLoginFace, ivBack;
     private TextView tvLogout, tvTitle;
 
     private int modeVIew = 0;
@@ -62,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     private View.OnClickListener albumClick;
 
+    private boolean isFacebook = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         ivChangeMode = this.findViewById(R.id.iv_change_mode);
         btLoginFace = this.findViewById(R.id.bt_login_face);
+        ivBack = findViewById(R.id.iv_back);
         tvLogout = this.findViewById(R.id.tv_logout);
         tvTitle = this.findViewById(R.id.tv_title);
 
@@ -128,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                             P1ListFragment p1ListFragment = new P1ListFragment();
                             p1ListFragment.setPictureList(images);
+                            p1ListFragment.setFacebook(isFacebook);
                             currentFragment = p1ListFragment;
                             ScreenManager.replaceFragment(MainActivity.this,
                                     R.id.content,
@@ -158,14 +162,24 @@ public class MainActivity extends AppCompatActivity {
                 changeMode();
             }
         });
+
+        tvLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeUIWithLogin(false);
+                getDataNotLogin();
+                isFacebook = false;
+            }
+        });
     }
 
     private void loginFacebook() {
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList(
-                "public_profile", "user_photos", "user_friends", "profile_pic"));
+                "public_profile", "user_photos", "user_friends"));
     }
 
     private void loginDone() {
+        isFacebook = true;
         getProfile();
 
         changeUIWithLogin(true);
@@ -183,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
                         DisplayPicture.displayImageCircleCrop(MainActivity.this,
                                 Profile.getCurrentProfile().getProfilePictureUri(500, 500).toString(),
                                 btLoginFace);
+                        tvTitle.setText(Profile.getCurrentProfile().getName());
                     }
                 });
         Bundle parameters = new Bundle();
@@ -234,20 +249,10 @@ public class MainActivity extends AppCompatActivity {
         if (b) {
             ivChangeMode.setVisibility(View.GONE);
             tvLogout.setVisibility(View.VISIBLE);
-            if (Profile.getCurrentProfile().getProfilePictureUri(500, 500) != null) {
-                DisplayPicture.displayImageCircleCrop(this,
-                        Profile.getCurrentProfile().getProfilePictureUri(500, 500).toString(),
-                        btLoginFace);
-            } else {
-                DisplayPicture.displayImageCircleCrop(this,
-                        R.drawable.ic_person_white_24dp,
-                        btLoginFace);
-            }
-            tvTitle.setText(Profile.getCurrentProfile().getName());
         } else {
-            ivChangeMode.setVisibility(View.GONE);
-            tvLogout.setVisibility(View.VISIBLE);
-            DisplayPicture.displayImageCircleCrop(this,
+            ivChangeMode.setVisibility(View.VISIBLE);
+            tvLogout.setVisibility(View.GONE);
+            DisplayPicture.displayImage(this,
                     R.drawable.ic_facebook,
                     btLoginFace);
 
@@ -329,6 +334,7 @@ public class MainActivity extends AppCompatActivity {
                     iconChangeMode = R.drawable.ic_slideshow_white_24dp;
                     P2GridFragment p2GridFragment = new P2GridFragment();
                     p2GridFragment.setPictureList(pictureList);
+                    p2GridFragment.setFacebook(isFacebook);
                     currentFragment = p2GridFragment;
                     break;
                 }
@@ -337,6 +343,7 @@ public class MainActivity extends AppCompatActivity {
                     iconChangeMode = R.drawable.ic_view_list_white_24dp;
                     P3SlideFragment p3SlideFragment = new P3SlideFragment();
                     p3SlideFragment.setPictureList(pictureList);
+                    p3SlideFragment.setFacebook(isFacebook);
                     currentFragment = p3SlideFragment;
                     break;
                 }
@@ -345,6 +352,7 @@ public class MainActivity extends AppCompatActivity {
                     iconChangeMode = R.drawable.ic_apps_white_24dp;
                     P1ListFragment p1ListFragment = new P1ListFragment();
                     p1ListFragment.setPictureList(pictureList);
+                    p1ListFragment.setFacebook(isFacebook);
                     currentFragment = p1ListFragment;
                     modeVIew = -1;
                     break;
