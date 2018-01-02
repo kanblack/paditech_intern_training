@@ -59,30 +59,30 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.VH> {
         }
 
         public void bindView(final int position) {
-            if (isFacebook) {
-                String id = pictureList.get(position);
-                Bundle parameter = new Bundle();
-                parameter.putString("fields", "link, images");
-                new GraphRequest(
-                        AccessToken.getCurrentAccessToken(),
-                        "/" + id,
-                        parameter,
-                        HttpMethod.GET,
-                        new GraphRequest.Callback() {
-                            public void onCompleted(GraphResponse response) {
-                                try {
-                                    JSONObject object = (JSONObject) response.getJSONObject().getJSONArray("images").get(0);
-                                    String source = object.getString("source");
-                                    DisplayPicture.displayImageCrop(context, source, ivPicture);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                ).executeAsync();
-            } else {
+//            if (isFacebook) {
+//                String id = pictureList.get(position);
+//                Bundle parameter = new Bundle();
+//                parameter.putString("fields", "link, images");
+//                new GraphRequest(
+//                        AccessToken.getCurrentAccessToken(),
+//                        "/" + id,
+//                        parameter,
+//                        HttpMethod.GET,
+//                        new GraphRequest.Callback() {
+//                            public void onCompleted(GraphResponse response) {
+//                                try {
+//                                    JSONObject object = (JSONObject) response.getJSONObject().getJSONArray("images").get(0);
+//                                    String source = object.getString("source");
+//                                    DisplayPicture.displayImageCrop(context, source, ivPicture);
+//                                } catch (JSONException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        }
+//                ).executeAsync();
+//            } else {
                 DisplayPicture.displayImageCrop(context, pictureList.get(position), ivPicture);
-            }
+//            }
         }
     }
 }

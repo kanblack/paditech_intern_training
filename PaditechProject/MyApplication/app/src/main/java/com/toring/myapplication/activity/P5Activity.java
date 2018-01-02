@@ -51,15 +51,12 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
     private TextView tvDone;
     private View currentViewDraw, currentViewImage;
 
-    private boolean isFacebook = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_p5);
 
         picturePath = getIntent().getStringExtra(this.getResources().getString(R.string.picture));
-        isFacebook = getIntent().getBooleanExtra(this.getResources().getString(R.string.is_facebook), false);
 
         ivPicture = this.findViewById(R.id.iv_picture);
         toolbar = this.findViewById(R.id.toolbar);
@@ -139,31 +136,8 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
     }
 
     private void setData() {
-        if (isFacebook) {
-            String id = picturePath;
-            Bundle parameter = new Bundle();
-            parameter.putString("fields", "link, images");
-            new GraphRequest(
-                    AccessToken.getCurrentAccessToken(),
-                    "/" + id,
-                    parameter,
-                    HttpMethod.GET,
-                    new GraphRequest.Callback() {
-                        public void onCompleted(GraphResponse response) {
-                            try {
-                                JSONObject object = (JSONObject) response.getJSONObject().getJSONArray("images").get(0);
-                                String source = object.getString("source");
-                                DisplayPicture.displayImageCrop(P5Activity.this, source, ivPicture);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-            ).executeAsync();
-        } else {
             DisplayPicture.displayImage(P5Activity.this
                     , picturePath, ivPicture);
-        }
 
         ivPicture.post(new Runnable() {
             @Override

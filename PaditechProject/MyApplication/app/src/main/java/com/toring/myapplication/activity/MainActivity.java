@@ -50,6 +50,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.facebook.AccessToken.getCurrentAccessToken;
+
 public class MainActivity extends AppCompatActivity {
     private List<String> pictureList;
     private ImageView ivChangeMode;
@@ -99,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
         setEvent();
 
-        if (AccessToken.getCurrentAccessToken() == null) {
+        if (getCurrentAccessToken() == null) {
             getDataNotLogin();
         } else {
             loginDone();
@@ -120,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void getAlbumPhoto(String albumID) {
         new GraphRequest(
-                AccessToken.getCurrentAccessToken(),
+                getCurrentAccessToken(),
                 "/" + albumID + "/photos",
                 null,
                 HttpMethod.GET,
@@ -131,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                             JSONArray temp = response.getJSONObject().getJSONArray("data");
                             for (int i = 0; i < temp.length(); i++) {
                                 temp.get(i);
-                                pictureList.add(((JSONObject) temp.get(i)).getString("id"));
+                                pictureList.add(getImageUrlById(((JSONObject) temp.get(i)).getString("id"), 500));
                             }
                             P1ListFragment p1ListFragment = new P1ListFragment();
                             p1ListFragment.setPictureList(pictureList);
@@ -148,11 +150,19 @@ public class MainActivity extends AppCompatActivity {
         ).executeAsync();
     }
 
+    public static String getImageUrlById(String id, int expectWidth) {
+        if (AccessToken.getCurrentAccessToken() != null) {
+            String accessToken = getCurrentAccessToken().getToken();
+            return String.format("https://graph.facebook.com/%s/picture?width=%d&access_token=%s", id, expectWidth, accessToken);
+        }
+        return null;
+    }
+
     private void setEvent() {
         btLoginFace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (AccessToken.getCurrentAccessToken() == null) {
+                if (getCurrentAccessToken() == null) {
                     loginFacebook();
                 } else {
                     loginDone();
@@ -203,8 +213,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void getProfile() {
         GraphRequest request = GraphRequest.newGraphPathRequest(
-                AccessToken.getCurrentAccessToken(),
-                "/" + AccessToken.getCurrentAccessToken().getUserId(),
+                getCurrentAccessToken(),
+                "/" + getCurrentAccessToken().getUserId(),
                 new GraphRequest.Callback() {
                     @Override
                     public void onCompleted(GraphResponse response) {
@@ -228,8 +238,8 @@ public class MainActivity extends AppCompatActivity {
         Bundle parameters = new Bundle();
         parameters.putString("fields", "id, name");
         GraphRequest request = new GraphRequest(
-                AccessToken.getCurrentAccessToken(),
-                "/" + AccessToken.getCurrentAccessToken().getUserId() + "/albums",
+                getCurrentAccessToken(),
+                "/" + getCurrentAccessToken().getUserId() + "/albums",
                 parameters,
                 HttpMethod.GET,
                 new GraphRequest.Callback() {

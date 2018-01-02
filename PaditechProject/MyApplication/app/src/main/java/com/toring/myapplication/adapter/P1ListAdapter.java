@@ -72,7 +72,6 @@ public class P1ListAdapter extends BaseAdapter {
                     Intent intent = new Intent(context, P4Activity.class);
 
                     intent.putExtra(context.getResources().getString(R.string.picture), pictureList.get(position));
-                    intent.putExtra(context.getResources().getString(R.string.is_facebook), isFacebook);
 
                     ActivityOptionsCompat options = ActivityOptionsCompat.
                             makeSceneTransitionAnimation(context, (View) ivPicture, "detail");

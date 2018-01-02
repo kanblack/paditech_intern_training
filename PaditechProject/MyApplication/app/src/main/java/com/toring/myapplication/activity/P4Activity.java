@@ -64,7 +64,6 @@ public class P4Activity extends AppCompatActivity {
     private TextView tvLink;
     private ImageView ivPopup;
     private ImageView ivPicture;
-    private boolean isFacebook;
 
     private String picturePath;
     Bitmap bitmap;
@@ -85,7 +84,6 @@ public class P4Activity extends AppCompatActivity {
         toolbar.setTitle("Detail");
 
         picturePath = getIntent().getStringExtra(this.getResources().getString(R.string.picture));
-        isFacebook = getIntent().getBooleanExtra(this.getResources().getString(R.string.is_facebook), false);
 
         displayImage();
 
@@ -165,7 +163,6 @@ public class P4Activity extends AppCompatActivity {
                         pw.dismiss();
                         Intent intent = new Intent(P4Activity.this, P5Activity.class);
                         intent.putExtra(P4Activity.this.getResources().getString(R.string.picture), picturePath);
-                        intent.putExtra(P4Activity.this.getResources().getString(R.string.is_facebook), isFacebook);
                         P4Activity.this.startActivity(intent);
                     }
                 });
@@ -193,30 +190,7 @@ public class P4Activity extends AppCompatActivity {
     }
 
     private void displayImage() {
-        if (isFacebook) {
-            String id = picturePath;
-            Bundle parameter = new Bundle();
-            parameter.putString("fields", "link, images");
-            new GraphRequest(
-                    AccessToken.getCurrentAccessToken(),
-                    "/" + id,
-                    parameter,
-                    HttpMethod.GET,
-                    new GraphRequest.Callback() {
-                        public void onCompleted(GraphResponse response) {
-                            try {
-                                JSONObject object = (JSONObject) response.getJSONObject().getJSONArray("images").get(0);
-                                String source = object.getString("source");
-                                DisplayPicture.displayImageCrop(P4Activity.this, source, ivPicture);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-            ).executeAsync();
-        } else {
             DisplayPicture.displayImage(P4Activity.this, picturePath, ivPicture);
-        }
     }
 
 

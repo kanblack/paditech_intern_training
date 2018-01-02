@@ -61,30 +61,7 @@ public class ItemP3VPFragment extends Fragment {
             }
         });
 
-        if (isFacebook){
-            String id = picturePath;
-            Bundle parameter = new Bundle();
-            parameter.putString("fields", "link, images");
-            new GraphRequest(
-                    AccessToken.getCurrentAccessToken(),
-                    "/" + id,
-                    parameter,
-                    HttpMethod.GET,
-                    new GraphRequest.Callback() {
-                        public void onCompleted(GraphResponse response) {
-                            try {
-                                JSONObject object = (JSONObject) response.getJSONObject().getJSONArray("images").get(0);
-                                String source = object.getString("source");
-                                DisplayPicture.displayImageCrop(ItemP3VPFragment.this.getContext(), source, ivPicture);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-            ).executeAsync();
-        }else {
-            DisplayPicture.displayImageCrop(this.getContext(), picturePath, ivPicture);
-        }
+        DisplayPicture.displayImageCrop(this.getContext(), picturePath, ivPicture);
         return view;
     }
 
