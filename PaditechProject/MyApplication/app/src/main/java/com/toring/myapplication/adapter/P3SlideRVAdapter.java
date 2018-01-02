@@ -70,8 +70,6 @@ public class P3SlideRVAdapter extends BaseAdapter {
     }
 
     public class VHP3Slide extends BaseAdapter.VH {
-        private View view;
-
         public VHP3Slide(View itemView) {
             super(itemView);
             ivPicture = itemView.findViewById(R.id.iv_picture);

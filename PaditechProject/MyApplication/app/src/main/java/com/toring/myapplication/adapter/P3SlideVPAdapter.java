@@ -16,17 +16,20 @@ import java.util.List;
 public class P3SlideVPAdapter extends FragmentStatePagerAdapter {
     private Context context;
     private List<String> pictureList;
+    private boolean isFacebook = false;
 
-    public P3SlideVPAdapter(FragmentManager fm, Context context, List<String> pictureList) {
+    public P3SlideVPAdapter(FragmentManager fm, Context context, List<String> pictureList, boolean isFacebook) {
         super(fm);
         this.context = context;
         this.pictureList = pictureList;
+        this.isFacebook = isFacebook;
     }
 
     @Override
     public Fragment getItem(int position) {
         ItemP3VPFragment itemP3VPFragment = new ItemP3VPFragment();
         itemP3VPFragment.setPicturePath(pictureList.get(position));
+        itemP3VPFragment.setFacebook(isFacebook);
         return itemP3VPFragment;
     }
 

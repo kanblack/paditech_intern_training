@@ -38,12 +38,20 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.toring.myapplication.R;
 import com.toring.myapplication.glide.DisplayPicture;
 import com.toring.myapplication.glide.GlideApp;
 import com.toring.myapplication.glide.SaveImage;
+import com.toring.myapplication.item_fragment.ItemP3VPFragment;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -56,6 +64,7 @@ public class P4Activity extends AppCompatActivity {
     private TextView tvLink;
     private ImageView ivPopup;
     private ImageView ivPicture;
+    private boolean isFacebook;
 
     private String picturePath;
     Bitmap bitmap;
@@ -76,7 +85,10 @@ public class P4Activity extends AppCompatActivity {
         toolbar.setTitle("Detail");
 
         picturePath = getIntent().getStringExtra(this.getResources().getString(R.string.picture));
-        DisplayPicture.displayImage(P4Activity.this, picturePath, ivPicture);
+        isFacebook = getIntent().getBooleanExtra(this.getResources().getString(R.string.is_facebook), false);
+
+        displayImage();
+
         tvLink.setText(picturePath);
 
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
@@ -153,6 +165,7 @@ public class P4Activity extends AppCompatActivity {
                         pw.dismiss();
                         Intent intent = new Intent(P4Activity.this, P5Activity.class);
                         intent.putExtra(P4Activity.this.getResources().getString(R.string.picture), picturePath);
+                        intent.putExtra(P4Activity.this.getResources().getString(R.string.is_facebook), isFacebook);
                         P4Activity.this.startActivity(intent);
                     }
                 });
@@ -169,7 +182,7 @@ public class P4Activity extends AppCompatActivity {
                                     SaveImage.saveImage(bitmap, P4Activity.this, UUID.randomUUID().toString());
                                 }
                             });
-                        }else {
+                        } else {
                             SaveImage.saveImage(bitmap, P4Activity.this, UUID.randomUUID().toString());
                         }
                         pw.dismiss();
@@ -177,6 +190,33 @@ public class P4Activity extends AppCompatActivity {
                 });
             }
         });
+    }
+
+    private void displayImage() {
+        if (isFacebook) {
+            String id = picturePath;
+            Bundle parameter = new Bundle();
+            parameter.putString("fields", "link, images");
+            new GraphRequest(
+                    AccessToken.getCurrentAccessToken(),
+                    "/" + id,
+                    parameter,
+                    HttpMethod.GET,
+                    new GraphRequest.Callback() {
+                        public void onCompleted(GraphResponse response) {
+                            try {
+                                JSONObject object = (JSONObject) response.getJSONObject().getJSONArray("images").get(0);
+                                String source = object.getString("source");
+                                DisplayPicture.displayImageCrop(P4Activity.this, source, ivPicture);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+            ).executeAsync();
+        } else {
+            DisplayPicture.displayImage(P4Activity.this, picturePath, ivPicture);
+        }
     }
 
 

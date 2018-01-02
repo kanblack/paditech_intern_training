@@ -45,7 +45,7 @@ public class P3SlideFragment extends FragmentBase {
         rv = view.findViewById(R.id.rv_slide);
 
         P3SlideVPAdapter vpAdapter = new P3SlideVPAdapter(this.getFragmentManager(),
-                this.getContext(), pictureList);
+                this.getContext(), pictureList, isFacebook);
         vp.setAdapter(vpAdapter);
 
         final P3SlideRVAdapter rvAdapter = new P3SlideRVAdapter(this.getActivity(), pictureList, isFacebook);

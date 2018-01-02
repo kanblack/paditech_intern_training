@@ -18,6 +18,10 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.toring.myapplication.R;
@@ -28,6 +32,9 @@ import com.toring.myapplication.glide.DisplayPicture;
 import com.toring.myapplication.glide.GlideApp;
 import com.toring.myapplication.glide.SaveImage;
 import com.toring.myapplication.manager.ScreenManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.UUID;
 
@@ -44,12 +51,15 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
     private TextView tvDone;
     private View currentViewDraw, currentViewImage;
 
+    private boolean isFacebook = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_p5);
 
         picturePath = getIntent().getStringExtra(this.getResources().getString(R.string.picture));
+        isFacebook = getIntent().getBooleanExtra(this.getResources().getString(R.string.is_facebook), false);
 
         ivPicture = this.findViewById(R.id.iv_picture);
         toolbar = this.findViewById(R.id.toolbar);
@@ -129,8 +139,31 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
     }
 
     private void setData() {
-        DisplayPicture.displayImage(P5Activity.this
-                , picturePath, ivPicture);
+        if (isFacebook) {
+            String id = picturePath;
+            Bundle parameter = new Bundle();
+            parameter.putString("fields", "link, images");
+            new GraphRequest(
+                    AccessToken.getCurrentAccessToken(),
+                    "/" + id,
+                    parameter,
+                    HttpMethod.GET,
+                    new GraphRequest.Callback() {
+                        public void onCompleted(GraphResponse response) {
+                            try {
+                                JSONObject object = (JSONObject) response.getJSONObject().getJSONArray("images").get(0);
+                                String source = object.getString("source");
+                                DisplayPicture.displayImageCrop(P5Activity.this, source, ivPicture);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+            ).executeAsync();
+        } else {
+            DisplayPicture.displayImage(P5Activity.this
+                    , picturePath, ivPicture);
+        }
 
         ivPicture.post(new Runnable() {
             @Override

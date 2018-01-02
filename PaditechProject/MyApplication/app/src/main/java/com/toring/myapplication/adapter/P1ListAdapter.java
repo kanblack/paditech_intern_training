@@ -20,6 +20,7 @@ import com.facebook.HttpMethod;
 import com.toring.myapplication.R;
 import com.toring.myapplication.activity.P4Activity;
 import com.toring.myapplication.glide.DisplayPicture;
+import com.toring.myapplication.item_fragment.ItemP3VPFragment;
 
 import org.json.JSONException;
 
@@ -71,6 +72,8 @@ public class P1ListAdapter extends BaseAdapter {
                     Intent intent = new Intent(context, P4Activity.class);
 
                     intent.putExtra(context.getResources().getString(R.string.picture), pictureList.get(position));
+                    intent.putExtra(context.getResources().getString(R.string.is_facebook), isFacebook);
+
                     ActivityOptionsCompat options = ActivityOptionsCompat.
                             makeSceneTransitionAnimation(context, (View) ivPicture, "detail");
                     context.startActivity(intent, options.toBundle());

@@ -23,6 +23,7 @@ import com.facebook.HttpMethod;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.toring.myapplication.R;
 import com.toring.myapplication.fragment.AlbumListFragment;
 import com.toring.myapplication.fragment.P1ListFragment;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView ivChangeMode;
     private ImageView btLoginFace, ivBack;
     private TextView tvLogout, tvTitle;
+    private LoginButton loginButton;
 
     private int modeVIew = 0;
     private Fragment currentFragment;
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         ivBack = findViewById(R.id.iv_back);
         tvLogout = this.findViewById(R.id.tv_logout);
         tvTitle = this.findViewById(R.id.tv_title);
+        loginButton = this.findViewById(R.id.login_button);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
@@ -105,7 +108,8 @@ public class MainActivity extends AppCompatActivity {
         albumClick = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                btLoginFace.setImageResource(R.drawable.ic_arrow_back_black_24dp);
+                btLoginFace.setVisibility(View.GONE);
+                ivBack.setVisibility(View.VISIBLE);
                 tvLogout.setVisibility(View.GONE);
                 ivChangeMode.setVisibility(View.VISIBLE);
                 tvTitle.setText(((Album) view.getTag()).getName());
@@ -123,14 +127,14 @@ public class MainActivity extends AppCompatActivity {
                 new GraphRequest.Callback() {
                     public void onCompleted(GraphResponse response) {
                         try {
-                            List<String> images = new ArrayList<>();
+                            pictureList = new ArrayList<>();
                             JSONArray temp = response.getJSONObject().getJSONArray("data");
                             for (int i = 0; i < temp.length(); i++) {
                                 temp.get(i);
-                                images.add(((JSONObject) temp.get(i)).getString("id"));
+                                pictureList.add(((JSONObject) temp.get(i)).getString("id"));
                             }
                             P1ListFragment p1ListFragment = new P1ListFragment();
-                            p1ListFragment.setPictureList(images);
+                            p1ListFragment.setPictureList(pictureList);
                             p1ListFragment.setFacebook(isFacebook);
                             currentFragment = p1ListFragment;
                             ScreenManager.replaceFragment(MainActivity.this,
@@ -166,9 +170,17 @@ public class MainActivity extends AppCompatActivity {
         tvLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                LoginManager.getInstance().logOut();
                 changeUIWithLogin(false);
                 getDataNotLogin();
                 isFacebook = false;
+            }
+        });
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.this.onBackPressed();
             }
         });
     }
@@ -176,6 +188,8 @@ public class MainActivity extends AppCompatActivity {
     private void loginFacebook() {
         LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList(
                 "public_profile", "user_photos", "user_friends"));
+//        loginButton.performClick();
+
     }
 
     private void loginDone() {
@@ -374,5 +388,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (ScreenManager.canBackFragment(this)) {
+            btLoginFace.setVisibility(View.VISIBLE);
+            ivBack.setVisibility(View.GONE);
+            tvLogout.setVisibility(View.VISIBLE);
+            ivChangeMode.setVisibility(View.GONE);
+            ScreenManager.backFragment(this);
+        } else {
+            super.onBackPressed();
+        }
     }
 }
