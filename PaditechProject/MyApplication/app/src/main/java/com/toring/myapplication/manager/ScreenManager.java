@@ -19,6 +19,15 @@ public class ScreenManager {
         transaction.commit();
     }
 
+    public static void addFragment(AppCompatActivity activityCompat, int id_view, Fragment fragment, boolean addTobackStack) {
+        FragmentManager manager = activityCompat.getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(id_view, fragment);
+        if (addTobackStack)
+            transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
     public static void backFragment(AppCompatActivity appCompatActivity) {
         FragmentManager manager = appCompatActivity.getSupportFragmentManager();
         manager.popBackStack();
