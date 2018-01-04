@@ -21,7 +21,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AlbumListFragment extends Fragment {
+public class AlbumListFragment extends FragmentBase {
 
     private RecyclerView rvAlbum;
     private ArrayList<Album> albumList;
@@ -54,4 +54,8 @@ public class AlbumListFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void loadMore() {
+
+    }
 }

@@ -26,7 +26,6 @@
         </activity>
         <activity android:name=".activity.P4Activity" />
         <activity android:name=".activity.P5Activity" />
-        <activity android:name=".activity.LoginActivity"></activity>
     </application>
 
 </manifest>

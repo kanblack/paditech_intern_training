@@ -20,27 +20,25 @@ import java.util.List;
  */
 public class P1ListFragment extends FragmentBase {
     private RecyclerView rvList;
-//    private List<String> pictureList;
-
-//    public void setPictureList(List<String> pictureList) {
-//        this.pictureList = pictureList;
-//    }
+    private P1ListAdapter adapter;
 
     public P1ListFragment() {
-        // Required empty public constructor
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_p1_list, container, false);
         rvList = view.findViewById(R.id.rv_list);
-        P1ListAdapter adapter = new P1ListAdapter(this.getActivity(), pictureList, isFacebook);
+        adapter = new P1ListAdapter(this, pictureList, album);
         rvList.setAdapter(adapter);
         rvList.setLayoutManager(new LinearLayoutManager(this.getContext()));
         return view;
     }
 
+    @Override
+    public void loadMore() {
+        adapter.notifyDataSetChanged();
+    }
 }

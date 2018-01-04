@@ -25,14 +25,10 @@ import java.util.List;
 public class P3SlideFragment extends FragmentBase {
     private ViewPager vp;
     private RecyclerView rv;
-//    private List<String> pictureList;
-
-//    public void setPictureList(List<String> pictureList) {
-//        this.pictureList = pictureList;
-//    }
+    private P3SlideVPAdapter vpAdapter;
+    private P3SlideRVAdapter rvAdapter;
 
     public P3SlideFragment() {
-        // Required empty public constructor
     }
 
 
@@ -44,11 +40,11 @@ public class P3SlideFragment extends FragmentBase {
         vp = view.findViewById(R.id.vp_slide);
         rv = view.findViewById(R.id.rv_slide);
 
-        P3SlideVPAdapter vpAdapter = new P3SlideVPAdapter(this.getFragmentManager(),
-                this.getContext(), pictureList, isFacebook);
+        vpAdapter = new P3SlideVPAdapter(this.getFragmentManager(),
+                this.getContext(), pictureList, false);
         vp.setAdapter(vpAdapter);
 
-        final P3SlideRVAdapter rvAdapter = new P3SlideRVAdapter(this.getActivity(), pictureList, isFacebook);
+        rvAdapter = new P3SlideRVAdapter(this, pictureList, album);
         rv.setAdapter(rvAdapter);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL, false);
         rv.setLayoutManager(linearLayoutManager);
@@ -60,7 +56,6 @@ public class P3SlideFragment extends FragmentBase {
 
             @Override
             public void onPageSelected(int position) {
-//                rv.scrollToPosition(position);
 
                 DisplayMetrics metrics = P3SlideFragment.this.getActivity().getResources().getDisplayMetrics();
                 float w = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 51, metrics);
@@ -73,6 +68,9 @@ public class P3SlideFragment extends FragmentBase {
                 rvAdapter.notifyItemChanged(position);
                 rvAdapter.notifyItemChanged(oldIndex);
 
+                if (position == pictureList.size() - 1){
+                    P3SlideFragment.this.getNoFacebookFragment().loadMorePhoto();
+                }
             }
 
             @Override
@@ -92,5 +90,11 @@ public class P3SlideFragment extends FragmentBase {
             }
         });
         return view;
+    }
+
+    @Override
+    public void loadMore() {
+        vpAdapter.notifyDataSetChanged();
+        rvAdapter.notifyDataSetChanged();
     }
 }

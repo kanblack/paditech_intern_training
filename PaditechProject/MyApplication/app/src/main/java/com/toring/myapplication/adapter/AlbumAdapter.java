@@ -15,6 +15,7 @@ import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.toring.myapplication.R;
 import com.toring.myapplication.glide.DisplayPicture;
+import com.toring.myapplication.glide.GlideApp;
 import com.toring.myapplication.network.facebook_model.Album;
 
 import org.json.JSONException;
@@ -73,46 +74,17 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumVH> {
         public void onBindView(int position) {
             view.setTag(albumList.get(position));
             view.setOnClickListener(onClickListener);
+            Album album = albumList.get(position);
 
-            tvName.setText(albumList.get(position).getName());
-            Bundle bundle = new Bundle();
-            bundle.putString("fields", "id, count, cover_photo, name");
-            GraphRequest request = new GraphRequest(
-                    AccessToken.getCurrentAccessToken(),
-                    "/" + albumList.get(position).getId(),
-                    bundle,
-                    HttpMethod.GET,
-                    new GraphRequest.Callback() {
-                        public void onCompleted(GraphResponse response) {
-                            try {
-                                tvCount.setText(response.getJSONObject().getString("count") + "  photos");
-
-                                Bundle bundle = new Bundle();
-                                bundle.putString("fields", "picture");
-                                new GraphRequest(
-                                        AccessToken.getCurrentAccessToken(),
-                                        "/" + response.getJSONObject().getJSONObject("cover_photo").getString("id"),
-                                        bundle,
-                                        HttpMethod.GET,
-                                        new GraphRequest.Callback() {
-                                            public void onCompleted(GraphResponse response) {
-                                                try {
-                                                    DisplayPicture.displayImageCrop(context,
-                                                            response.getJSONObject().getString("picture"),
-                                                            ivCover);
-                                                } catch (JSONException e) {
-                                                    e.printStackTrace();
-                                                }
-                                            }
-                                        }
-                                ).executeAsync();
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-            );
-            request.executeAsync();
+            tvName.setText(album.getName());
+            tvCount.setText(album.getPhotoCount() + " Photos");
+            if (album.getPhotoCount() == 0){
+                DisplayPicture.displayImageCrop(context, R.drawable.ic_image_black_24dp, ivCover);
+            }else{
+                DisplayPicture.displayImageCrop(context,
+                        album.getUrl(),
+                        ivCover);
+            }
         }
     }
 }

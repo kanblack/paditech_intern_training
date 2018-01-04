@@ -1,46 +1,35 @@
 package com.toring.myapplication.adapter;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.toring.myapplication.R;
 import com.toring.myapplication.activity.P4Activity;
-import com.toring.myapplication.glide.DisplayPicture;
-import com.toring.myapplication.item_fragment.ItemP3VPFragment;
-
-import org.json.JSONException;
+import com.toring.myapplication.fragment.FragmentBase;
 
 import java.util.List;
 
 public class P1ListAdapter extends BaseAdapter {
 
-    public P1ListAdapter(Activity context, List<String> pictureList, boolean isFacebook) {
-        super(context, pictureList, isFacebook);
+    public P1ListAdapter(FragmentBase context, List<String> pictureList, String album) {
+        super(context, pictureList, album);
     }
 
     @Override
     public VHP1List onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(context);
+        LayoutInflater inflater = LayoutInflater.from(context.getContext());
         View view = inflater.inflate(R.layout.item_p1_list, parent, false);
         return new VHP1List(view);
     }
 
     @Override
     public void onBindViewHolder(VH holder, int position) {
+        super.onBindViewHolder(holder, position);
         holder.bindView(position);
     }
 
@@ -69,12 +58,12 @@ public class P1ListAdapter extends BaseAdapter {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, P4Activity.class);
+                    Intent intent = new Intent(context.getContext(), P4Activity.class);
 
                     intent.putExtra(context.getResources().getString(R.string.picture), pictureList.get(position));
 
                     ActivityOptionsCompat options = ActivityOptionsCompat.
-                            makeSceneTransitionAnimation(context, (View) ivPicture, "detail");
+                            makeSceneTransitionAnimation(context.getActivity(), (View) ivPicture, "detail");
                     context.startActivity(intent, options.toBundle());
                 }
             });

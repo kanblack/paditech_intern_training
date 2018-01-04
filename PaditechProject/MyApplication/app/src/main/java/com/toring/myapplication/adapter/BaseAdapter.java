@@ -2,6 +2,7 @@ package com.toring.myapplication.adapter;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
+import com.toring.myapplication.fragment.FragmentBase;
 import com.toring.myapplication.glide.DisplayPicture;
 
 import org.json.JSONException;
@@ -24,14 +26,14 @@ import java.util.List;
  */
 
 public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.VH> {
-    protected Activity context;
+    protected FragmentBase context;
     protected List<String> pictureList;
-    protected boolean isFacebook;
+    protected String album;
 
-    public BaseAdapter(Activity context, List<String> pictureList, boolean isFacebook) {
+    public BaseAdapter(FragmentBase context, List<String> pictureList, String album) {
         this.context = context;
         this.pictureList = pictureList;
-        this.isFacebook = isFacebook;
+        this.album = album;
     }
 
     public List<String> getPictureList() {
@@ -42,12 +44,15 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.VH> {
         this.pictureList = pictureList;
     }
 
-    public boolean isFacebook() {
-        return isFacebook;
-    }
+    @Override
+    public void onBindViewHolder(VH holder, int position) {
+        holder.bindView(position);
 
-    public void setFacebook(boolean facebook) {
-        isFacebook = facebook;
+        if (position == pictureList.size() - 1 && album != null){
+            context.getNoFacebookFragment().loadMorePhoto();
+        }
+
+        Log.e("LOADMORE", "onBindViewHolder: " + position );
     }
 
     public class VH extends RecyclerView.ViewHolder {
@@ -59,30 +64,7 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.VH> {
         }
 
         public void bindView(final int position) {
-//            if (isFacebook) {
-//                String id = pictureList.get(position);
-//                Bundle parameter = new Bundle();
-//                parameter.putString("fields", "link, images");
-//                new GraphRequest(
-//                        AccessToken.getCurrentAccessToken(),
-//                        "/" + id,
-//                        parameter,
-//                        HttpMethod.GET,
-//                        new GraphRequest.Callback() {
-//                            public void onCompleted(GraphResponse response) {
-//                                try {
-//                                    JSONObject object = (JSONObject) response.getJSONObject().getJSONArray("images").get(0);
-//                                    String source = object.getString("source");
-//                                    DisplayPicture.displayImageCrop(context, source, ivPicture);
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        }
-//                ).executeAsync();
-//            } else {
-                DisplayPicture.displayImageCrop(context, pictureList.get(position), ivPicture);
-//            }
+            DisplayPicture.displayImageCrop(context.getContext(), pictureList.get(position), ivPicture);
         }
     }
 }

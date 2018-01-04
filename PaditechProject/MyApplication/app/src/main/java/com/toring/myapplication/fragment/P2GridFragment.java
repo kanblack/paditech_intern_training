@@ -19,27 +19,24 @@ import java.util.List;
  */
 public class P2GridFragment extends FragmentBase {
     private RecyclerView rvGrid;
-//    private List<String> pictureList;
-
-//    public void setPictureList(List<String> pictureList) {
-//        this.pictureList = pictureList;
-//    }
+    private P2GridAdapter adapter;
 
     public P2GridFragment() {
-        // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_p2_grid, container, false);
         rvGrid = view.findViewById(R.id.rv_grid);
-        P2GridAdapter adapter = new P2GridAdapter(this.getActivity(), pictureList, isFacebook);
+        adapter = new P2GridAdapter(this, pictureList, album);
         rvGrid.setAdapter(adapter);
         rvGrid.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         return view;
     }
 
+    @Override
+    public void loadMore() {
+        adapter.notifyDataSetChanged();
+    }
 }

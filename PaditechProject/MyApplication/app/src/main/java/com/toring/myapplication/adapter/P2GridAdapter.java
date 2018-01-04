@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.toring.myapplication.R;
+import com.toring.myapplication.activity.MainActivity;
 import com.toring.myapplication.activity.P4Activity;
+import com.toring.myapplication.fragment.FragmentBase;
 import com.toring.myapplication.glide.DisplayPicture;
 
 import java.util.List;
@@ -22,19 +24,20 @@ import java.util.List;
 
 public class P2GridAdapter extends BaseAdapter {
 
-    public P2GridAdapter(Activity context, List<String> pictureList, boolean isFacebook) {
-        super(context, pictureList, isFacebook);
+    public P2GridAdapter(FragmentBase context, List<String> pictureList, String album) {
+        super(context, pictureList, album);
     }
 
     @Override
     public VHP2Grid onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        LayoutInflater layoutInflater = LayoutInflater.from(context.getContext());
         View view = layoutInflater.inflate(R.layout.item_p2_grid, parent, false);
         return new VHP2Grid(view);
     }
 
     @Override
     public void onBindViewHolder(VH holder, int position) {
+        super.onBindViewHolder(holder, position);
         holder.bindView(position);
     }
 
@@ -53,19 +56,17 @@ public class P2GridAdapter extends BaseAdapter {
         }
 
         public void bindView(final int position) {
-//            DisplayPicture.displayImageCrop(context, pictureList.get(position), ivPicture);
-
             super.bindView(position);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(context, P4Activity.class);
+                    Intent intent = new Intent(context.getContext(), P4Activity.class);
 
                     intent.putExtra(context.getResources().getString(R.string.picture), pictureList.get(position));
 
                     ActivityOptionsCompat options = ActivityOptionsCompat.
-                            makeSceneTransitionAnimation((Activity) context, (View)ivPicture, "detail");
+                            makeSceneTransitionAnimation(context.getActivity(), (View)ivPicture, "detail");
                     context.startActivity(intent, options.toBundle());
                 }
             });

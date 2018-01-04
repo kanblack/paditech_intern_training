@@ -2,87 +2,88 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/full"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_color"
     tools:context="com.toring.myapplication.activity.MainActivity">
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"/>
+    <!--<com.facebook.login.widget.LoginButton-->
+        <!--android:id="@+id/login_button"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:visibility="gone" />-->
 
-    <RelativeLayout
-        android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_heigth"
-        android:background="@color/colorPrimary">
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/appbar"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/app_bar_heigth"-->
+        <!--android:background="@color/colorPrimary">-->
 
-        <ImageView
-            android:id="@+id/bt_login_face"
-            android:layout_width="@dimen/app_bar_heigth"
-            android:layout_height="@dimen/app_bar_heigth"
-            android:layout_marginRight="@dimen/margin_4dp"
-            android:padding="@dimen/padding_8dp"
-            android:src="@drawable/ic_facebook"
-            tools:ignore="VectorDrawableCompat" />
+        <!--<ImageView-->
+            <!--android:id="@+id/bt_login_face"-->
+            <!--android:layout_width="@dimen/app_bar_heigth"-->
+            <!--android:layout_height="@dimen/app_bar_heigth"-->
+            <!--android:layout_marginRight="@dimen/margin_4dp"-->
+            <!--android:padding="@dimen/padding_8dp"-->
+            <!--android:src="@drawable/ic_facebook"-->
+            <!--tools:ignore="VectorDrawableCompat" />-->
 
-        <ImageView
-            android:id="@+id/iv_back"
-            android:layout_width="@dimen/app_bar_heigth"
-            android:layout_height="@dimen/app_bar_heigth"
-            android:layout_marginRight="@dimen/margin_4dp"
-            android:padding="@dimen/padding_8dp"
-            android:src="@drawable/ic_arrow_back_black_24dp"
-            android:visibility="gone"
-            tools:ignore="VectorDrawableCompat" />
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_back"-->
+            <!--android:layout_width="@dimen/app_bar_heigth"-->
+            <!--android:layout_height="@dimen/app_bar_heigth"-->
+            <!--android:layout_marginRight="@dimen/margin_4dp"-->
+            <!--android:padding="@dimen/padding_8dp"-->
+            <!--android:src="@drawable/ic_arrow_back_black_24dp"-->
+            <!--android:visibility="gone"-->
+            <!--tools:ignore="VectorDrawableCompat" />-->
 
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="@string/app_name"
-            android:textColor="#FFFFFF"
-            android:textSize="@dimen/text_size_big"
-            android:textStyle="bold" />
+        <!--<TextView-->
+            <!--android:id="@+id/tv_title"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:text="@string/app_name"-->
+            <!--android:textColor="#FFFFFF"-->
+            <!--android:textSize="@dimen/text_size_big"-->
+            <!--android:textStyle="bold" />-->
 
-        <ImageView
-            android:id="@+id/iv_change_mode"
-            android:layout_width="@dimen/app_bar_heigth"
-            android:layout_height="@dimen/app_bar_heigth"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/margin_4dp"
-            android:padding="@dimen/padding_8dp"
-            app:srcCompat="@drawable/ic_apps_white_24dp"
-            tools:ignore="VectorDrawableCompat" />
+        <!--<ImageView-->
+            <!--android:id="@+id/iv_change_mode"-->
+            <!--android:layout_width="@dimen/app_bar_heigth"-->
+            <!--android:layout_height="@dimen/app_bar_heigth"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_marginRight="@dimen/margin_4dp"-->
+            <!--android:padding="@dimen/padding_8dp"-->
+            <!--app:srcCompat="@drawable/ic_apps_white_24dp"-->
+            <!--tools:ignore="VectorDrawableCompat" />-->
 
-        <TextView
-            android:id="@+id/tv_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:gravity="center"
-            android:paddingRight="@dimen/padding_16dp"
-            android:text="@string/logout"
-            android:textColor="@color/background_color"
-            android:textSize="@dimen/text_size_normal"
-            android:textStyle="bold"
-            android:visibility="gone" />
-    </RelativeLayout>
+        <!--<TextView-->
+            <!--android:id="@+id/tv_logout"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:gravity="center"-->
+            <!--android:paddingRight="@dimen/padding_16dp"-->
+            <!--android:text="@string/logout"-->
+            <!--android:textColor="@color/background_color"-->
+            <!--android:textSize="@dimen/text_size_normal"-->
+            <!--android:textStyle="bold"-->
+            <!--android:visibility="gone" />-->
+    <!--</RelativeLayout>-->
 
-    <RelativeLayout
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/appbar"
-        android:layout_marginTop="@dimen/margin_4dp"
-        android:paddingBottom="@dimen/padding_8dp">
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/content"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@id/appbar"-->
+        <!--android:layout_marginTop="@dimen/margin_4dp"-->
+        <!--android:paddingBottom="@dimen/padding_8dp">-->
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true" />
-    </RelativeLayout>
+        <!--<ProgressBar-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_centerInParent="true" />-->
+    <!--</RelativeLayout>-->
 </RelativeLayout>

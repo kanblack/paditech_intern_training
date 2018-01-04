@@ -2,15 +2,26 @@ package com.toring.myapplication.fragment;
 
 import android.support.v4.app.Fragment;
 
+import com.toring.myapplication.adapter.BaseAdapter;
+
 import java.util.List;
 
 /**
  * Created by ToRing on 1/2/2018.
  */
 
-public class FragmentBase extends Fragment {
+public abstract class FragmentBase extends Fragment {
     protected List<String> pictureList;
-    protected boolean isFacebook;
+    protected NoFacebookFragment noFacebookFragment;
+    protected String album;
+
+    public NoFacebookFragment getNoFacebookFragment() {
+        return noFacebookFragment;
+    }
+
+    public void setNoFacebookFragment(NoFacebookFragment noFacebookFragment) {
+        this.noFacebookFragment = noFacebookFragment;
+    }
 
     public List<String> getPictureList() {
         return pictureList;
@@ -20,11 +31,13 @@ public class FragmentBase extends Fragment {
         this.pictureList = pictureList;
     }
 
-    public boolean isFacebook() {
-        return isFacebook;
+    public String getAlbum() {
+        return album;
     }
 
-    public void setFacebook(boolean facebook) {
-        isFacebook = facebook;
+    public void setAlbum(String album) {
+        this.album = album;
     }
+
+    public abstract void loadMore();
 }

@@ -7,13 +7,17 @@ package com.toring.myapplication.network.facebook_model;
 public class Album {
     String id;
     String name;
-
-    public Album(String id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+    String url;
+    int photoCount;
 
     public Album() {
+    }
+
+    public Album(String id, String name, String url, int photoCount) {
+        this.id = id;
+        this.name = name;
+        this.url = url;
+        this.photoCount = photoCount;
     }
 
     public String getId() {
@@ -30,5 +34,21 @@ public class Album {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public int getPhotoCount() {
+        return photoCount;
+    }
+
+    public void setPhotoCount(int photoCount) {
+        this.photoCount = photoCount;
     }
 }
