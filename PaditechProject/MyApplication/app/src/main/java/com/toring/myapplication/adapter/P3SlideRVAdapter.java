@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.toring.myapplication.R;
+import com.toring.myapplication.fragment.FragmentBase;
 import com.toring.myapplication.glide.DisplayPicture;
 
 import java.util.List;
@@ -28,19 +29,20 @@ public class P3SlideRVAdapter extends BaseAdapter {
         this.onClickListener = onClickListener;
     }
 
-    public P3SlideRVAdapter(Activity context, List<String> pictureList, boolean isFacebook) {
-        super(context, pictureList, isFacebook);
+    public P3SlideRVAdapter(FragmentBase context, List<String> pictureList, String album) {
+        super(context, pictureList, album);
     }
 
     @Override
     public VHP3Slide onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(context);
+        LayoutInflater inflater = LayoutInflater.from(context.getContext());
         View view = inflater.inflate(R.layout.item_p3_slide, parent, false);
         return new VHP3Slide(view);
     }
 
     @Override
     public void onBindViewHolder(final VH holder, final int position) {
+        super.onBindViewHolder(holder, position);
         holder.bindView(position);
 
         if (position == currentIndex) {

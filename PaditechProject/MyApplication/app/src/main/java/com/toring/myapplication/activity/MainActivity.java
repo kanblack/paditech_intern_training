@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         if (AccessToken.getCurrentAccessToken() == null){
             ScreenManager.replaceFragment(this, R.id.full, new NoFacebookFragment(), false);
         }else {
-
+            ScreenManager.replaceFragment(this, R.id.full, new FacebookAlbumFragment(), false);
         }
 
 //        ivChangeMode = this.findViewById(R.id.iv_change_mode);
@@ -90,24 +90,24 @@ public class MainActivity extends AppCompatActivity {
 //        tvTitle = this.findViewById(R.id.tv_title);
 //        loginButton = this.findViewById(R.id.login_button);
 //
-//        FacebookSdk.sdkInitialize(getApplicationContext());
-//        callbackManager = CallbackManager.Factory.create();
-//        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-//            @Override
-//            public void onSuccess(LoginResult loginResult) {
-//                loginDone();
-//            }
-//
-//            @Override
-//            public void onCancel() {
-//
-//            }
-//
-//            @Override
-//            public void onError(FacebookException error) {
-//
-//            }
-//        });
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                loginDone();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+        });
 
 //        setEvent();
 //
@@ -157,7 +157,6 @@ public class MainActivity extends AppCompatActivity {
                             }
                             P1ListFragment p1ListFragment = new P1ListFragment();
                             p1ListFragment.setPictureList(pictureList);
-                            p1ListFragment.setFacebook(isFacebook);
                             currentFragment = p1ListFragment;
                             ScreenManager.replaceFragment(MainActivity.this,
                                     R.id.content,
@@ -173,44 +172,44 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadMorePhoto(){
-        GraphRequest request = GraphRequest.newGraphPathRequest(
-                getCurrentAccessToken(),
-                "/" + albumID + "/photos",
-                new GraphRequest.Callback() {
-                    @Override
-                    public void onCompleted(GraphResponse response) {
-                        try {
-                            JSONArray temp = response.getJSONObject().getJSONArray("data");
-                            for (int i = 0; i < temp.length(); i++) {
-                                JSONObject obj = (JSONObject) temp.get(i);
-                                int width = obj.getInt("width");
-                                pictureList.add(getImageUrlById(((JSONObject) temp.get(i)).getString("id"), width));
-                            }
-
-//                            P1ListFragment p1ListFragment = new P1ListFragment();
-//                            p1ListFragment.setPictureList(pictureList);
-//                            p1ListFragment.setFacebook(isFacebook);
-//                            currentFragment = p1ListFragment;
-//                            ScreenManager.replaceFragment(MainActivity.this,
-//                                    R.id.content,
-//                                    currentFragment, true);
-
-                            after = response.getJSONObject().getJSONObject("paging").getJSONObject("cursors").getString("after");
-
-                            currentFragment.loadMore();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-
-        Bundle parameters = new Bundle();
-        parameters.putString("pretty", "0");
-        parameters.putString("fields", "height,width");
-        parameters.putString("limit", "3");
-        parameters.putString("after", after);
-        request.setParameters(parameters);
-        request.executeAsync();
+//        GraphRequest request = GraphRequest.newGraphPathRequest(
+//                getCurrentAccessToken(),
+//                "/" + albumID + "/photos",
+//                new GraphRequest.Callback() {
+//                    @Override
+//                    public void onCompleted(GraphResponse response) {
+//                        try {
+//                            JSONArray temp = response.getJSONObject().getJSONArray("data");
+//                            for (int i = 0; i < temp.length(); i++) {
+//                                JSONObject obj = (JSONObject) temp.get(i);
+//                                int width = obj.getInt("width");
+//                                pictureList.add(getImageUrlById(((JSONObject) temp.get(i)).getString("id"), width));
+//                            }
+//
+////                            P1ListFragment p1ListFragment = new P1ListFragment();
+////                            p1ListFragment.setPictureList(pictureList);
+////                            p1ListFragment.setFacebook(isFacebook);
+////                            currentFragment = p1ListFragment;
+////                            ScreenManager.replaceFragment(MainActivity.this,
+////                                    R.id.content,
+////                                    currentFragment, true);
+//
+//                            after = response.getJSONObject().getJSONObject("paging").getJSONObject("cursors").getString("after");
+//
+//                            currentFragment.loadMore();
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
+//
+//        Bundle parameters = new Bundle();
+//        parameters.putString("pretty", "0");
+//        parameters.putString("fields", "height,width");
+//        parameters.putString("limit", "3");
+//        parameters.putString("after", after);
+//        request.setParameters(parameters);
+//        request.executeAsync();
     }
 
     public static String getImageUrlById(String id, int expectWidth) {
@@ -267,7 +266,12 @@ public class MainActivity extends AppCompatActivity {
     private void loginDone() {
         isFacebook = true;
         Log.e("OKOKOKO", "loginDone: "+"OKOKOKOKOKOKOKO" );
-//        ScreenManager.replaceFragment(this, R.id.full, new FacebookAlbumFragment(), false);
+        ScreenManager.replaceFragment(this, R.id.full, new FacebookAlbumFragment(), false);
+    }
+
+    public void logoutFacebook(){
+        LoginManager.getInstance().logOut();
+        ScreenManager.replaceFragment(this, R.id.full, new NoFacebookFragment(), false);
     }
 
     private void getProfile() {
@@ -461,16 +465,16 @@ public class MainActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    public void onBackPressed() {
-        if (ScreenManager.canBackFragment(this)) {
-            btLoginFace.setVisibility(View.VISIBLE);
-            ivBack.setVisibility(View.GONE);
-            tvLogout.setVisibility(View.VISIBLE);
-            ivChangeMode.setVisibility(View.GONE);
-            ScreenManager.backFragment(this);
-        } else {
-            super.onBackPressed();
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+//        if (ScreenManager.canBackFragment(this)) {
+//            btLoginFace.setVisibility(View.VISIBLE);
+//            ivBack.setVisibility(View.GONE);
+//            tvLogout.setVisibility(View.VISIBLE);
+//            ivChangeMode.setVisibility(View.GONE);
+//            ScreenManager.backFragment(this);
+//        } else {
+//            super.onBackPressed();
+//        }
+//    }
 }
