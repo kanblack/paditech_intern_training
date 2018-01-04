@@ -224,7 +224,7 @@ public class NoFacebookFragment extends Fragment {
                             currentFragment.setAlbum(albumID);
                             ScreenManager.replaceFragment((MainActivity) NoFacebookFragment.this.getActivity(),
                                     R.id.content,
-                                    currentFragment, true);
+                                    currentFragment, false);
 
                             afterCursor = response.getJSONObject().getJSONObject("paging").getJSONObject("cursors").getString("after");
                         } catch (JSONException e) {
