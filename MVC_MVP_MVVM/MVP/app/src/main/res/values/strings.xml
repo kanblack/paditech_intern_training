@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MVP Test</string>
+    <string name="name">name</string>
+    <string name="pass">pass</string>
+    <string name="login">login</string>
+    <string name="cancel">Cancel</string>
+</resources>

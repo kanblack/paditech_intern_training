@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.pesteam.mvvm.MainActivity">
+    <data class = "ActivityMainBinding">
+        <variable
+            name="Modellogin"
+            type="com.pesteam.mvvm.ViewModel.ViewModelLogin"/>
+        <variable
+            name="Click"
+            type="com.pesteam.mvvm.ClickEvent.OnclickListener"/>
+    </data>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:tag="layout/activity_main_0"
+    >
+
+    <LinearLayout
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:text="@={Modellogin.userName}"
+            android:id="@+id/name"
+            android:textSize="@dimen/sizeText"
+            android:padding="10dp"
+            android:hint="@string/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <EditText
+            android:id="@+id/pass"
+            android:textSize="@dimen/sizeText"
+            android:text="@={Modellogin.passWord}"
+            android:hint="@string/pass"
+            android:padding="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"/>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/bt_login"
+                android:text="@string/login"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:onClick="@{(v)->Click.Onclick()}"/>
+            <Button
+                android:id="@+id/bt_cancel"
+                android:text="@string/cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>
+</layout>
