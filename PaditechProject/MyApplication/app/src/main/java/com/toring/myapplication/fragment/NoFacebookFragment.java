@@ -7,18 +7,16 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
-import com.facebook.login.LoginManager;
 import com.toring.myapplication.R;
 import com.toring.myapplication.activity.MainActivity;
 import com.toring.myapplication.manager.ScreenManager;
@@ -32,7 +30,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import io.realm.Realm;
@@ -49,18 +46,24 @@ public class NoFacebookFragment extends Fragment {
     private ImageView ivChangeMode;
     private ImageView btLoginFace;
     private ImageView ivBack;
+    private TextView tvTitle;
 
     private String albumID = null;
     private String afterCursor;
+    private String title;
 
     private List<String> pictureList;
 
     private FragmentBase currentFragment;
 
-    private int modeVIew = 0;
+    private int modeView = 0;
     private int iconChangeMode = R.drawable.ic_apps_white_24dp;
 
     public NoFacebookFragment() {
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public void setPictureList(List<String> pictureList) {
@@ -79,6 +82,11 @@ public class NoFacebookFragment extends Fragment {
         ivChangeMode = view.findViewById(R.id.iv_change_mode);
         btLoginFace = view.findViewById(R.id.bt_login_face);
         ivBack = view.findViewById(R.id.iv_back);
+        tvTitle = view.findViewById(R.id.tv_title);
+
+        if (title != null){
+            tvTitle.setText(title);
+        }
 
         btLoginFace.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,7 +155,6 @@ public class NoFacebookFragment extends Fragment {
                     .enqueue(new Callback<MainObject>() {
                         @Override
                         public void onResponse(Call<MainObject> call, Response<MainObject> response) {
-                            Log.d("main", "onResponse: " + response.body().toString());
                             MainObject mainObject = response.body();
                             pictureList = mainObject.getData();
 
@@ -279,7 +286,7 @@ public class NoFacebookFragment extends Fragment {
 
     private void changeMode() {
         if (pictureList != null) {
-            switch (modeVIew) {
+            switch (modeView) {
                 case 0: {
                     iconChangeMode = R.drawable.ic_slideshow_white_24dp;
                     P2GridFragment p2GridFragment = new P2GridFragment();
@@ -288,17 +295,24 @@ public class NoFacebookFragment extends Fragment {
                 }
 
                 case 1: {
-                    iconChangeMode = R.drawable.ic_view_list_white_24dp;
+                    iconChangeMode = R.drawable.ic_dashboard_white_24dp;
                     P3SlideFragment p3SlideFragment = new P3SlideFragment();
                     currentFragment = p3SlideFragment;
                     break;
                 }
 
                 case 2: {
+                    iconChangeMode = R.drawable.ic_view_list_white_24dp;
+                    P4StaggeredGridFragment p4StaggeredGridFragment = new P4StaggeredGridFragment();
+                    currentFragment = p4StaggeredGridFragment;
+                    break;
+                }
+
+                case 3: {
                     iconChangeMode = R.drawable.ic_apps_white_24dp;
                     P1ListFragment p1ListFragment = new P1ListFragment();
                     currentFragment = p1ListFragment;
-                    modeVIew = -1;
+                    modeView = -1;
                     break;
                 }
             }
@@ -313,7 +327,7 @@ public class NoFacebookFragment extends Fragment {
                     currentFragment,
                     false);
 
-            modeVIew++;
+            modeView++;
         }
     }
 }

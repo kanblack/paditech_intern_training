@@ -8,12 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.Profile;
-import com.facebook.login.LoginManager;
 import com.toring.myapplication.R;
 import com.toring.myapplication.activity.MainActivity;
 import com.toring.myapplication.glide.DisplayPicture;
@@ -80,7 +80,7 @@ public class FacebookAlbumFragment extends Fragment {
 
     private void getListAlbum() {
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "albums.limit(1000){picture{url},name,photo_count}");
+        parameters.putString("fields", "albums{picture{url},name,photo_count}");
         GraphRequest request = new GraphRequest(
                 getCurrentAccessToken(),
                 "/" + getCurrentAccessToken().getUserId(),
@@ -105,12 +105,18 @@ public class FacebookAlbumFragment extends Fragment {
                             albumListFragment.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    NoFacebookFragment noFacebookFragment = new NoFacebookFragment();
-                                    noFacebookFragment.setAlbumID(((Album)view.getTag()).getId());
-                                    ScreenManager.replaceFragment((MainActivity)FacebookAlbumFragment.this.getActivity(), R.id.full, noFacebookFragment, true);
+                                    if (((Album) view.getTag()).getPhotoCount() > 0) {
+                                        NoFacebookFragment noFacebookFragment = new NoFacebookFragment();
+                                        noFacebookFragment.setAlbumID(((Album) view.getTag()).getId());
+                                        noFacebookFragment.setTitle(((Album) view.getTag()).getName());
+                                        ScreenManager.replaceFragment((MainActivity) FacebookAlbumFragment.this.getActivity(), R.id.full, noFacebookFragment, true);
+                                    } else {
+                                        Toast.makeText(FacebookAlbumFragment.this.getActivity(),
+                                                "Album không có ảnh.", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             });
-                            ScreenManager.replaceFragment((MainActivity)FacebookAlbumFragment.this.getActivity(), R.id.content,
+                            ScreenManager.replaceFragment((MainActivity) FacebookAlbumFragment.this.getActivity(), R.id.content,
                                     albumListFragment, false);
                         } catch (JSONException e) {
                             e.printStackTrace();
