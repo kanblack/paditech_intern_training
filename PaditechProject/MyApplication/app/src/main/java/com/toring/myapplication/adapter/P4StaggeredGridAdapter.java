@@ -1,20 +1,16 @@
 package com.toring.myapplication.adapter;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.toring.myapplication.R;
-import com.toring.myapplication.activity.MainActivity;
 import com.toring.myapplication.activity.P4Activity;
 import com.toring.myapplication.fragment.FragmentBase;
 import com.toring.myapplication.glide.DisplayPicture;
+import com.toring.myapplication.glide.GlideApp;
 
 import java.util.List;
 
@@ -22,17 +18,17 @@ import java.util.List;
  * Created by tr on 12/18/17.
  */
 
-public class P2GridAdapter extends BaseAdapter {
+public class P4StaggeredGridAdapter extends BaseAdapter {
 
-    public P2GridAdapter(FragmentBase context, List<String> pictureList, String album) {
+    public P4StaggeredGridAdapter(FragmentBase context, List<String> pictureList, String album) {
         super(context, pictureList, album);
     }
 
     @Override
-    public VHP2Grid onCreateViewHolder(ViewGroup parent, int viewType) {
+    public VHP4GridStaggered onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(context.getContext());
-        View view = layoutInflater.inflate(R.layout.item_p2_grid, parent, false);
-        return new VHP2Grid(view);
+        View view = layoutInflater.inflate(R.layout.item_p4_staggered, parent, false);
+        return new VHP4GridStaggered(view);
     }
 
     @Override
@@ -46,17 +42,24 @@ public class P2GridAdapter extends BaseAdapter {
         return pictureList.size();
     }
 
-    public class VHP2Grid extends BaseAdapter.VH {
+    public class VHP4GridStaggered extends VH {
         private View view;
 
-        public VHP2Grid(View itemView) {
+        public VHP4GridStaggered(View itemView) {
             super(itemView);
             ivPicture = itemView.findViewById(R.id.iv_picture);
             view = itemView;
         }
 
         public void bindView(final int position) {
-            super.bindView(position);
+//            super.bindView(position);
+            DisplayPicture.displayImage(context.getContext(), pictureList.get(position), ivPicture);
+//            GlideApp.with(context)
+//                    .load(pictureList.get(position))
+//                    .fitCenter()
+//                    .thumbnail(0.5f)
+//                    .error(R.mipmap.ic_launcher)
+//                    .into(ivPicture);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -66,7 +69,7 @@ public class P2GridAdapter extends BaseAdapter {
                     intent.putExtra(context.getResources().getString(R.string.picture), pictureList.get(position));
 
                     ActivityOptionsCompat options = ActivityOptionsCompat.
-                            makeSceneTransitionAnimation(context.getActivity(), (View) ivPicture, "detail");
+                            makeSceneTransitionAnimation(context.getActivity(), ivPicture, "detail");
                     context.startActivity(intent, options.toBundle());
                 }
             });
