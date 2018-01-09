@@ -32,8 +32,9 @@ public class P4StaggeredGridFragment extends FragmentBase {
         adapter = new P4StaggeredGridAdapter(this, pictureList, album);
 
         final StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-//        manager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        manager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_MOVE_ITEMS_BETWEEN_SPANS);
         rvList.setLayoutManager(manager);
+        rvList.setHasFixedSize(true);
 //        rvList.setItemAnimator(new DefaultItemAnimator());
         rvList.setAdapter(adapter);
 //        rvList.addOnScrollListener(new RecyclerView.OnScrollListener() {

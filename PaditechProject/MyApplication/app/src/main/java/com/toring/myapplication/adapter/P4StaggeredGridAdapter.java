@@ -1,13 +1,18 @@
 package com.toring.myapplication.adapter;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
+import com.squareup.picasso.Picasso;
 import com.toring.myapplication.R;
 import com.toring.myapplication.activity.P4Activity;
+import com.toring.myapplication.customvie.DynamicHeightImageView;
 import com.toring.myapplication.fragment.FragmentBase;
 import com.toring.myapplication.glide.DisplayPicture;
 import com.toring.myapplication.glide.GlideApp;
@@ -44,22 +49,34 @@ public class P4StaggeredGridAdapter extends BaseAdapter {
 
     public class VHP4GridStaggered extends VH {
         private View view;
+//        private DynamicHeightImageView dynamicHeightImageView;
 
         public VHP4GridStaggered(View itemView) {
             super(itemView);
             ivPicture = itemView.findViewById(R.id.iv_picture);
+//            dynamicHeightImageView = itemView.findViewById(R.id.iv_picture);
             view = itemView;
         }
 
         public void bindView(final int position) {
-//            super.bindView(position);
-            DisplayPicture.displayImage(context.getContext(), pictureList.get(position), ivPicture);
-//            GlideApp.with(context)
-//                    .load(pictureList.get(position))
-//                    .fitCenter()
-//                    .thumbnail(0.5f)
-//                    .error(R.mipmap.ic_launcher)
-//                    .into(ivPicture);
+            GlideApp.with(context)
+                    .asBitmap()
+                    .load(pictureList.get(position))
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            float n = (resource.getHeight() / (float) resource.getWidth());
+
+                            ViewGroup.LayoutParams params = ivPicture.getLayoutParams();
+                            // image fit width
+                            params.height = (int) (n * ivPicture.getWidth());
+
+//                            dynamicHeightImageView.setRatio(n);
+                            ivPicture.setLayoutParams(params);
+
+                            ivPicture.setImageBitmap(resource);
+                        }
+                    });
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
