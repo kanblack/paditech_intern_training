@@ -49,16 +49,21 @@ public class P4StaggeredGridAdapter extends BaseAdapter {
 
     public class VHP4GridStaggered extends VH {
         private View view;
-//        private DynamicHeightImageView dynamicHeightImageView;
 
         public VHP4GridStaggered(View itemView) {
             super(itemView);
             ivPicture = itemView.findViewById(R.id.iv_picture);
-//            dynamicHeightImageView = itemView.findViewById(R.id.iv_picture);
             view = itemView;
         }
 
         public void bindView(final int position) {
+//            ViewGroup.LayoutParams params = ivPicture.getLayoutParams();
+//            // image fit width
+//            params.height = (int) (300 + (position%5)*20);
+//
+//            DisplayPicture.displayImage(context.getContext(), pictureList.get(position), ivPicture);
+//            ivPicture.setLayoutParams(params);
+
             GlideApp.with(context)
                     .asBitmap()
                     .load(pictureList.get(position))

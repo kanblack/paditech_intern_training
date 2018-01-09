@@ -2,8 +2,6 @@ package com.toring.myapplication.fragment;
 
 import android.support.v4.app.Fragment;
 
-import com.toring.myapplication.adapter.BaseAdapter;
-
 import java.util.List;
 
 /**
@@ -12,15 +10,15 @@ import java.util.List;
 
 public abstract class FragmentBase extends Fragment {
     protected List<String> pictureList;
-    protected NoFacebookFragment noFacebookFragment;
+    protected ViewAllImageFragment viewAllImageFragment;
     protected String album;
 
-    public NoFacebookFragment getNoFacebookFragment() {
-        return noFacebookFragment;
+    public ViewAllImageFragment getViewAllImageFragment() {
+        return viewAllImageFragment;
     }
 
-    public void setNoFacebookFragment(NoFacebookFragment noFacebookFragment) {
-        this.noFacebookFragment = noFacebookFragment;
+    public void setViewAllImageFragment(ViewAllImageFragment viewAllImageFragment) {
+        this.viewAllImageFragment = viewAllImageFragment;
     }
 
     public List<String> getPictureList() {

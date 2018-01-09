@@ -1,7 +1,7 @@
 package com.toring.myapplication.network.service;
 
 
-import com.toring.myapplication.network.modle.MainObject;
+import com.toring.myapplication.network.no_face_modle.MainObject;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

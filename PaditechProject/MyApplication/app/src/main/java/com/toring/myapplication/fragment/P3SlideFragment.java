@@ -17,8 +17,6 @@ import com.toring.myapplication.R;
 import com.toring.myapplication.adapter.P3SlideRVAdapter;
 import com.toring.myapplication.adapter.P3SlideVPAdapter;
 
-import java.util.List;
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -69,7 +67,7 @@ public class P3SlideFragment extends FragmentBase {
                 rvAdapter.notifyItemChanged(oldIndex);
 
                 if (position == pictureList.size() - 1){
-                    P3SlideFragment.this.getNoFacebookFragment().loadMorePhoto();
+                    P3SlideFragment.this.getViewAllImageFragment().loadMorePhoto();
                 }
             }
 

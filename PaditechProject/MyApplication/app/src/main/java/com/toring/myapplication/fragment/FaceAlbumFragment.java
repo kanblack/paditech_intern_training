@@ -21,7 +21,7 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AlbumListFragment extends FragmentBase {
+public class FaceAlbumFragment extends FragmentBase {
 
     private RecyclerView rvAlbum;
     private ArrayList<Album> albumList;
@@ -36,7 +36,7 @@ public class AlbumListFragment extends FragmentBase {
         this.albumList = albumList;
     }
 
-    public AlbumListFragment() {
+    public FaceAlbumFragment() {
         // Required empty public constructor
     }
 

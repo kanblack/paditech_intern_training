@@ -28,12 +28,12 @@ import java.util.ArrayList;
 
 import static com.facebook.AccessToken.getCurrentAccessToken;
 
-public class FacebookAlbumFragment extends Fragment {
+public class FacebookFragment extends Fragment {
     private ImageView ivBack;
     private TextView tvLogout;
     private TextView tvTitle;
 
-    public FacebookAlbumFragment() {
+    public FacebookFragment() {
     }
 
 
@@ -49,7 +49,7 @@ public class FacebookAlbumFragment extends Fragment {
         tvLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) FacebookAlbumFragment.this.getActivity()).logoutFacebook();
+                ((MainActivity) FacebookFragment.this.getActivity()).logoutFacebook();
             }
         });
 
@@ -66,7 +66,7 @@ public class FacebookAlbumFragment extends Fragment {
                 new GraphRequest.Callback() {
                     @Override
                     public void onCompleted(GraphResponse response) {
-                        DisplayPicture.displayImageCircleCrop(FacebookAlbumFragment.this.getActivity(),
+                        DisplayPicture.displayImageCircleCrop(FacebookFragment.this.getActivity(),
                                 Profile.getCurrentProfile().getProfilePictureUri(500, 500).toString(),
                                 ivBack);
                         tvTitle.setText(Profile.getCurrentProfile().getName());
@@ -100,24 +100,24 @@ public class FacebookAlbumFragment extends Fragment {
                                 album.setUrl(object.getJSONObject("picture").getJSONObject("data").getString("url"));
                                 arrayList.add(album);
                             }
-                            AlbumListFragment albumListFragment = new AlbumListFragment();
-                            albumListFragment.setAlbumList(arrayList);
-                            albumListFragment.setOnClickListener(new View.OnClickListener() {
+                            FaceAlbumFragment faceAlbumFragment = new FaceAlbumFragment();
+                            faceAlbumFragment.setAlbumList(arrayList);
+                            faceAlbumFragment.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
                                     if (((Album) view.getTag()).getPhotoCount() > 0) {
-                                        NoFacebookFragment noFacebookFragment = new NoFacebookFragment();
-                                        noFacebookFragment.setAlbumID(((Album) view.getTag()).getId());
-                                        noFacebookFragment.setTitle(((Album) view.getTag()).getName());
-                                        ScreenManager.replaceFragment((MainActivity) FacebookAlbumFragment.this.getActivity(), R.id.full, noFacebookFragment, true);
+                                        ViewAllImageFragment viewAllImageFragment = new ViewAllImageFragment();
+                                        viewAllImageFragment.setAlbumID(((Album) view.getTag()).getId());
+                                        viewAllImageFragment.setTitle(((Album) view.getTag()).getName());
+                                        ScreenManager.replaceFragment((MainActivity) FacebookFragment.this.getActivity(), R.id.full, viewAllImageFragment, true);
                                     } else {
-                                        Toast.makeText(FacebookAlbumFragment.this.getActivity(),
+                                        Toast.makeText(FacebookFragment.this.getActivity(),
                                                 "Album không có ảnh.", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
-                            ScreenManager.replaceFragment((MainActivity) FacebookAlbumFragment.this.getActivity(), R.id.content,
-                                    albumListFragment, false);
+                            ScreenManager.replaceFragment((MainActivity) FacebookFragment.this.getActivity(), R.id.content,
+                                    faceAlbumFragment, false);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

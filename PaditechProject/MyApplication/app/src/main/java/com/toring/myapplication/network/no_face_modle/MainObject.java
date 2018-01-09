@@ -1,11 +1,9 @@
-package com.toring.myapplication.network.modle;
+package com.toring.myapplication.network.no_face_modle;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
-
-import io.realm.RealmObject;
 
 public class MainObject{
 

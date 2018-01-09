@@ -1,23 +1,12 @@
 package com.toring.myapplication.adapter;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.toring.myapplication.fragment.FragmentBase;
 import com.toring.myapplication.glide.DisplayPicture;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -49,7 +38,7 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.VH> {
         holder.bindView(position);
 
         if (position == pictureList.size() - 1 && album != null){
-            context.getNoFacebookFragment().loadMorePhoto();
+            context.getViewAllImageFragment().loadMorePhoto();
         }
 
         Log.e("LOADMORE", "onBindViewHolder: " + position );

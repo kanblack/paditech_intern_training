@@ -1,4 +1,4 @@
-package com.toring.myapplication.network.modle;
+package com.toring.myapplication.network.no_face_modle;
 
 import io.realm.RealmObject;
 

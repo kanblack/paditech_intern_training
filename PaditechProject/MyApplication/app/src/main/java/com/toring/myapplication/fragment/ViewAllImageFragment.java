@@ -21,8 +21,8 @@ import com.toring.myapplication.R;
 import com.toring.myapplication.activity.MainActivity;
 import com.toring.myapplication.manager.ScreenManager;
 import com.toring.myapplication.network.RetrofitFactory;
-import com.toring.myapplication.network.modle.DataObject;
-import com.toring.myapplication.network.modle.MainObject;
+import com.toring.myapplication.network.no_face_modle.DataObject;
+import com.toring.myapplication.network.no_face_modle.MainObject;
 import com.toring.myapplication.network.service.ServiceGetPicture;
 
 import org.json.JSONArray;
@@ -42,7 +42,7 @@ import static com.facebook.AccessToken.getCurrentAccessToken;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class NoFacebookFragment extends Fragment {
+public class ViewAllImageFragment extends Fragment {
     private ImageView ivChangeMode;
     private ImageView btLoginFace;
     private ImageView ivBack;
@@ -59,7 +59,7 @@ public class NoFacebookFragment extends Fragment {
     private int modeView = 0;
     private int iconChangeMode = R.drawable.ic_apps_white_24dp;
 
-    public NoFacebookFragment() {
+    public ViewAllImageFragment() {
     }
 
     public void setTitle(String title) {
@@ -100,7 +100,7 @@ public class NoFacebookFragment extends Fragment {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ScreenManager.backFragment((MainActivity) NoFacebookFragment.this.getActivity());
+                ScreenManager.backFragment((MainActivity) ViewAllImageFragment.this.getActivity());
             }
         });
 
@@ -143,7 +143,7 @@ public class NoFacebookFragment extends Fragment {
             P1ListFragment p1ListFragment = new P1ListFragment();
             currentFragment = p1ListFragment;
             currentFragment.setPictureList(pictureList);
-            currentFragment.setNoFacebookFragment(this);
+            currentFragment.setViewAllImageFragment(this);
             currentFragment.setAlbum(albumID);
             ScreenManager.replaceFragment((MainActivity) this.getActivity(),
                     R.id.content,
@@ -161,9 +161,9 @@ public class NoFacebookFragment extends Fragment {
                             P1ListFragment p1ListFragment = new P1ListFragment();
                             currentFragment = p1ListFragment;
                             currentFragment.setPictureList(pictureList);
-                            currentFragment.setNoFacebookFragment(NoFacebookFragment.this);
+                            currentFragment.setViewAllImageFragment(ViewAllImageFragment.this);
                             currentFragment.setAlbum(albumID);
-                            ScreenManager.replaceFragment((MainActivity) NoFacebookFragment.this.getActivity(),
+                            ScreenManager.replaceFragment((MainActivity) ViewAllImageFragment.this.getActivity(),
                                     R.id.content,
                                     currentFragment,
                                     false);
@@ -180,7 +180,7 @@ public class NoFacebookFragment extends Fragment {
                         public void onFailure(Call<MainObject> call, Throwable t) {
                             final AlertDialog.Builder alertDialog =
                                     new AlertDialog.Builder(
-                                            NoFacebookFragment.this.getActivity(),
+                                            ViewAllImageFragment.this.getActivity(),
                                             R.style.dialog);
                             alertDialog.setMessage("Kết nối thất bại. Vui lòng kiểm tra lại kết nối internet.");
                             alertDialog.setPositiveButton("Tải lại", new DialogInterface.OnClickListener() {
@@ -227,9 +227,9 @@ public class NoFacebookFragment extends Fragment {
                             P1ListFragment p1ListFragment = new P1ListFragment();
                             currentFragment = p1ListFragment;
                             currentFragment.setPictureList(pictureList);
-                            currentFragment.setNoFacebookFragment(NoFacebookFragment.this);
+                            currentFragment.setViewAllImageFragment(ViewAllImageFragment.this);
                             currentFragment.setAlbum(albumID);
-                            ScreenManager.replaceFragment((MainActivity) NoFacebookFragment.this.getActivity(),
+                            ScreenManager.replaceFragment((MainActivity) ViewAllImageFragment.this.getActivity(),
                                     R.id.content,
                                     currentFragment, false);
 
@@ -319,15 +319,19 @@ public class NoFacebookFragment extends Fragment {
 
             ivChangeMode.setImageResource(iconChangeMode);
 
-            currentFragment.setNoFacebookFragment(this);
+            currentFragment.setViewAllImageFragment(this);
             currentFragment.setPictureList(pictureList);
             currentFragment.setAlbum(albumID);
-            ScreenManager.replaceFragment((MainActivity) NoFacebookFragment.this.getActivity(),
+            ScreenManager.replaceFragment((MainActivity) ViewAllImageFragment.this.getActivity(),
                     R.id.content,
                     currentFragment,
                     false);
 
             modeView++;
         }
+    }
+
+    private void createImageObject(){
+
     }
 }
