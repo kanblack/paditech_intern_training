@@ -26,7 +26,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.P4Activity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/TranStatusBar"/>
         <activity android:name=".activity.P5Activity"
             android:screenOrientation="portrait"/>
     </application>

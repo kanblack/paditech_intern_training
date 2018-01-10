@@ -63,14 +63,16 @@ public class P4StaggeredGridAdapter extends BaseAdapter {
 
         public void bindView(final int position) {
 
-            if (imageObjectList.get(position).getName() == null || imageObjectList.get(position).getName().isEmpty()) {
-                tvUrl.setText(imageObjectList.get(position).getUrl());
+            final ImageObject imageObject = imageObjectList.get(position);
+
+            if (imageObject.getName() == null || imageObject.getName().isEmpty()) {
+                tvUrl.setText(imageObject.getUrl());
             } else {
-                tvUrl.setText(imageObjectList.get(position).getName());
+                tvUrl.setText(imageObject.getName());
             }
 
-            if (imageObjectList.get(position).getHeight() > 0) {
-                float n = (imageObjectList.get(position).getHeight() / (float) imageObjectList.get(position).getWidth());
+            if (imageObject.getHeight() > 0) {
+                float n = (imageObject.getHeight() / (float) imageObject.getWidth());
 
                 ViewGroup.LayoutParams params = dynamicHeightImageView.getLayoutParams();
                 // image fit width
@@ -78,11 +80,11 @@ public class P4StaggeredGridAdapter extends BaseAdapter {
 
                 dynamicHeightImageView.setLayoutParams(params);
                 dynamicHeightImageView.setRatio(n);
-                GlideApp.with(context).load(imageObjectList.get(position).getUrl()).into(dynamicHeightImageView);
+                GlideApp.with(context).load(imageObject.getUrl()).placeholder(R.drawable.ic_loading_rotate).into(dynamicHeightImageView);
             } else {
                 GlideApp.with(context)
                         .asBitmap()
-                        .load(imageObjectList.get(position).getUrl())
+                        .load(imageObject.getUrl())
                         .priority(Priority.IMMEDIATE)
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
@@ -94,8 +96,8 @@ public class P4StaggeredGridAdapter extends BaseAdapter {
                                 params.height = (int) (n * dynamicHeightImageView.getWidth());
 
                                 dynamicHeightImageView.setLayoutParams(params);
-                                imageObjectList.get(position).setHeight(resource.getHeight());
-                                imageObjectList.get(position).setWidth(resource.getWidth());
+                                imageObject.setHeight(resource.getHeight());
+                                imageObject.setWidth(resource.getWidth());
 
                                 dynamicHeightImageView.setImageBitmap(resource);
                             }

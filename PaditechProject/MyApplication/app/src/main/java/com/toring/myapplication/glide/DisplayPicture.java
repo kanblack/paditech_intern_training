@@ -34,6 +34,7 @@ public class DisplayPicture {
         GlideApp.with(context)
                 .load(picturePath)
                 .centerCrop()
+                .placeholder(R.drawable.ic_loading_rotate)
                 .error(R.mipmap.ic_launcher)
                 .into(iv);
     }
@@ -42,6 +43,7 @@ public class DisplayPicture {
         GlideApp.with(context)
                 .load(picturePath)
                 .centerCrop()
+                .placeholder(R.drawable.ic_loading_rotate)
                 .error(R.mipmap.ic_launcher)
                 .into(iv);
     }
@@ -50,6 +52,7 @@ public class DisplayPicture {
         GlideApp.with(context)
                 .load(picturePath)
                 .circleCrop()
+                .placeholder(R.drawable.ic_loading_rotate)
                 .error(R.mipmap.ic_launcher)
                 .into(iv);
     }
@@ -58,6 +61,7 @@ public class DisplayPicture {
         GlideApp.with(context)
                 .load(picturePath)
                 .circleCrop()
+                .placeholder(R.drawable.ic_loading_rotate)
                 .error(R.mipmap.ic_launcher)
                 .into(iv);
     }

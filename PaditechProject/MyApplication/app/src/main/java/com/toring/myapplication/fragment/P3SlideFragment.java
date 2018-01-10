@@ -56,8 +56,7 @@ public class P3SlideFragment extends FragmentBase {
             public void onPageSelected(int position) {
 
                 DisplayMetrics metrics = P3SlideFragment.this.getActivity().getResources().getDisplayMetrics();
-                float w = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 51, metrics);
-                w += 50;
+                float w = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 50, metrics);
                 linearLayoutManager.scrollToPositionWithOffset(position,
                         (int) ((P3SlideFragment.this.getView().getWidth()-w)/2));
 

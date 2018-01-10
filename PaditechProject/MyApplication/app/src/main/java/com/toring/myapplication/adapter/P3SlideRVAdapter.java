@@ -73,7 +73,6 @@ public class P3SlideRVAdapter extends BaseAdapter {
         }
 
         public void bindView(final int position) {
-//            DisplayPicture.displayImageCrop(context, imageObjectList.get(position), ivPicture);
             super.bindView(position);
 
             view.setTag(position);

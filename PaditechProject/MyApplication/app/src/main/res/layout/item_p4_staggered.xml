@@ -17,8 +17,7 @@
             android:id="@+id/iv_picture"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:background="@android:color/holo_red_dark" />
+            android:scaleType="fitCenter" />
 
         <TextView
             android:id="@+id/tv_url"
