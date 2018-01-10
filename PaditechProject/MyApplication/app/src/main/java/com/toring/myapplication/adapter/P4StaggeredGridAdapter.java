@@ -78,7 +78,7 @@ public class P4StaggeredGridAdapter extends BaseAdapter {
 
                 dynamicHeightImageView.setLayoutParams(params);
                 dynamicHeightImageView.setRatio(n);
-                GlideApp.with(context).load(imageObjectList.get(position).getUrl()).into(dynamicHeightImageView);
+                GlideApp.with(context).load(imageObjectList.get(position).getUrl()).fitCenter().into(dynamicHeightImageView);
             } else {
                 GlideApp.with(context)
                         .asBitmap()
