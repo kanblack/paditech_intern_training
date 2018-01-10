@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.toring.myapplication.item_fragment.ItemP3VPFragment;
+import com.toring.myapplication.network.image_object.ImageObject;
 
 import java.util.List;
 
@@ -15,26 +16,26 @@ import java.util.List;
 
 public class P3SlideVPAdapter extends FragmentStatePagerAdapter {
     private Context context;
-    private List<String> pictureList;
+    private List<ImageObject> imageObjectList;
     private boolean isFacebook = false;
 
-    public P3SlideVPAdapter(FragmentManager fm, Context context, List<String> pictureList, boolean isFacebook) {
+    public P3SlideVPAdapter(FragmentManager fm, Context context, List<ImageObject> imageObjectList, boolean isFacebook) {
         super(fm);
         this.context = context;
-        this.pictureList = pictureList;
+        this.imageObjectList = imageObjectList;
         this.isFacebook = isFacebook;
     }
 
     @Override
     public Fragment getItem(int position) {
         ItemP3VPFragment itemP3VPFragment = new ItemP3VPFragment();
-        itemP3VPFragment.setPicturePath(pictureList.get(position));
+        itemP3VPFragment.setImageObject(imageObjectList.get(position));
         itemP3VPFragment.setFacebook(isFacebook);
         return itemP3VPFragment;
     }
 
     @Override
     public int getCount() {
-        return pictureList.size();
+        return imageObjectList.size();
     }
 }

@@ -2,26 +2,17 @@ package com.toring.myapplication.activity;
 
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.facebook.AccessToken;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.toring.myapplication.R;
@@ -32,14 +23,12 @@ import com.toring.myapplication.glide.DisplayPicture;
 import com.toring.myapplication.glide.GlideApp;
 import com.toring.myapplication.glide.SaveImage;
 import com.toring.myapplication.manager.ScreenManager;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.toring.myapplication.network.image_object.ImageObject;
 
 import java.util.UUID;
 
 public class P5Activity extends AppCompatActivity implements View.OnClickListener {
-    private String picturePath;
+    private ImageObject imageObject;
     private DrawingView ivPicture;
 
     private Toolbar toolbar;
@@ -56,7 +45,7 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_p5);
 
-        picturePath = getIntent().getStringExtra(this.getResources().getString(R.string.picture));
+        imageObject = (ImageObject) getIntent().getSerializableExtra(this.getResources().getString(R.string.picture));
 
         ivPicture = this.findViewById(R.id.iv_picture);
         toolbar = this.findViewById(R.id.toolbar);
@@ -66,7 +55,7 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
         tvDone = this.findViewById(R.id.tv_done);
 
         ImageLoader imageLoader = ImageLoader.getInstance();
-        imageLoader.loadImage(picturePath, new SimpleImageLoadingListener() {
+        imageLoader.loadImage(imageObject.getUrl(), new SimpleImageLoadingListener() {
             @Override
             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                 Bitmap bitmap = loadedImage.copy(Bitmap.Config.ARGB_8888, true);
@@ -94,7 +83,7 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
 //                    Log.e("", "onClick: ");
                     ImageLoader imageLoader = ImageLoader.getInstance();
                     if (ivPicture.getImage() == null) {
-                        imageLoader.loadImage(picturePath, new SimpleImageLoadingListener() {
+                        imageLoader.loadImage(imageObject.getUrl(), new SimpleImageLoadingListener() {
                             @Override
                             public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
                                 Bitmap bitmap = loadedImage.copy(Bitmap.Config.ARGB_8888, true);
@@ -137,14 +126,14 @@ public class P5Activity extends AppCompatActivity implements View.OnClickListene
 
     private void setData() {
             DisplayPicture.displayImage(P5Activity.this
-                    , picturePath, ivPicture);
+                    , imageObject.getUrl(), ivPicture);
 
         ivPicture.post(new Runnable() {
             @Override
             public void run() {
                 GlideApp.with(P5Activity.this)
                         .asBitmap()
-                        .load(picturePath)
+                        .load(imageObject.getUrl())
                         .into(new SimpleTarget<Bitmap>() {
                             @Override
                             public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {

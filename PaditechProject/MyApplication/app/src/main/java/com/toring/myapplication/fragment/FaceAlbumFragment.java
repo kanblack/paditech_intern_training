@@ -55,7 +55,7 @@ public class FaceAlbumFragment extends FragmentBase {
     }
 
     @Override
-    public void loadMore() {
+    public void loadMore(int start, int end) {
 
     }
 }

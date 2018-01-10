@@ -100,6 +100,7 @@ public class FacebookFragment extends Fragment {
                                 album.setUrl(object.getJSONObject("picture").getJSONObject("data").getString("url"));
                                 arrayList.add(album);
                             }
+
                             FaceAlbumFragment faceAlbumFragment = new FaceAlbumFragment();
                             faceAlbumFragment.setAlbumList(arrayList);
                             faceAlbumFragment.setOnClickListener(new View.OnClickListener() {

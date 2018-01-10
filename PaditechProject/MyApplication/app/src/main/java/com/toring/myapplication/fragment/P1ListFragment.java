@@ -10,10 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.toring.myapplication.R;
-import com.toring.myapplication.activity.MainActivity;
 import com.toring.myapplication.adapter.P1ListAdapter;
-
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,14 +28,14 @@ public class P1ListFragment extends FragmentBase {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_p1_list, container, false);
         rvList = view.findViewById(R.id.rv_list);
-        adapter = new P1ListAdapter(this, pictureList, album);
+        adapter = new P1ListAdapter(this, imageObjectList, album);
         rvList.setAdapter(adapter);
         rvList.setLayoutManager(new LinearLayoutManager(this.getContext()));
         return view;
     }
 
     @Override
-    public void loadMore() {
-        adapter.notifyDataSetChanged();
+    public void loadMore(int start, int end) {
+        adapter.notifyItemRangeInserted(start, end);
     }
 }

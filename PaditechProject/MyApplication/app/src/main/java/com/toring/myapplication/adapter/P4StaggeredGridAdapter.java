@@ -6,16 +6,17 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.bumptech.glide.Priority;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
-import com.squareup.picasso.Picasso;
 import com.toring.myapplication.R;
 import com.toring.myapplication.activity.P4Activity;
 import com.toring.myapplication.customvie.DynamicHeightImageView;
 import com.toring.myapplication.fragment.FragmentBase;
-import com.toring.myapplication.glide.DisplayPicture;
 import com.toring.myapplication.glide.GlideApp;
+import com.toring.myapplication.network.image_object.ImageObject;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ import java.util.List;
 
 public class P4StaggeredGridAdapter extends BaseAdapter {
 
-    public P4StaggeredGridAdapter(FragmentBase context, List<String> pictureList, String album) {
+    public P4StaggeredGridAdapter(FragmentBase context, List<ImageObject> pictureList, String album) {
         super(context, pictureList, album);
     }
 
@@ -44,54 +45,72 @@ public class P4StaggeredGridAdapter extends BaseAdapter {
 
     @Override
     public int getItemCount() {
-        return pictureList.size();
+        return imageObjectList.size();
     }
 
     public class VHP4GridStaggered extends VH {
         private View view;
+        private TextView tvUrl;
+        private DynamicHeightImageView dynamicHeightImageView;
 
         public VHP4GridStaggered(View itemView) {
             super(itemView);
-            ivPicture = itemView.findViewById(R.id.iv_picture);
+//            ivPicture = itemView.findViewById(R.id.iv_picture);
+            dynamicHeightImageView = itemView.findViewById(R.id.iv_picture);
+            tvUrl = itemView.findViewById(R.id.tv_url);
             view = itemView;
         }
 
         public void bindView(final int position) {
-//            ViewGroup.LayoutParams params = ivPicture.getLayoutParams();
-//            // image fit width
-//            params.height = (int) (300 + (position%5)*20);
-//
-//            DisplayPicture.displayImage(context.getContext(), pictureList.get(position), ivPicture);
-//            ivPicture.setLayoutParams(params);
 
-            GlideApp.with(context)
-                    .asBitmap()
-                    .load(pictureList.get(position))
-                    .into(new SimpleTarget<Bitmap>() {
-                        @Override
-                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-                            float n = (resource.getHeight() / (float) resource.getWidth());
+            if (imageObjectList.get(position).getName() == null || imageObjectList.get(position).getName().isEmpty()) {
+                tvUrl.setText(imageObjectList.get(position).getUrl());
+            } else {
+                tvUrl.setText(imageObjectList.get(position).getName());
+            }
 
-                            ViewGroup.LayoutParams params = ivPicture.getLayoutParams();
-                            // image fit width
-                            params.height = (int) (n * ivPicture.getWidth());
+            if (imageObjectList.get(position).getHeight() > 0) {
+                float n = (imageObjectList.get(position).getHeight() / (float) imageObjectList.get(position).getWidth());
 
-//                            dynamicHeightImageView.setRatio(n);
-                            ivPicture.setLayoutParams(params);
+                ViewGroup.LayoutParams params = dynamicHeightImageView.getLayoutParams();
+                // image fit width
+                params.height = (int) (n * dynamicHeightImageView.getWidth());
 
-                            ivPicture.setImageBitmap(resource);
-                        }
-                    });
+                dynamicHeightImageView.setLayoutParams(params);
+                dynamicHeightImageView.setRatio(n);
+                GlideApp.with(context).load(imageObjectList.get(position).getUrl()).into(dynamicHeightImageView);
+            } else {
+                GlideApp.with(context)
+                        .asBitmap()
+                        .load(imageObjectList.get(position).getUrl())
+                        .priority(Priority.IMMEDIATE)
+                        .into(new SimpleTarget<Bitmap>() {
+                            @Override
+                            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                                float n = (resource.getHeight() / (float) resource.getWidth());
+
+                                ViewGroup.LayoutParams params = dynamicHeightImageView.getLayoutParams();
+                                // image fit width
+                                params.height = (int) (n * dynamicHeightImageView.getWidth());
+
+                                dynamicHeightImageView.setLayoutParams(params);
+                                imageObjectList.get(position).setHeight(resource.getHeight());
+                                imageObjectList.get(position).setWidth(resource.getWidth());
+
+                                dynamicHeightImageView.setImageBitmap(resource);
+                            }
+                        });
+            }
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context.getContext(), P4Activity.class);
 
-                    intent.putExtra(context.getResources().getString(R.string.picture), pictureList.get(position));
+                    intent.putExtra(context.getResources().getString(R.string.picture), imageObjectList.get(position));
 
                     ActivityOptionsCompat options = ActivityOptionsCompat.
-                            makeSceneTransitionAnimation(context.getActivity(), ivPicture, "detail");
+                            makeSceneTransitionAnimation(context.getActivity(), dynamicHeightImageView, "detail");
                     context.startActivity(intent, options.toBundle());
                 }
             });

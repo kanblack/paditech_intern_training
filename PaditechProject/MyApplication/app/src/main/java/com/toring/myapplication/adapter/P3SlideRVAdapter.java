@@ -1,18 +1,12 @@
 package com.toring.myapplication.adapter;
 
-import android.app.Activity;
-import android.content.Context;
-import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.toring.myapplication.R;
 import com.toring.myapplication.fragment.FragmentBase;
-import com.toring.myapplication.glide.DisplayPicture;
+import com.toring.myapplication.network.image_object.ImageObject;
 
 import java.util.List;
 
@@ -29,7 +23,7 @@ public class P3SlideRVAdapter extends BaseAdapter {
         this.onClickListener = onClickListener;
     }
 
-    public P3SlideRVAdapter(FragmentBase context, List<String> pictureList, String album) {
+    public P3SlideRVAdapter(FragmentBase context, List<ImageObject> pictureList, String album) {
         super(context, pictureList, album);
     }
 
@@ -68,7 +62,7 @@ public class P3SlideRVAdapter extends BaseAdapter {
 
     @Override
     public int getItemCount() {
-        return pictureList.size();
+        return imageObjectList.size();
     }
 
     public class VHP3Slide extends BaseAdapter.VH {
@@ -79,7 +73,7 @@ public class P3SlideRVAdapter extends BaseAdapter {
         }
 
         public void bindView(final int position) {
-//            DisplayPicture.displayImageCrop(context, pictureList.get(position), ivPicture);
+//            DisplayPicture.displayImageCrop(context, imageObjectList.get(position), ivPicture);
             super.bindView(position);
 
             view.setTag(position);

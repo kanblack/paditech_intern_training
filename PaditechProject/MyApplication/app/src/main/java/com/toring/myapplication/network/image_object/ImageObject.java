@@ -1,10 +1,15 @@
 package com.toring.myapplication.network.image_object;
 
+import java.io.Serializable;
+
+import io.realm.RealmObject;
+
 /**
  * Created by ToRing on 1/10/2018.
  */
 
-public class ImageObject {
+public class ImageObject extends RealmObject implements Serializable{
+    private String name;
     private String url;
     private int width;
     private int height;
@@ -22,6 +27,13 @@ public class ImageObject {
 
     public ImageObject(String url) {
         this.url = url;
+    }
+
+    public ImageObject(String name, String url, int width, int height) {
+        this.name = name;
+        this.url = url;
+        this.width = width;
+        this.height = height;
     }
 
     public String getUrl() {
@@ -46,5 +58,13 @@ public class ImageObject {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

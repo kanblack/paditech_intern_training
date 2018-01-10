@@ -14,17 +14,18 @@ import android.widget.ImageView;
 import com.toring.myapplication.R;
 import com.toring.myapplication.activity.P4Activity;
 import com.toring.myapplication.glide.DisplayPicture;
+import com.toring.myapplication.network.image_object.ImageObject;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ItemP3VPFragment extends Fragment {
     private ImageView ivPicture;
-    private String picturePath;
+    private ImageObject imageObject;
     private boolean isFacebook;
 
-    public void setPicturePath(String picturePath) {
-        this.picturePath = picturePath;
+    public void setImageObject(ImageObject imageObject) {
+        this.imageObject = imageObject;
     }
 
     public void setFacebook(boolean facebook) {
@@ -46,7 +47,7 @@ public class ItemP3VPFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(ItemP3VPFragment.this.getContext(), P4Activity.class);
-                intent.putExtra(ItemP3VPFragment.this.getContext().getResources().getString(R.string.picture), picturePath);
+                intent.putExtra(ItemP3VPFragment.this.getContext().getResources().getString(R.string.picture), imageObject);
                 intent.putExtra(ItemP3VPFragment.this.getContext().getResources().getString(R.string.is_facebook), isFacebook);
                 ActivityOptionsCompat options = ActivityOptionsCompat.
                         makeSceneTransitionAnimation((Activity) ItemP3VPFragment.this.getContext(), (View) ivPicture, "detail");
@@ -54,7 +55,7 @@ public class ItemP3VPFragment extends Fragment {
             }
         });
 
-        DisplayPicture.displayImageCrop(this.getContext(), picturePath, ivPicture);
+        DisplayPicture.displayImageCrop(this.getContext(), imageObject.getUrl(), ivPicture);
         return view;
     }
 

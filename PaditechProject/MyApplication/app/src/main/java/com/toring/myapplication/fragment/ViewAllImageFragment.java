@@ -21,6 +21,7 @@ import com.toring.myapplication.R;
 import com.toring.myapplication.activity.MainActivity;
 import com.toring.myapplication.manager.ScreenManager;
 import com.toring.myapplication.network.RetrofitFactory;
+import com.toring.myapplication.network.image_object.ImageObject;
 import com.toring.myapplication.network.no_face_modle.DataObject;
 import com.toring.myapplication.network.no_face_modle.MainObject;
 import com.toring.myapplication.network.service.ServiceGetPicture;
@@ -52,7 +53,7 @@ public class ViewAllImageFragment extends Fragment {
     private String afterCursor;
     private String title;
 
-    private List<String> pictureList;
+    private List<ImageObject> imageObjectList;
 
     private FragmentBase currentFragment;
 
@@ -64,10 +65,6 @@ public class ViewAllImageFragment extends Fragment {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public void setPictureList(List<String> pictureList) {
-        this.pictureList = pictureList;
     }
 
     public void setAlbumID(String albumID) {
@@ -84,7 +81,7 @@ public class ViewAllImageFragment extends Fragment {
         ivBack = view.findViewById(R.id.iv_back);
         tvTitle = view.findViewById(R.id.tv_title);
 
-        if (title != null){
+        if (title != null) {
             tvTitle.setText(title);
         }
 
@@ -111,7 +108,7 @@ public class ViewAllImageFragment extends Fragment {
             }
         });
 
-        pictureList = new ArrayList<>();
+        imageObjectList = new ArrayList<>();
         if (albumID == null) {
             btLoginFace.setVisibility(View.VISIBLE);
             ivBack.setVisibility(View.GONE);
@@ -136,13 +133,13 @@ public class ViewAllImageFragment extends Fragment {
         final Realm realm = Realm.getDefaultInstance();
         List<DataObject> myData = realm.where(DataObject.class).findAll();
         if (myData.size() != 0) {
-            pictureList = new ArrayList<>();
+            imageObjectList = new ArrayList<>();
             for (DataObject dataObject : myData) {
-                pictureList.add(dataObject.getUrl());
+                imageObjectList.add(new ImageObject(dataObject.getUrl()));
             }
             P1ListFragment p1ListFragment = new P1ListFragment();
             currentFragment = p1ListFragment;
-            currentFragment.setPictureList(pictureList);
+            currentFragment.setImageObjectList(imageObjectList);
             currentFragment.setViewAllImageFragment(this);
             currentFragment.setAlbum(albumID);
             ScreenManager.replaceFragment((MainActivity) this.getActivity(),
@@ -156,11 +153,14 @@ public class ViewAllImageFragment extends Fragment {
                         @Override
                         public void onResponse(Call<MainObject> call, Response<MainObject> response) {
                             MainObject mainObject = response.body();
-                            pictureList = mainObject.getData();
+                            List<String> listURL = mainObject.getData();
+                            for (String s : listURL) {
+                                imageObjectList.add(new ImageObject(s));
+                            }
 
                             P1ListFragment p1ListFragment = new P1ListFragment();
                             currentFragment = p1ListFragment;
-                            currentFragment.setPictureList(pictureList);
+                            currentFragment.setImageObjectList(imageObjectList);
                             currentFragment.setViewAllImageFragment(ViewAllImageFragment.this);
                             currentFragment.setAlbum(albumID);
                             ScreenManager.replaceFragment((MainActivity) ViewAllImageFragment.this.getActivity(),
@@ -169,8 +169,8 @@ public class ViewAllImageFragment extends Fragment {
                                     false);
 
                             realm.beginTransaction();
-                            for (String s : pictureList) {
-                                realm.copyToRealm(new DataObject(s));
+                            for (ImageObject imageObject : imageObjectList) {
+                                realm.copyToRealm(imageObject);
                             }
                             realm.commitTransaction();
                             realm.close();
@@ -206,7 +206,7 @@ public class ViewAllImageFragment extends Fragment {
 
     private void getAlbumPhoto(final String albumID) {
         Bundle parameters = new Bundle();
-        parameters.putString("fields", "width");
+        parameters.putString("fields", "width,height, name");
         parameters.putString("limit", "10");
 
         new GraphRequest(
@@ -217,16 +217,25 @@ public class ViewAllImageFragment extends Fragment {
                 new GraphRequest.Callback() {
                     public void onCompleted(GraphResponse response) {
                         try {
-                            pictureList = new ArrayList<>();
+                            imageObjectList = new ArrayList<>();
                             JSONArray temp = response.getJSONObject().getJSONArray("data");
                             for (int i = 0; i < temp.length(); i++) {
                                 JSONObject obj = (JSONObject) temp.get(i);
                                 int width = obj.getInt("width");
-                                pictureList.add(getImageUrlById(((JSONObject) temp.get(i)).getString("id"), width));
+
+                                String name =  null;
+                                if (obj.has("name")) {
+                                    name = obj.getString("name");
+                                }
+                                ImageObject imageObject = new ImageObject(name,
+                                        getImageUrlById(obj.getString("id"), width),
+                                        width,
+                                        obj.getInt("height"));
+                                imageObjectList.add(imageObject);
                             }
                             P1ListFragment p1ListFragment = new P1ListFragment();
                             currentFragment = p1ListFragment;
-                            currentFragment.setPictureList(pictureList);
+                            currentFragment.setImageObjectList(imageObjectList);
                             currentFragment.setViewAllImageFragment(ViewAllImageFragment.this);
                             currentFragment.setAlbum(albumID);
                             ScreenManager.replaceFragment((MainActivity) ViewAllImageFragment.this.getActivity(),
@@ -251,14 +260,24 @@ public class ViewAllImageFragment extends Fragment {
                         @Override
                         public void onCompleted(GraphResponse response) {
                             try {
+                                int start = imageObjectList.size();
                                 JSONArray temp = response.getJSONObject().getJSONArray("data");
                                 for (int i = 0; i < temp.length(); i++) {
                                     JSONObject obj = (JSONObject) temp.get(i);
                                     int width = obj.getInt("width");
-                                    pictureList.add(getImageUrlById(((JSONObject) temp.get(i)).getString("id"), width));
+
+                                    String name =  null;
+                                    if (obj.has("name")) {
+                                        name = obj.getString("name");
+                                    }
+                                    ImageObject imageObject = new ImageObject(name,
+                                            getImageUrlById(obj.getString("id"), width),
+                                            width,
+                                            obj.getInt("height"));
+                                    imageObjectList.add(imageObject);
                                 }
                                 afterCursor = response.getJSONObject().getJSONObject("paging").getJSONObject("cursors").getString("after");
-                                currentFragment.loadMore();
+                                currentFragment.loadMore(start, imageObjectList.size());
                             } catch (JSONException e) {
                                 e.printStackTrace();
                                 afterCursor = null;
@@ -268,7 +287,7 @@ public class ViewAllImageFragment extends Fragment {
 
             Bundle parameters = new Bundle();
             parameters.putString("pretty", "0");
-            parameters.putString("fields", "height,width");
+            parameters.putString("fields", "width,height, name");
             parameters.putString("limit", "10");
             parameters.putString("after", afterCursor);
             request.setParameters(parameters);
@@ -285,7 +304,7 @@ public class ViewAllImageFragment extends Fragment {
     }
 
     private void changeMode() {
-        if (pictureList != null) {
+        if (imageObjectList != null) {
             switch (modeView) {
                 case 0: {
                     iconChangeMode = R.drawable.ic_slideshow_white_24dp;
@@ -320,7 +339,7 @@ public class ViewAllImageFragment extends Fragment {
             ivChangeMode.setImageResource(iconChangeMode);
 
             currentFragment.setViewAllImageFragment(this);
-            currentFragment.setPictureList(pictureList);
+            currentFragment.setImageObjectList(imageObjectList);
             currentFragment.setAlbum(albumID);
             ScreenManager.replaceFragment((MainActivity) ViewAllImageFragment.this.getActivity(),
                     R.id.content,
@@ -331,7 +350,7 @@ public class ViewAllImageFragment extends Fragment {
         }
     }
 
-    private void createImageObject(){
+    private void createImageObject() {
 
     }
 }

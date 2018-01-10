@@ -2,6 +2,8 @@ package com.toring.myapplication.fragment;
 
 import android.support.v4.app.Fragment;
 
+import com.toring.myapplication.network.image_object.ImageObject;
+
 import java.util.List;
 
 /**
@@ -9,7 +11,7 @@ import java.util.List;
  */
 
 public abstract class FragmentBase extends Fragment {
-    protected List<String> pictureList;
+    protected List<ImageObject> imageObjectList;
     protected ViewAllImageFragment viewAllImageFragment;
     protected String album;
 
@@ -21,12 +23,12 @@ public abstract class FragmentBase extends Fragment {
         this.viewAllImageFragment = viewAllImageFragment;
     }
 
-    public List<String> getPictureList() {
-        return pictureList;
+    public List<ImageObject> getImageObjectList() {
+        return imageObjectList;
     }
 
-    public void setPictureList(List<String> pictureList) {
-        this.pictureList = pictureList;
+    public void setImageObjectList(List<ImageObject> imageObjectList) {
+        this.imageObjectList = imageObjectList;
     }
 
     public String getAlbum() {
@@ -37,5 +39,5 @@ public abstract class FragmentBase extends Fragment {
         this.album = album;
     }
 
-    public abstract void loadMore();
+    public abstract void loadMore(int start, int end);
 }

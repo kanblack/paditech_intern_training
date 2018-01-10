@@ -1,20 +1,15 @@
 package com.toring.myapplication.adapter;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.toring.myapplication.R;
-import com.toring.myapplication.activity.MainActivity;
 import com.toring.myapplication.activity.P4Activity;
 import com.toring.myapplication.fragment.FragmentBase;
-import com.toring.myapplication.glide.DisplayPicture;
+import com.toring.myapplication.network.image_object.ImageObject;
 
 import java.util.List;
 
@@ -24,7 +19,7 @@ import java.util.List;
 
 public class P2GridAdapter extends BaseAdapter {
 
-    public P2GridAdapter(FragmentBase context, List<String> pictureList, String album) {
+    public P2GridAdapter(FragmentBase context, List<ImageObject> pictureList, String album) {
         super(context, pictureList, album);
     }
 
@@ -43,7 +38,7 @@ public class P2GridAdapter extends BaseAdapter {
 
     @Override
     public int getItemCount() {
-        return pictureList.size();
+        return imageObjectList.size();
     }
 
     public class VHP2Grid extends BaseAdapter.VH {
@@ -63,7 +58,7 @@ public class P2GridAdapter extends BaseAdapter {
                 public void onClick(View view) {
                     Intent intent = new Intent(context.getContext(), P4Activity.class);
 
-                    intent.putExtra(context.getResources().getString(R.string.picture), pictureList.get(position));
+                    intent.putExtra(context.getResources().getString(R.string.picture), imageObjectList.get(position));
 
                     ActivityOptionsCompat options = ActivityOptionsCompat.
                             makeSceneTransitionAnimation(context.getActivity(), (View) ivPicture, "detail");

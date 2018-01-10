@@ -2,7 +2,6 @@ package com.toring.myapplication.adapter;
 
 import android.content.Intent;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +10,13 @@ import android.widget.TextView;
 import com.toring.myapplication.R;
 import com.toring.myapplication.activity.P4Activity;
 import com.toring.myapplication.fragment.FragmentBase;
+import com.toring.myapplication.network.image_object.ImageObject;
 
 import java.util.List;
 
 public class P1ListAdapter extends BaseAdapter {
 
-    public P1ListAdapter(FragmentBase context, List<String> pictureList, String album) {
+    public P1ListAdapter(FragmentBase context, List<ImageObject> pictureList, String album) {
         super(context, pictureList, album);
     }
 
@@ -35,7 +35,7 @@ public class P1ListAdapter extends BaseAdapter {
 
     @Override
     public int getItemCount() {
-        return pictureList.size();
+        return imageObjectList.size();
     }
 
     public class VHP1List extends BaseAdapter.VH {
@@ -53,14 +53,18 @@ public class P1ListAdapter extends BaseAdapter {
         public void bindView(final int position) {
             super.bindView(position);
 
-            tv.setText(pictureList.get(position));
+            if (imageObjectList.get(position).getName() == null || imageObjectList.get(position).getName().isEmpty()) {
+                tv.setText(imageObjectList.get(position).getUrl());
+            } else {
+                tv.setText(imageObjectList.get(position).getName());
+            }
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(context.getContext(), P4Activity.class);
 
-                    intent.putExtra(context.getResources().getString(R.string.picture), pictureList.get(position));
+                    intent.putExtra(context.getResources().getString(R.string.picture), imageObjectList.get(position));
 
                     ActivityOptionsCompat options = ActivityOptionsCompat.
                             makeSceneTransitionAnimation(context.getActivity(), (View) ivPicture, "detail");

@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 import com.toring.myapplication.R;
 import com.toring.myapplication.adapter.P2GridAdapter;
 
-import java.util.List;
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -29,14 +27,14 @@ public class P2GridFragment extends FragmentBase {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_p2_grid, container, false);
         rvGrid = view.findViewById(R.id.rv_grid);
-        adapter = new P2GridAdapter(this, pictureList, album);
+        adapter = new P2GridAdapter(this, imageObjectList, album);
         rvGrid.setAdapter(adapter);
         rvGrid.setLayoutManager(new GridLayoutManager(this.getContext(), 3));
         return view;
     }
 
     @Override
-    public void loadMore() {
-        adapter.notifyDataSetChanged();
+    public void loadMore(int start, int end) {
+        adapter.notifyItemRangeInserted(start, end);
     }
 }

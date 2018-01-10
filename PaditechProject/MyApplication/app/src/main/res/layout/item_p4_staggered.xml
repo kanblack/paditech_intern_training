@@ -4,9 +4,21 @@
     android:layout_height="wrap_content"
     android:padding="1dp">
 
-    <ImageView
+    <com.toring.myapplication.customvie.DynamicHeightImageView
         android:id="@+id/iv_picture"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/holo_red_dark"/>
+
+    <TextView
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_url"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:layout_below="@id/iv_picture"
+        android:textColor="@color/text_color_primary"
+        android:padding="@dimen/padding_8dp"
+        android:textSize="@dimen/text_size_normal"/>
 </RelativeLayout>

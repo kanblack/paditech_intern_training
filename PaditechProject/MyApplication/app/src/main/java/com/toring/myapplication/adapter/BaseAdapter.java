@@ -7,6 +7,7 @@ import android.widget.ImageView;
 
 import com.toring.myapplication.fragment.FragmentBase;
 import com.toring.myapplication.glide.DisplayPicture;
+import com.toring.myapplication.network.image_object.ImageObject;
 
 import java.util.List;
 
@@ -16,28 +17,28 @@ import java.util.List;
 
 public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.VH> {
     protected FragmentBase context;
-    protected List<String> pictureList;
+    protected List<ImageObject> imageObjectList;
     protected String album;
 
-    public BaseAdapter(FragmentBase context, List<String> pictureList, String album) {
+    public BaseAdapter(FragmentBase context, List<ImageObject> imageObjectList, String album) {
         this.context = context;
-        this.pictureList = pictureList;
+        this.imageObjectList = imageObjectList;
         this.album = album;
     }
 
-    public List<String> getPictureList() {
-        return pictureList;
+    public List<ImageObject> getImageObjectList() {
+        return imageObjectList;
     }
 
-    public void setPictureList(List<String> pictureList) {
-        this.pictureList = pictureList;
+    public void setImageObjectList(List<ImageObject> imageObjectList) {
+        this.imageObjectList = imageObjectList;
     }
 
     @Override
     public void onBindViewHolder(VH holder, int position) {
         holder.bindView(position);
 
-        if (position == pictureList.size() - 1 && album != null){
+        if (position == imageObjectList.size() - 1 && album != null){
             context.getViewAllImageFragment().loadMorePhoto();
         }
 
@@ -53,7 +54,7 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.VH> {
         }
 
         public void bindView(final int position) {
-            DisplayPicture.displayImageCrop(context.getContext(), pictureList.get(position), ivPicture);
+            DisplayPicture.displayImageCrop(context.getContext(), imageObjectList.get(position).getUrl(), ivPicture);
         }
     }
 }

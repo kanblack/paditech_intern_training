@@ -39,10 +39,10 @@ public class P3SlideFragment extends FragmentBase {
         rv = view.findViewById(R.id.rv_slide);
 
         vpAdapter = new P3SlideVPAdapter(this.getFragmentManager(),
-                this.getContext(), pictureList, false);
+                this.getContext(), imageObjectList, false);
         vp.setAdapter(vpAdapter);
 
-        rvAdapter = new P3SlideRVAdapter(this, pictureList, album);
+        rvAdapter = new P3SlideRVAdapter(this, imageObjectList, album);
         rv.setAdapter(rvAdapter);
         final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL, false);
         rv.setLayoutManager(linearLayoutManager);
@@ -66,7 +66,7 @@ public class P3SlideFragment extends FragmentBase {
                 rvAdapter.notifyItemChanged(position);
                 rvAdapter.notifyItemChanged(oldIndex);
 
-                if (position == pictureList.size() - 1){
+                if (position == imageObjectList.size() - 1){
                     P3SlideFragment.this.getViewAllImageFragment().loadMorePhoto();
                 }
             }
@@ -91,8 +91,8 @@ public class P3SlideFragment extends FragmentBase {
     }
 
     @Override
-    public void loadMore() {
+    public void loadMore(int start, int end) {
         vpAdapter.notifyDataSetChanged();
-        rvAdapter.notifyDataSetChanged();
+        rvAdapter.notifyItemRangeInserted(start, end);
     }
 }

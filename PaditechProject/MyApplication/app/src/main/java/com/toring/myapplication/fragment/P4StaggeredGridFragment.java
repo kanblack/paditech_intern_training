@@ -3,8 +3,6 @@ package com.toring.myapplication.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
@@ -29,7 +27,7 @@ public class P4StaggeredGridFragment extends FragmentBase {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_p4_staggered, container, false);
         rvList = view.findViewById(R.id.rv_staggered);
-        adapter = new P4StaggeredGridAdapter(this, pictureList, album);
+        adapter = new P4StaggeredGridAdapter(this, imageObjectList, album);
 
         rvList.setHasFixedSize(true);
         final StaggeredGridLayoutManager manager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
@@ -49,7 +47,7 @@ public class P4StaggeredGridFragment extends FragmentBase {
     }
 
     @Override
-    public void loadMore() {
-        adapter.notifyDataSetChanged();
+    public void loadMore(int start, int end) {
+        adapter.notifyItemRangeInserted(start, end);
     }
 }
